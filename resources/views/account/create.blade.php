@@ -14,7 +14,7 @@
     </div>
     <div class="col-md-1">
         <div class="form-check">
-            <input class="form-check-input" type="radio" id="Business" name="CutomerType" value="Business" >
+            <input class="form-check-input" type="radio" id="Business" name="CutomerType" value="Business"  required>
             <label class="form-check-label" for="Business">
               Business
             </label>
@@ -22,7 +22,7 @@
     </div>
     <div class="col-md-1">
         <div class="form-check">
-            <input class="form-check-input" type="radio" id="Individual" name="CutomerType" value="Individual">
+            <input class="form-check-input" type="radio" id="Individual" name="CutomerType" value="Individual" required>
             <label class="form-check-label" for="Individual">
               Individual
             </label>
@@ -33,7 +33,7 @@
 
 <div class="row m-2">
     <div class="col-md-2 m-1">
-        Primary Contact
+        Customer Name
     </div>
     <div class="col-md-4">
         <input type="text" class="form-control" name="name" placeholder="First Name" required>
@@ -42,12 +42,12 @@
         </div>  
     </div>
 </div>
-<div class="row m-2" id="company">
+<div class="row m-2" id="company" >
     <div class="col-md-2 m-1">
         Company Name
     </div>
     <div class="col-md-4">
-        <input type="text" class="form-control" name="companyName" placeholder="" required>
+        <input type="text" id="companyName" class="form-control" name="companyName">
         <div class="invalid-feedback">
         Company name is Empty
         </div>  
@@ -64,8 +64,8 @@
         Home Address is Empty
         </div>  
     </div>
-    <div class="col-md-2" id="shopAddress">
-        <input type="text" class="form-control" id="Addressshop" placeholder="Shop Address" name="shopAddress" placeholder="" required >
+    <div class="col-md-2" id="shopAddress" class="CompanyDiv">
+        <input type="text" class="form-control" id="Addressshop" placeholder="Shop Address" name="shopAddress" >
         <div class="invalid-feedback">
         Shop address is Empty
         </div>  
@@ -80,7 +80,7 @@
         Email
     </div>
     <div class="col-md-4">
-        <input type="text" class="form-control" name="email" placeholder="" required>
+        <input type="email" class="form-control" name="email" placeholder="example (abc@gmail.com)">
         <div class="invalid-feedback">
         Email is Empty
         </div>  
@@ -92,13 +92,13 @@
         Customer Phone
     </div>
     <div class="col-md-2">
-        <input type="text" class="form-control " name="mobile1" placeholder="Mobile" required>
+        <input type="number" class="form-control " name="mobile1" placeholder="Mobile" required>
         <div class="invalid-feedback">
         Phone Number is Empty
         </div>  
     </div>
     <div class="col-md-2" id="workPhone">
-        <input type="text" class="form-control" name="mobile2" placeholder="Work phone" >
+        <input type="number" id="WorkPhoneNo" class="form-control" name="mobile2" placeholder="Work phone" >
         <div class="invalid-feedback">
         Work phone is Empty
         </div>  
@@ -109,7 +109,7 @@
         PAN Number
     </div>
     <div class="col-md-4">
-        <input type="text" class="form-control" name="pan" placeholder="" required>
+        <input type="number" id="Pan" class="form-control" name="pan">
         <div class="invalid-feedback">
         PAN Number is Empty
         </div>  
@@ -120,7 +120,7 @@
         VAT Number
     </div>
     <div class="col-md-4">
-        <input type="text" class="form-control" name="vat" placeholder="" required>
+        <input type="number" id="Vat" class="form-control" name="vat">
         <div class="invalid-feedback">
         VAT Number is Empty
         </div>  
@@ -149,20 +149,35 @@
 
 </form>
 
-@section('account.create')
+@section('account.update')
 <script>
 $(document).ready(function() {
 $("#divAddress").hide();
 
 $("#Individual").click(function(){
+    //Making input required false
+    $('#companyName').attr('required',false);
+    $('#Addressshop').attr('required',false);
+    $('#WorkPhoneNo').attr('required',false);
+    $('#Pan').attr('required',false);
+    $('#Vat').attr('required',false);
+    $('#addbtn').hide();
+    // Hiding Input Text Field
   $('#company').hide();
   $('#shopAddress').hide();
   $('#workPhone').hide();
   $('#PAN').hide();
   $('#VAT').hide();
+  
 });
 $("#Business").click(function(){
+    $('#companyName').attr('required',true);
+    $('#Addressshop').attr('required',true);
+    $('#WorkPhoneNo').attr('required',true);
+    $('#Pan').attr('required',true);
+    $('#Vat').attr('required',true);
     $('#company').show();
+    $('#addbtn').show();
     $('#shopAddress').show();
     $('#workPhone').show();
     $('#PAN').show();
@@ -182,14 +197,9 @@ var radioname= $('input[name="CutomerType"]:checked').val();
 		$("#divAddress").show(function(){
             $("#addbtn").click(function(){
                 var value=$("#homeAddress").val();
-                
-                
-            
             $('#Addressshop').val(value);
             // $value="";
             })
-            
-            
         });
 	}, 1000);
     

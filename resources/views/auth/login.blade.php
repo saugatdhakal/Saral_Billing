@@ -14,7 +14,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card ">
-                <center><div class="card-header"><h1>Puja Fancy Store</h1></div></center>
+                <center><div class="card-header"><h1>SARAL BILLING</h1></div></center>
                 
 
                 <div class="card-body">

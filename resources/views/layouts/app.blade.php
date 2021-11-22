@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/saral.css') }}" rel="stylesheet">
 
     <!--here-->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -164,6 +165,7 @@
 
         @yield('userDetails')
         @yield('account.create')
+        @yield('account.update')
         @yield('account.index')
         
         

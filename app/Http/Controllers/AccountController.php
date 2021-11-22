@@ -55,7 +55,7 @@ class AccountController extends Controller
         $account->pan_number =  empty($request->pan)?null:$request->pan;
         $account->remark=  empty($request->remark)?null:$request->remark;
         $account->save();
-        return back();
+        return redirect()->route('Account.index')->with('successes','Customer Create Successful');
         // $query= DB::table('Account')->insert([
         //     'account_type'->$request->input('CutomerType'),
         //     'name'->$request->input(concat('firstName',' ','secondName')),
@@ -122,7 +122,7 @@ class AccountController extends Controller
         $account->remark= empty($request->remark)?null:$request->remark;
         // return $account;
         $account->save();
-        return redirect()->route('Account.index')->with('success','Customer Updated');;
+        return redirect()->route('Account.index')->with('success','Customer Updated');
     }
 
     /**
@@ -134,7 +134,10 @@ class AccountController extends Controller
     public function delete($id)
     {
         // $account = DB::table('Accounts')->find($id);
-        DB::table('Accounts')->where('id', $id)->delete();
+        // DB::table('Accounts')->where('id', $id)->delete();
+        
+        $account = Account::find($id);
+        $account->delete();
         return "DeleteSuccess";
     }
 }

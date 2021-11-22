@@ -7,6 +7,12 @@
     </script>
     {{-- {{Session::get('success')}} --}}
 @endif
+@if(Session::has('successes'))
+    <script>
+        swal("Customer Created!", "{{Session::get('successes')}}", "success");
+    </script>
+    {{-- {{Session::get('success')}} --}}
+@endif
 <div class="row m-2 mt-3">
 
     <div class="col-md-3">
@@ -132,19 +138,20 @@
                     <td>{{$row->name}}</td>
                     <td>{{($row->account_type == "Business")? $row->shop_address: $row->home_address}}</td>
                     <td>{{$row->contact_number_1}}</td>
-                    <td>{{$row->vat_number}}</td>
-                    <td>{{$row->pan_number}}</td>
+                    <td>{{empty($row->vat_number)? "EMPTY": $row->vat_number }}</td>
+                    <td>{{empty($row->pan_number)? "EMPTY":$row->pan_number}}</td>
                     <td>
-                        <a href="{{route('account.edit',['id'=>$row->id])}}">
-                            <i class="far fa-edit"></i> 
+                        <a class="btnEdit" href="{{route('account.edit',['id'=>$row->id])}}">
+                            <i class="far fa-edit fa-lg"></i> 
                         </a>
-                        
+                        &#160 {{-- space  --}}
                         <a data-toggle="modal" class="view"  data-id="{{$row->id}}" data-target="#exampleModalCenter">
-                             <i class="far fa-eye"></i>
+                             <i class="far fa-eye fa-lg"></i>
                         </a>
+                        &#160
                         <a class="deleteAccount" id="{{$row->id}}" href="">
-                        <i class="fas fa-trash-alt"></i>
-                      </a>
+                          <i class="fas fa-trash-alt fa-lg"></i>
+                        </a>
                     </td>
                 </tr>
                 @endforeach
@@ -173,7 +180,7 @@
                 <div class="col-sm-4"><b>Customer Type:</b></div>
                 <div class="col-sm-5"><span id="customerType" class="badge badge-dark"></span></div>
                 </div>
-                <div class="row">
+                <div class="row" id="ShopNameDiv">
                     <div class="col-sm-4"><b>Shop Name:</b></div>
                     <div class="col-sm-5"><p id="customerShop"><strong></strong></p></div>
                 </div>
@@ -181,7 +188,7 @@
                     <div class="col-sm-4"><b>House Address:</b></div>
                     <div class="col-sm-5"><p id="houseAddress"><strong></strong></p></div>
                 </div>
-                <div class="row">
+                <div class="row" id="ShopAddress">
                   <div class="col-sm-4"><b>Shop Address:</b></div>
                   <div class="col-sm-5"><p id="shopAddress"><strong></strong></p></div>
               </div>
@@ -189,7 +196,7 @@
                 <div class="col-sm-4"><b>Phone Number 1:</b></div>
                 <div class="col-sm-5"><p id="contactNum1"><strong></strong></p></div>
              </div>
-             <div class="row">
+             <div class="row" id="Phone2">
               <div class="col-sm-4"><b>Phone Number 2:</b></div>
               <div class="col-sm-5"><p id="contactNum2"><strong></strong></p></div>
             </div>
@@ -197,11 +204,11 @@
               <div class="col-sm-4"><b>Email:</b></div>
               <div class="col-sm-5"><p id="emails"><strong></strong></p></div>
             </div>
-            <div class="row">
+            <div class="row" id="VATNO">
               <div class="col-sm-4"><b>Vat No:</b></div>
               <div class="col-sm-5"><p id="vatNo"><strong></strong></p></div>
             </div>
-            <div class="row">
+            <div class="row" id="PANNO">
               <div class="col-sm-4"><b>Pan No:</b></div>
               <div class="col-sm-5"><p id="panNo"><strong></strong></p></div>
             </div>
@@ -233,14 +240,23 @@
                    
                 $('#customerName').html(data.name);
                 $('#customerType').html(data.account_type);
-                $('#customerShop').html(data.shop_name);
+                if(data.shop_name == null && data.shop_address == null && data.contact_number_2==null && data.vat_number== null && data.pan_number==null ){
+                  $('#ShopNameDiv').hide();
+                  $('#ShopAddress').hide();
+                  $('#Phone2').hide();
+                  $('#VATNO').hide();
+                  $('#PANNO').hide();
+                }else{
+                  $('#customerShop').html(data.shop_name);
+                  $('#shopAddress').html(data.shop_address);
+                  $('#contactNum2').html(data.contact_number_2);
+                  $('#vatNo').html(data.vat_number);
+                  $('#panNo').html(data.pan_number)
+                }
                 $('#houseAddress').html(data.home_address);
-                $('#shopAddress').html(data.shop_address);
                 $('#contactNum1').html(data.contact_number_1);
-                $('#contactNum2').html(data.contact_number_2);
                 $('#emails').html(data.email);
-                $('#vatNo').html(data.vat_number);
-                $('#panNo').html(data.pan_number);
+                ;
 
                }
            })
