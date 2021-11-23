@@ -36,6 +36,8 @@ Route::get('/account/edit/{id}', [App\Http\Controllers\AccountController::class,
 Route::post('/account/update/{id}', [App\Http\Controllers\AccountController::class, 'update'])->name('account.update');
 Route::get('/account/view/{id}', [App\Http\Controllers\AccountController::class, 'view'])->name('account.view');
 Route::delete('/account/delete/{id}', [App\Http\Controllers\AccountController::class, 'delete'])->name('account.delete');
-
+Route::get('/account/trash', [App\Http\Controllers\AccountController::class, 'trash'])->name('account.trash');
+Route::delete('/account/trashDelete/{id}', [App\Http\Controllers\AccountController::class, 'trashDelete'])->name('account.trashDelete');
+Route::get('/account/trashRestore/{id}', [App\Http\Controllers\AccountController::class, 'trashRestore'])->name('account.trashRestore');
 
 //
