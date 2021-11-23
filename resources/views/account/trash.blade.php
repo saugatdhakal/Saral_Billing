@@ -1,9 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-
-
 <div class="card-body">
+  <center>Trash </center>
+</div>
+
+<div class="card-body m-2">
         
     <table id="datatablesSimple">
         <thead>
@@ -64,6 +66,51 @@
 </div>
 @section('account.trash')
 <script>
+
+   /// Restore Trash
+   $(document).ready(function(){
+        $(".restoreTrash").click(function(e){
+        e.preventDefault();
+        var btnId = $(this).attr("id");
+        // alert(btnId);
+            swal({
+            title: "Are you sure?",
+            text: "Do you want to restore data!!",
+            icon: "info",
+            buttons: true,
+            dangerMode: false,
+          })
+          .then((result) => {
+            
+            if (result) {
+              $.ajax({
+                type: "POST",
+                url:"trashRestore/"+btnId,
+                data: {
+                  "_token":$('input[name="_token"]').val(),
+                  "id":btnId,
+                },
+                success: function(data){
+                
+                  if(data == "DataRestore"){
+                    swal(" Your Data has been restore!!", {
+                      icon: "success",
+                    }).then((result)=>{
+                      location.reload();
+                    });
+                  }
+
+                }
+              })
+            } 
+            // else {
+            //   swal("Your imaginary file is safe!");
+            // }
+      });
+      });
+    });
+
+    //Force delete trash account
     $(document).ready(function(){
       
       $(".deleteAccount").click(function(e){
@@ -104,49 +151,10 @@
             // }
       });
       });
-        /// Restore Trash
-
-        $(".restoreTrash").click(function(e){
-        e.preventDefault();
-        var btnId = $(this).attr("id");
-        alert(btnId);
-            swal({
-            title: "Are you sure?",
-            text: "Do you want to restore data!!",
-            icon: "info",
-            buttons: true,
-            dangerMode: false,
-          })
-          .then((willDelete) => {
-            if (willDelete) {
-              $.ajax({
-                type: "GET",
-                url:"trashRestore/"+btnId,
-                data: {
-                //   "_token":$('input[name="_token"]').val(),
-                  "id":btnId,
-                },
-                success: function(data){
-                //  alert(data); 
-                  if(data == "DataRestore"){
-                    swal(" Your Data has been restore!!", {
-                      icon: "success",
-                    }).then((willDelete)=>{
-                      location.reload();
-                    });
-                  }
-
-                }
-              })
-            } 
-            // else {
-            //   swal("Your imaginary file is safe!");
-            // }
-      });
-      });
-
-
     });
+       
+
+
   </script>
       
   @endsection

@@ -14,12 +14,9 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $users = DB::table('Accounts')->where('deleted_by',NULL)->get(['id','name','account_type','shop_address','home_address','contact_number_1','vat_number','pan_number']);
-        $countCustomer = DB::table('Accounts')->count();
-        $countBusiness = DB::table('Accounts')->where('account_type','Business')->count();
-        $countIndividual = DB::table('Accounts')->where('account_type','Individual')->count();
-        // return $users;
-        return view('account.index',['users'=>$users,'count'=>$countCustomer,'countBusiness'=>$countBusiness,'countIndividual'=>$countIndividual]);
+        $users = DB::table('accounts')->where('deleted_by',NULL)->get(['id','name','account_type','shop_address','home_address','contact_number_1','vat_number','pan_number']);
+        
+        return view('account.index',['users'=>$users]);
     }
 
     /**
@@ -43,20 +40,32 @@ class AccountController extends Controller
         // return $request;
 
         $account = new Account;
+
         $account->account_type= $request->CutomerType;
+
         $account->name= $request->name;
+
         if($request->CutomerType =="Bussiness"){
             $account->shop_name = empty($request->companyName)? null:$request->companyName;
+
             $account->shop_address = empty($request->shopAddress)? null:$request->shopAddress;
+
             $account->vat_number =  empty($request->vat)?null:$request->vat;
+
             $account->pan_number =  empty($request->pan)?null:$request->pan;
+
             $account->contact_number_2 = empty($request->mobile2)?null:$request->mobile2;
         }
         $account->home_address = empty($request->homeAddress)? null:$request->homeAddress;
+
         $account->contact_number_1 = empty($request->mobile1)?null:$request->mobile1;
+
         $account->email = empty($request->email)?null:$request->email;
+
         $account->remark=  empty($request->remark)?null:$request->remark;
+
         $account->save();
+
         return redirect()->route('Account.index')->with('successes','Customer Create Successful');
         // $query= DB::table('Account')->insert([
         //     'account_type'->$request->input('CutomerType'),
@@ -85,6 +94,7 @@ class AccountController extends Controller
         // $accountmodel = DB::table('Accounts')->find($id);
         $user = DB::table('Accounts')->select('name','account_type','shop_name','home_address','shop_address','contact_number_1','contact_number_2',
         'email','vat_number','pan_number','remark')->find($id);
+
         return $user;
     }
 
@@ -96,7 +106,7 @@ class AccountController extends Controller
      */
     public function edit($id)
     {
-        $account = DB::table('Accounts')->find($id);
+        $account = DB::table('accounts')->find($id);
         // return $account;
         return view('account.update',['account' => $account]);
     }
@@ -110,21 +120,34 @@ class AccountController extends Controller
      */
     public function update(Request $request,$id)
     {
+        $flag=true;
         $account = Account::find($id);
         $account->account_type= $request->CutomerType;
         $account->name= $request->name;
-        $account->shop_name = empty($request->companyName)? null:$request->companyName;
+        if($request->CutomerType == "Bussiness"){
+            $account->shop_name = empty($request->companyName)? null:$request->companyName;
+
+            $account->shop_address = empty($request->shopAddress)? null:$request->shopAddress;
+
+            $account->contact_number_2 = empty($request->mobile2)?null:$request->mobile2;
+
+            $account->vat_number =  empty($request->vat)?null:$request->vat;
+
+            $account->pan_number =  empty($request->pan)?null:$request->pan;
+        }
+        
         $account->home_address = empty($request->homeAddress)? null:$request->homeAddress;
-        $account->shop_address = empty($request->shopAddress)? null:$request->shopAddress;
+        
         $account->contact_number_1 = empty($request->mobile1)?null:$request->mobile1;
-        $account->contact_number_2 = empty($request->mobile2)?null:$request->mobile2;
+        
         $account->email = empty($request->email)?null:$request->email;
-        $account->vat_number =  empty($request->vat)?null:$request->vat;
-        $account->pan_number =  empty($request->pan)?null:$request->pan;
+
         $account->remark= empty($request->remark)?null:$request->remark;
         // return $account;
         $account->save();
+
         return redirect()->route('Account.index')->with('success','Customer Updated');
+
     }
 
     /**
@@ -152,8 +175,9 @@ class AccountController extends Controller
     }
     public function trashRestore($id)
     {
-        $account = Account::withTrashed()->find($id)->restore();
+        $account = Account::withTrashed()->find($id);
         $account->status = 'ACTIVE';
+        $account->restore();
         return "DataRestore";
     }
     public function trash(){

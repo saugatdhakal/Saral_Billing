@@ -13,15 +13,15 @@
         Customer Type 
     </div>
     <div class="col-md-1">
-        <div class="form-check">
-            <input class="form-check-input" type="radio" id="Business" name="CutomerType" value="Business"  required>
+        <div class="form-check" id="bussinessRadio">
+            <input class="form-check-input" type="radio" id="Business"   name="CutomerType" value="Business"  required>
             <label class="form-check-label" for="Business">
               Business
             </label>
           </div>
     </div>
     <div class="col-md-1">
-        <div class="form-check">
+        <div class="form-check" id="individualRadio">
             <input class="form-check-input" type="radio" id="Individual" name="CutomerType" value="Individual" required>
             <label class="form-check-label" for="Individual">
               Individual
@@ -132,7 +132,7 @@
         Remark
     </div>
     <div class="col-md-4">
-        <textarea class="form-control" value="{{$account->remark}}" name="remark" rows="3"></textarea>
+        <textarea class="form-control"  name="remark" rows="3"> {{$account->remark}}</textarea>
     </div>
 
 </div>
@@ -149,66 +149,84 @@
 
 </form>
 
-@section('account.create')
+@section('account.update')
 <script>
+
     $(document).ready(function() {
-    $("#divAddress").hide();
-    
-    $("#Individual").click(function(){
-        //Making input required false
-        $('#companyName').attr('required',false);
-        $('#Addressshop').attr('required',false);
-        $('#WorkPhoneNo').attr('required',false);
-        $('#Pan').attr('required',false);
-        $('#Vat').attr('required',false);
-        $('#addbtn').hide();
-        // Hiding Input Text Field
-      $('#company').hide();
-      $('#shopAddress').hide();
-      $('#workPhone').hide();
-      $('#PAN').hide();
-      $('#VAT').hide();
-      
-    });
-    $("#Business").click(function(){
-        $('#companyName').attr('required',true);
-        $('#Addressshop').attr('required',true);
-        $('#WorkPhoneNo').attr('required',true);
-        $('#Pan').attr('required',true);
-        $('#Vat').attr('required',true);
-        $('#company').show();
-        $('#addbtn').show();
-        $('#shopAddress').show();
-        $('#workPhone').show();
-        $('#PAN').show();
-      $('#VAT').show();
-    });
-    var timer=null;
-    
-    
-    $("#homeAddress").bind('keypress', function(){
-    var radioname= $('input[name="CutomerType"]:checked').val();
-       
-        if (timer){
-            clearTimeout(timer);
-        }
-        timer = setTimeout(function(){
-            
-            $("#divAddress").show(function(){
-                $("#addbtn").click(function(){
-                    var value=$("#homeAddress").val();
-                $('#Addressshop').val(value);
-                // $value="";
-                })
-            });
-        }, 1000);
+        //Getting data from controller to script
+        var acc = <?php echo json_encode($account->account_type); ?>;  
         
-    });
+            if(acc == "Business"){
+                $('#Business').click();
+                radioBusiness();   
+            }else{
+                $('#Individual').click();
+                radioIndividual();
+            }
+        $("#divAddress").hide();
+        function radioBusiness(){
+            
+            $('#individualRadio').hide();
+            $('#companyName').attr('required',true);
+            $('#Addressshop').attr('required',true);
+            $('#WorkPhoneNo').attr('required',true);
+            $('#Pan').attr('required',true);
+            $('#Vat').attr('required',true);
+            $('#company').show();
+            $('#addbtn').show();
+            $('#shopAddress').show();
+            $('#workPhone').show();
+            $('#PAN').show();
+        $('#VAT').show();
+        }
+        function radioIndividual(){
+            $('#bussinessRadio').hide();
+            $('#companyName').attr('required',false);
+            $('#Addressshop').attr('required',false);
+            $('#WorkPhoneNo').attr('required',false);
+            $('#Pan').attr('required',false);
+            $('#Vat').attr('required',false);
+            $('#addbtn').hide();
+            // Hiding Input Text Field
+            $('#company').hide();
+            $('#shopAddress').hide();
+            $('#workPhone').hide();
+            $('#PAN').hide();
+            $('#VAT').hide();
+        }
+        // $("#Individual").click(function(){
+        //     //Making input required false
+        
+        
+        // });
+        // $("#Business").click(function(){
+        
+        // });
+        // Address Button 
+        var timer=null;
+        $("#homeAddress").bind('keypress', function(){
+        var radioname= $('input[name="CutomerType"]:checked').val();
+        
+            if (timer){
+                clearTimeout(timer);
+            }
+            timer = setTimeout(function(){
+                
+                $("#divAddress").show(function(){
+                    $("#addbtn").click(function(){
+                        var value=$("#homeAddress").val();
+                    $('#Addressshop').val(value);
+                    // $value="";
+                    })
+                });
+            }, 1000);
+            
+        });
     
-    ///
-    });
-    </script>
     
+    });
+</script>
+
     @endsection
     
     <script>

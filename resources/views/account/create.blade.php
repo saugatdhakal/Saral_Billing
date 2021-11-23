@@ -149,7 +149,7 @@
 
 </form>
 
-@section('account.update')
+@section('account.create')
 <script>
 $(document).ready(function() {
 $("#divAddress").hide();

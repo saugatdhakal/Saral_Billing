@@ -21,7 +21,7 @@
 
             <div class="card-body text-success">
               <h1>
-                  <center>{{$count}}</center>
+                  <center>{{DB::table('accounts')->where('deleted_by',NULL)->get()->count();}}</center>
               </h1>
             </div>
 
@@ -35,7 +35,7 @@
 
             <div class="card-body text-success">
               <h1>
-                  <center>{{$countBusiness}}</center>
+                  <center>{{DB::table('accounts')->where('deleted_by',NULL)->where('account_type','Business')->count();}}</center>
               </h1>
             </div>
 
@@ -49,7 +49,7 @@
 
             <div class="card-body text-success">
               <h1>
-                  <center>{{$countIndividual}}</center>
+                  <center>{{DB::table('accounts')->where('deleted_by',NULL)->where('account_type','Individual')->count();}}</center>
               </h1>
             </div>
 
@@ -63,7 +63,7 @@
 
             <div class="card-body text-success">
               <h1>
-                  <center>{{$count}}</center>
+                  <center>{{DB::table('accounts')->get()->count();}}</center>
               </h1>
             </div>
 
@@ -245,29 +245,40 @@
                data:{
                   id 
                },
+               cache: false,
                success: function(data) {
                    
-                $('#customerName').html(data.name);
-                $('#customerType').html(data.account_type);
-                if(data.shop_name == null && data.shop_address == null && data.contact_number_2==null && data.vat_number== null && data.pan_number==null ){
+                
+                
+                if(data.account_type=="Individual"){
                   $('#ShopNameDiv').hide();
                   $('#ShopAddress').hide();
                   $('#Phone2').hide();
                   $('#VATNO').hide();
                   $('#PANNO').hide();
-                }else{
+                  
+                }
+                else if(data.account_type=="Business"){
+                  $('#ShopNameDiv').show();
+                  $('#ShopAddress').show();
+                  $('#Phone2').show();
+                  $('#VATNO').show();
+                  $('#PANNO').show();
                   $('#customerShop').html(data.shop_name);
                   $('#shopAddress').html(data.shop_address);
                   $('#contactNum2').html(data.contact_number_2);
                   $('#vatNo').html(data.vat_number);
                   $('#panNo').html(data.pan_number)
-                }
+                  }
+                $('#customerName').html(data.name);
+                $('#customerType').html(data.account_type);
                 $('#houseAddress').html(data.home_address);
                 $('#contactNum1').html(data.contact_number_1);
                 $('#emails').html(data.email);
-                ;
-
+                
+                
                }
+               
            })
        });
 
