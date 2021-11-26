@@ -177,7 +177,7 @@
             $('#shopAddress').show();
             $('#workPhone').show();
             $('#PAN').show();
-        $('#VAT').show();
+            $('#VAT').show();
         }
         function radioIndividual(){
             $('#bussinessRadio').hide();

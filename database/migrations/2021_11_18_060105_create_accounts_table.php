@@ -20,11 +20,11 @@ class CreateAccountsTable extends Migration
         $table->string('shop_name')->nullable();
         $table->string('home_address')->nullable();
         $table->string('shop_address')->nullable();
-        $table->string('contact_number_1');
-        $table->string('contact_number_2')->nullable();
+        $table->string('contact_number_1')->unique();
+        $table->string('contact_number_2')->nullable()->unique();
         $table->string('email')->nullable();
-        $table->string('vat_number')->nullable();
-        $table->string('pan_number')->nullable();
+        $table->string('vat_number')->nullable()->unique();
+        $table->string('pan_number')->nullable()->unique();
         $table->string('remark')->nullable();
         $table->enum('status',['ACTIVE','INACTIVE']);
         $table->unsignedBigInteger('created_by')->nullable();
