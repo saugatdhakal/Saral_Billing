@@ -10,11 +10,16 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    {{-- Yajra Datatable --}}
+    <link href="https:////cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js" rel="stylesheet">
+   
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -90,6 +95,20 @@
                                     <a class="nav-link" href="{{route('account.trash')}}"><i class="fas fa-user-slash"></i> &#160 Trash Account</a>
                                 </nav>
                             </div>
+                            {{-- Supplier --}}
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#suppliers" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i id="userIcon"class="fa fa-industry"></i><!-- <i class="fas fa-columns"></i> Font Awesome fontawesome.com --></div>
+                               Suppliers 
+                                <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path></svg><!-- <i class="fas fa-angle-down"></i> Font Awesome fontawesome.com --></div>
+                            </a>
+                            <div class="collapse" id="suppliers" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="{{route('supplier.index')}}"><i class="far fa-file-alt"></i>&#160 Supplier Dashboard</a>
+                                    <a class="nav-link" href="{{route('supplier.create')}}"><i class="fas fa-user-plus"></i> &#160 Add Suppliers </a>
+                                    <a class="nav-link" href="{{route('account.trash')}}"><i class="fas fa-user-slash"></i> &#160 Trash Account</a>
+                                </nav>
+                            </div>
+
                                 {{-- users --}}
                                 <a class="nav-link" href="{{route('user')}}">
                                     <div class="sb-nav-link-icon"><i class="fas fa-user"></i><!-- <i class="fas fa-tachometer-alt"></i> Font Awesome fontawesome.com --></div>
@@ -155,7 +174,7 @@
                             <div class="text-muted">Copyright © Your Website 2021</div>
                             <div>
                                 <a href="#">Privacy Policy</a>
-                                ·
+                                
                                 <a href="#">Terms &amp; Conditions</a>
                             </div>
                         </div>
@@ -166,9 +185,12 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="{{ asset('js/scripts.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-       
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="{{ asset('js/datatables-simple-demo.js') }}"></script>
+
+         {{-- Yajra Datatable --}}
+         <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+         
 
         @yield('userDetails')
         @yield('account.create')
@@ -176,6 +198,9 @@
         @yield('account.index')
         @yield('account.trash')
         @yield('supplier.create')
+        @yield('supplier.index')
+        @yield('supplier.edit')
+
         
         
         

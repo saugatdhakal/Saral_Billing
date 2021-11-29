@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Suppliers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use DataTables;
 
 class SuppliersController extends Controller
 {
@@ -15,10 +16,38 @@ class SuppliersController extends Controller
      */
     public function index()
     {
-        $suppliers = DB::table('suppliers')->where('deleted_by',NULL)->get(['id','name','address','contact_number','contact_person','email','remark']);
-        return view('suppliers.index',["suppliers"=>$suppliers]);
+        return view('suppliers.index');
+        
+        // return view('suppliers.index',["suppliers"=>$suppliers]);
     }
 
+    public function getSuppliers(Request $request){
+        if($request->ajax()){
+            $data = DB::table('suppliers')->where('deleted_by',NULL)->get(['id','name','address','contact_number','contact_person','email','remark']);
+            
+            return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('action',function($row){
+                $actionBtn =' 
+                <a class="btnEdit" href="'.route('supplier.edit',["id"=>$row->id]).'" >
+                <i class="far fa-edit fa-lg"></i> 
+                </a>
+                 &#160
+                <a data-toggle="modal" class="viewSuppliers" id="'.$row->id.'" data-id="{{$row->id}}" data-target="#view_suppliers">
+                 <i class="far fa-eye fa-lg"></i>
+                </a>
+                &#160
+                <a  class="deleteSupplier" id="'.$row->id.'">
+                <i class="fas fa-trash-alt fa-lg"></i>
+                </a>
+                ';
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+        }
+        // return view('suppliers.index');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -66,9 +95,15 @@ class SuppliersController extends Controller
      * @param  \App\Models\Suppliers  $suppliers
      * @return \Illuminate\Http\Response
      */
-    public function edit(Suppliers $suppliers)
+    public function edit($id)
     {
-        //
+        $suppliers = DB::table('suppliers')->select('id','name',
+        'address',
+        'contact_number',
+        'contact_person',
+        'email',
+        'remark',)->find($id);
+        return view('suppliers.edit',['suppliers'=>$suppliers]);
     }
 
     /**
@@ -78,9 +113,23 @@ class SuppliersController extends Controller
      * @param  \App\Models\Suppliers  $suppliers
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Suppliers $suppliers)
+    public function update(Request $request, $id)
     {
-        //
+        $suppliers = Suppliers::find($id);
+
+        $suppliers->name = $request->supplier_name;
+
+        $suppliers->address = $request->address;
+
+        $suppliers->contact_number = empty($request->contact_number)? null:$request->contact_number;
+
+        $suppliers->contact_person = empty($request->contact_person_name)?  null: $request->contact_person_name;
+
+        $suppliers->remark= empty($request->remark)?null:$request->remark;
+        
+        $suppliers-> save();
+
+        return redirect()->route('supplier.index');
     }
 
     /**
@@ -89,8 +138,11 @@ class SuppliersController extends Controller
      * @param  \App\Models\Suppliers  $suppliers
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Suppliers $suppliers)
+    public function delete($id)
     {
-        //
+        $suppliers = Suppliers::find($id);
+        $suppliers->status = 'INACTIVE';
+        $suppliers->delete();
+        return "DeleteSuccess";
     }
 }
