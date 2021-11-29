@@ -122,8 +122,11 @@ class AccountController extends Controller
     {
         $flag=true;
         $account = Account::find($id);
+
         $account->account_type= $request->CutomerType;
+
         $account->name= $request->name;
+        
         if($request->CutomerType == "Bussiness"){
             $account->shop_name = empty($request->companyName)? null:$request->companyName;
 

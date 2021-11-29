@@ -2,12 +2,12 @@
 
 @section('content')
 
-<div class="row mb-3 p-0 mt-2 ">
+<div class="row mb-3 p-0 mt-2 mr-3">
   
   <div class="col-md-12 clearfix ">
-    <a class="float-right" href="{{route('account.create')}}">
+    <a class="float-right" href="{{route('supplier.create')}}">
       <button type="button" class="btn btn-outline-primary"  >
-          <i class="fa fa-user"  aria-hidden="true"></i> Create Customers
+          <i class="fa fa-user"  aria-hidden="true"></i> Add Suppliers
         </button>
       </a>
   
@@ -15,7 +15,7 @@
   
     <a class="float-right mr-2"  href="{{route('account.trash')}}">
       <button type="button" class="btn btn-outline-danger"  >
-        <i class="fas fa-user-times"></i> Trash Customers
+        <i class="fas fa-user-times"></i> Trash Suppliers
         </button>
       </a>
     </div>
@@ -30,10 +30,10 @@
     </div>
     <div class="card-body">
         
-        <table id="datatablesSimple">
+        <table class="table table-striped table-bordered yajra-datatable">
             <thead>
                 <tr>
-                    <th>SN</th>
+                    
                     <th>Name</th>
                     <th>Address</th>
                     <th>Contact Person</th>
@@ -43,53 +43,16 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tfoot>
-                <tr>
-                    <th>SN</th>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Contact Person</th>
-                    <th>Contact Number</th>
-                    <th>Email</th>
-                    <th>remark</th>
-                    <th>Action</th>
-                </tr>
-            </tfoot>
+           
             <tbody>
-                @php $i=0; @endphp
-                @foreach ($suppliers as $row )
-                <tr>
-                    <td>{{++$i}}</td>
-
-                    <td>{{$row->name}}</td>
-                    <td>{{$row->address}}</td>
-                    <td>{{empty($row->contact_number)? "EMPTY" : $row->contact_number}}</td>
-                    <td>{{empty($row->contact_person)? "Empty" : $row->contact_person}}</td>
-                    <td>{{empty($row->email)? "EMPTY": $row->email }}</td>
-                    <td>{{empty($row->remark)? "EMPTY":$row->remark}}</td>
-                    <td>
-                        <a class="btnEdit" href="{{route('account.edit',['id'=>$row->id])}}">
-                            <i class="far fa-edit fa-lg"></i> 
-                        </a>
-                        &#160 {{-- space  --}}
-                        <a data-toggle="modal" class="view"  data-id="{{$row->id}}" data-target="#exampleModalCenter">
-                             <i class="far fa-eye 
-                             "></i>
-                        </a>
-                        &#160
-                        <a class="deleteAccount" id="{{$row->id}}" >
-                          <i class="fas fa-trash-alt fa-lg"></i>
-                        </a>
-                    </td>
-                </tr>
-                @endforeach
+              
             </tbody>
         </table>
 
     </div>
 
     {{-- Bootstrap model --}}
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="view_suppliers" tabindex="-1" role="dialog" aria-labelledby="view_suppliers" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -149,5 +112,83 @@
           </div>
         </div>
       </div>
+
+      @section('supplier.index')
+        <script>
+          
+          $(function(){
+            // YajraBox-Datatable
+            var table =$('.yajra-datatable').DataTable({
+              processing:true,
+              serverSide:true,
+              ajax:"{{route('supplier.getSuppliers')}}",
+              columns:[
+                
+                {data: 'name', name: 'name'},
+                {data: 'address' ,name : 'address'},
+                {data: 'contact_person' , name: 'contact_person'},
+                {data: 'contact_number', name: 'contact_number'},
+                {data: 'email', name: 'email'},
+                {data: 'remark', name: 'remark'},
+               {
+                 data: 'action', name: 'action',orderable: true, searchable: true,
+               },
+              ]
+            });
+            //Delete Supplier AJAX
+            $('body').on('click', '.deleteSupplier', function () {
+                var btnId = $(this).attr("id");
+                // alert(btnId);
+              swal({
+                title: "Are you sure?",
+                text: "Deleted Data will move to Trash",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+              })
+              .then((willDelete) => {
+               
+                if (willDelete) {
+                  $.ajax({
+                    type: "DELETE",
+                    url:"delete/"+btnId,
+                    data: {
+                      "_token":$('input[name="_token"]').val(),
+                      "id":btnId,
+                    },
+                    success: function(data){
+                    //  alert(data); 
+                      if(data == "DeleteSuccess"){
+                        swal(" Your Data has been Move to Trash!!", {
+                          icon: "success",
+                        }).then((willDelete)=>{
+                          location.reload();
+                        });
+                      }
+
+                    }
+                  })
+                } 
+                
+          });
+                
+            });
+
+            //View Suppliers AJAX
+
+            $('body').on('click', '.viewSuppliers', function () {
+              var btnId = $(this).attr("id");
+                alert(btnId);
+
+            });
+
+            // $('.viewSuppliers').click(function () {
+            //     var btnId = $(this).attr("id");
+            //     alert(btnId);
+            // })
+
+          });
+        </script>
+      @endsection
 
 @endsection

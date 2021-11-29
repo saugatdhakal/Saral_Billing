@@ -48,7 +48,13 @@ Route::post('/account/trashRestore/{id}', [App\Http\Controllers\AccountControlle
 
 //Suppliers Routes
 Route::get('/supplier/index', [App\Http\Controllers\SuppliersController::class, 'index'])->name('supplier.index');
+Route::get('/supplier/getSuppliers', [App\Http\Controllers\SuppliersController::class, 'getSuppliers'])->name('supplier.getSuppliers'); //Yajra Box Datatable
 Route::get('/supplier/create', [App\Http\Controllers\SuppliersController::class, 'create'])->name('supplier.create');
 Route::post('/supplier/store', [App\Http\Controllers\SuppliersController::class, 'store'])->name('supplier.store');
+Route::get('/supplier/edit/{id}', [App\Http\Controllers\SuppliersController::class, 'edit'])->name('supplier.edit');
+Route::post('/supplier/update/{id}', [App\Http\Controllers\SuppliersController::class, 'update'])->name('supplier.update');
+Route::delete('supplier/delete/{id}', [App\Http\Controllers\SuppliersController::class, 'delete'])->name('supplier.delete');
+
+
 
 });
