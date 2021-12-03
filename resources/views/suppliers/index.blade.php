@@ -13,7 +13,7 @@
   
   
   
-    <a class="float-right mr-2"  href="{{route('account.trash')}}">
+    <a class="float-right mr-2"  href="{{route('supplier.trash')}}">
       <button type="button" class="btn btn-outline-danger"  >
         <i class="fas fa-user-times"></i> Trash Suppliers
         </button>
@@ -40,7 +40,7 @@
                     <th>Contact Number</th>
                     <th>Email</th>
                     <th>remark</th>
-                    <th>Action</th>
+                    <th width="9%">Action</th>
                 </tr>
             </thead>
            
@@ -52,62 +52,46 @@
     </div>
 
     {{-- Bootstrap model --}}
-    <div class="modal fade" id="view_suppliers" tabindex="-1" role="dialog" aria-labelledby="view_suppliers" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle"><i class="far fa-address-card"></i>  Customer Deatils</h5>
+              <h5 class="modal-title" id="exampleModalLongTitle"><i class="far fa-address-card"></i>  Supplier Deatils</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
                 {{-- body start --}}
-              <div class="row">
-                  <div class="col-sm-4"><h5>Name:</h5></div>
-                  <div class="col-sm-5"><p id="customerName"></p></div>
+              <div class="row mb-1">
+                  <div class="col-sm-4"><b>Name:</b></div>
+                  <div class="col-sm-5"><p id="name"></p></div>
               </div>
-              <div class="row mb-3">
-                <div class="col-sm-4"><b>Customer Type:</b></div>
-                <div class="col-sm-5"><span id="customerType" class="badge badge-dark"></span></div>
+              <div class="row mb-1">
+                <div class="col-sm-4"><b>Address:</b></div>
+                <div class="col-sm-5"><p id="address"></p></div>
                 </div>
-                <div class="row" id="ShopNameDiv">
-                    <div class="col-sm-4"><b>Shop Name:</b></div>
-                    <div class="col-sm-5"><p id="customerShop"><strong></strong></p></div>
+                <div class="row mb-1" >
+                    <div class="col-sm-4"><b>Contact Person:</b></div>
+                    <div class="col-sm-5"><p id="person"><strong></strong></p></div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-4"><b>House Address:</b></div>
-                    <div class="col-sm-5"><p id="houseAddress"><strong></strong></p></div>
+                <div class="row mb-1">
+                    <div class="col-sm-4"><b>Contact Number:</b></div>
+                    <div class="col-sm-5"><p id="number"><strong></strong></p></div>
                 </div>
-                <div class="row" id="ShopAddress">
-                  <div class="col-sm-4"><b>Shop Address:</b></div>
-                  <div class="col-sm-5"><p id="shopAddress"><strong></strong></p></div>
+                <div class="row mb-1" >
+                  <div class="col-sm-4"><b>Email:</b></div>
+                  <div class="col-sm-5"><p id="email"><strong></strong></p></div>
               </div>
-              <div class="row">
-                <div class="col-sm-4"><b>Phone Number 1:</b></div>
-                <div class="col-sm-5"><p id="contactNum1"><strong></strong></p></div>
+              <div class="row mb-1">
+                <div class="col-sm-4"><b>Remark:</b></div>
+                <div class="col-sm-5"><p id="remark"><strong></strong></p></div>
              </div>
-             <div class="row" id="Phone2">
-              <div class="col-sm-4"><b>Phone Number 2:</b></div>
-              <div class="col-sm-5"><p id="contactNum2"><strong></strong></p></div>
-            </div>
-            <div class="row">
-              <div class="col-sm-4"><b>Email:</b></div>
-              <div class="col-sm-5"><p id="emails"><strong></strong></p></div>
-            </div>
-            <div class="row" id="VATNO">
-              <div class="col-sm-4"><b>Vat No:</b></div>
-              <div class="col-sm-5"><p id="vatNo"><strong></strong></p></div>
-            </div>
-            <div class="row" id="PANNO">
-              <div class="col-sm-4"><b>Pan No:</b></div>
-              <div class="col-sm-5"><p id="panNo"><strong></strong></p></div>
-            </div>
+             
               {{-- body stop --}}
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              
+              <button type="button" class="close"style="color: black;" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
@@ -178,8 +162,25 @@
 
             $('body').on('click', '.viewSuppliers', function () {
               var btnId = $(this).attr("id");
-                alert(btnId);
+                // alert(btnId);
+                $('#exampleModal').modal('toggle');
+                $.get("view/"+btnId , function (data) {
+                    // console.log(data);
+                    $('#name').html(data.name);
+                    $('#address').html(data.address);
+                    $('#person').html(data.contact_person);
+                    $('#number').html(data.contact_number);
+                    $('#email').html(data.email);
+                    $('#remark').html(data.remark);
 
+
+
+
+                }
+            );
+              });
+            $('.close').click(function () {
+              $('#exampleModal').modal('toggle');
             });
 
             // $('.viewSuppliers').click(function () {

@@ -1,7 +1,7 @@
 .btnEdit{
     color:black;
 }
-.deleteAccount{
+.deleteAccount,.deleteSupplier{
     color:red;
 }
 .view{

@@ -200,6 +200,7 @@
         @yield('supplier.create')
         @yield('supplier.index')
         @yield('supplier.edit')
+        @yield('supplier.trash')
 
         
         

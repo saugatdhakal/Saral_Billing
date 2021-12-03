@@ -33,7 +33,7 @@ class SuppliersController extends Controller
                 <i class="far fa-edit fa-lg"></i> 
                 </a>
                  &#160
-                <a data-toggle="modal" class="viewSuppliers" id="'.$row->id.'" data-id="{{$row->id}}" data-target="#view_suppliers">
+                <a data-toggle="modal" class="viewSuppliers" id="'.$row->id.'"  data-target="#modal">
                  <i class="far fa-eye fa-lg"></i>
                 </a>
                 &#160
@@ -48,6 +48,33 @@ class SuppliersController extends Controller
         }
         // return view('suppliers.index');
     }
+
+    public function getTrash(Request $request){
+        if($request->ajax()){
+            $data = DB::table('suppliers')->whereNotNull('deleted_by')->get(['id','name','address','contact_number','contact_person','email','remark']);
+            
+            return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('action',function($row){
+                $actionBtn =' 
+                <a class="btnEdit" href="'.route('supplier.edit',["id"=>$row->id]).'" >
+                <i class="far fa-edit fa-lg"></i> 
+                </a>
+                 &#160
+                <a data-toggle="modal" class="viewSuppliers" id="'.$row->id.'"  data-target="#modal">
+                 <i class="far fa-eye fa-lg"></i>
+                </a>
+                &#160
+                <a  class="deleteSupplier" id="'.$row->id.'">
+                <i class="fas fa-trash-alt fa-lg"></i>
+                </a>
+                ';
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -58,6 +85,8 @@ class SuppliersController extends Controller
       
         return view('suppliers.create');
     }
+
+    
 
     /**
      * Store a newly created resource in storage.
@@ -84,9 +113,9 @@ class SuppliersController extends Controller
      * @param  \App\Models\Suppliers  $suppliers
      * @return \Illuminate\Http\Response
      */
-    public function show(Suppliers $suppliers)
+    public function trash(Suppliers $suppliers)
     {
-        //
+        return view('suppliers.trash');
     }
 
     /**
@@ -132,6 +161,11 @@ class SuppliersController extends Controller
         return redirect()->route('supplier.index');
     }
 
+    public function view($id){  
+        
+        $suppliers = DB::table('suppliers')->select('name','address','contact_number','email','contact_person','remark')->find($id);
+        return $suppliers;  
+    }
     /**
      * Remove the specified resource from storage.
      *
