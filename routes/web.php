@@ -57,6 +57,8 @@ Route::delete('supplier/delete/{id}', [App\Http\Controllers\SuppliersController:
 Route::get('/supplier/view/{id}', [App\Http\Controllers\SuppliersController::class, 'view'])->name('supplier.view');
 Route::get('/supplier/trash', [App\Http\Controllers\SuppliersController::class, 'trash'])->name('supplier.trash');
 Route::get('/supplier/getTrash', [App\Http\Controllers\SuppliersController::class, 'getTrash'])->name('supplier.getTrash'); //Yajra Box Datatable
+Route::post('/supplier/restoreSupplier/{id}', [App\Http\Controllers\SuppliersController::class, 'restoreSupplier'])->name('supplier.restoreSupplier');
+Route::delete('/supplier/trashSupplier/{id}', [App\Http\Controllers\SuppliersController::class, 'trashSupplier'])->name('supplier.trashSupplier');
 
 
 

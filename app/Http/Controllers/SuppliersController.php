@@ -61,12 +61,12 @@ class SuppliersController extends Controller
                 <i class="far fa-edit fa-lg"></i> 
                 </a>
                  &#160
-                <a data-toggle="modal" class="viewSuppliers" id="'.$row->id.'"  data-target="#modal">
-                 <i class="far fa-eye fa-lg"></i>
+                 <a class="restoreTrash" id="'.$row->id.'">
+                 <i class="fas fa-undo-alt fa-lg"></i>
                 </a>
                 &#160
-                <a  class="deleteSupplier" id="'.$row->id.'">
-                <i class="fas fa-trash-alt fa-lg"></i>
+                <a class="deleteSupplier" id="'.$row->id.'">
+                    <i class="fas fa-trash-alt fa-lg"></i>
                 </a>
                 ';
                 return $actionBtn;
@@ -177,6 +177,18 @@ class SuppliersController extends Controller
         $suppliers = Suppliers::find($id);
         $suppliers->status = 'INACTIVE';
         $suppliers->delete();
+        return "DeleteSuccess";
+    }
+
+    public function restoreSupplier($id){
+        $suppliers = Suppliers::withTrashed()->find($id);
+        $suppliers->status = 'ACTIVE';
+        $suppliers->restore();
+        return "DataRestore";
+    }
+    public function trashSupplier($id){
+        Suppliers::onlyTrashed()->find($id)->forceDelete();
+        // Account::find($id)->forceDelete();
         return "DeleteSuccess";
     }
 }

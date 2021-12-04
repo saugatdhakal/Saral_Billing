@@ -105,7 +105,7 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="{{route('supplier.index')}}"><i class="far fa-file-alt"></i>&#160 Supplier Dashboard</a>
                                     <a class="nav-link" href="{{route('supplier.create')}}"><i class="fas fa-user-plus"></i> &#160 Add Suppliers </a>
-                                    <a class="nav-link" href="{{route('account.trash')}}"><i class="fas fa-user-slash"></i> &#160 Trash Account</a>
+                                    <a class="nav-link" href="{{route('supplier.trash')}}"><i class="fas fa-user-slash"></i> &#160 Trash Account</a>
                                 </nav>
                             </div>
 

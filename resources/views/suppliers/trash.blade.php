@@ -53,7 +53,87 @@
                },
               ]
             });
+
+            //Restore Deleted Data 
+            $('body').on('click', '.restoreTrash', function (e){
+            
+              e.preventDefault();
+              var btnId = $(this).attr("id");
+              // alert(btnId);
+            swal({
+            title: "Are you sure?",
+            text: "Do you want to restore data!!",
+            icon: "info",
+            buttons: true,
+            dangerMode: false,
+          })
+          .then((result) => {
+            
+            if (result) {
+              $.ajax({
+                type: "POST",
+                url:"restoreSupplier/"+btnId,
+                data: {
+                  "_token":$('input[name="_token"]').val(),
+                  "id":btnId,
+                },
+                success: function(data){
+                
+                  if(data == "DataRestore"){
+                    swal(" Your Data has been restore!!", {
+                      icon: "success",
+                    }).then((result)=>{
+                      location.reload();
+                    });
+                  }
+
+                }
+              })
+            } 
+            
         });
+        });
+
+        //Force Delete Data 
+        $('body').on('click', '.deleteSupplier', function (e){
+        e.preventDefault();
+        var btnId = $(this).attr("id");
+        // alert(btnId);
+            swal({
+            title: "Are you sure?",
+            text: "Data will be permanently Deleted",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              $.ajax({
+                type: "DELETE",
+                url:"trashSupplier/"+btnId,
+                data: {
+                  "_token":$('input[name="_token"]').val(),
+                  "id":btnId,
+                },
+                success: function(data){
+                //  alert(data); 
+                  if(data == "DeleteSuccess"){
+                    swal(" Your Data has been Move to Trash!!", {
+                      icon: "success",
+                    }).then((willDelete)=>{
+                      location.reload();
+                    });
+                  }
+
+                }
+              })
+            
+          };
+          });
+
+            });
+      });
+
         </script>
 @endsection
 @endsection
