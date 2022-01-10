@@ -45,7 +45,7 @@ class AccountController extends Controller
 
         $account->name= $request->name;
 
-        if($request->CutomerType =="Bussiness"){
+        if($request->CutomerType =="Business"){
             $account->shop_name = empty($request->companyName)? null:$request->companyName;
 
             $account->shop_address = empty($request->shopAddress)? null:$request->shopAddress;
@@ -67,20 +67,7 @@ class AccountController extends Controller
         $account->save();
 
         return redirect()->route('Account.index')->with('successes','Customer Create Successful');
-        // $query= DB::table('Account')->insert([
-        //     'account_type'->$request->input('CutomerType'),
-        //     'name'->$request->input(concat('firstName',' ','secondName')),
-        //     'shop_name'->$request->input('companyName'),
-        //     'home_address'->$request->input('homeAddress'),
-        //     'shop_address'->$request->input('shopAddress'),
-        //     'contact_number1'->$request->input('mobile1'),
-        //     'contact_number2'->$request->input('mobile2'),
-        //     'email'->$request->input('email'),
-        //     'vat_number'->$request->input('vat'),
-        //     'pan_number'->$request->input('pan'),
-        //     'remark'->request->input('remark')
-        // ]);
-        // return back();
+        
     }
 
     /**
@@ -95,7 +82,7 @@ class AccountController extends Controller
         $user = DB::table('Accounts')->select('name','account_type','shop_name','home_address','shop_address','contact_number_1','contact_number_2',
         'email','vat_number','pan_number','remark')->find($id);
 
-        return $user;
+         return $user;
     }
 
     /**
@@ -127,7 +114,7 @@ class AccountController extends Controller
 
         $account->name= $request->name;
         
-        if($request->CutomerType == "Bussiness"){
+        if($request->CutomerType == "Business"){
             $account->shop_name = empty($request->companyName)? null:$request->companyName;
 
             $account->shop_address = empty($request->shopAddress)? null:$request->shopAddress;

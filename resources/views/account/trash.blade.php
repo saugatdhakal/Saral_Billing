@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="card-body">
-  <center>Trash </center>
+  <center><h1> Account Trash</h1> </center>
 </div>
 
 <div class="card-body m-2">

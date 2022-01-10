@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TransportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
+
+
 //Dashboard Routes
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //
@@ -59,6 +62,16 @@ Route::get('/supplier/trash', [App\Http\Controllers\SuppliersController::class, 
 Route::get('/supplier/getTrash', [App\Http\Controllers\SuppliersController::class, 'getTrash'])->name('supplier.getTrash'); //Yajra Box Datatable
 Route::post('/supplier/restoreSupplier/{id}', [App\Http\Controllers\SuppliersController::class, 'restoreSupplier'])->name('supplier.restoreSupplier');
 Route::delete('/supplier/trashSupplier/{id}', [App\Http\Controllers\SuppliersController::class, 'trashSupplier'])->name('supplier.trashSupplier');
+
+//Transport Routes Resource
+Route::get('/transport/restoreTransport/{id}',[App\Http\Controllers\TransportController::class, 'restoreTransport'])->name('transport.restoreTransport');
+Route::delete('/transport/forceDeleteTransport/{id}',[App\Http\Controllers\TransportController::class, 'forceDeleteTransport'])->name('transport.forceDeleteTransport');
+Route::get('/transport/trashDataTable',[App\Http\Controllers\TransportController::class, 'trashDataTable'])->name('transport.trashDataTable');
+Route::get('/transport/trash',[App\Http\Controllers\TransportController::class, 'trash'])->name('transport.trash');
+Route::get('/transport/view/Model/{id}', [App\Http\Controllers\TransportController::class,'viewModel'])->name('transport.viewModel');
+Route::get('/transport/yajraTable', [App\Http\Controllers\TransportController::class, 'yajraTableIndex'])->name('transport.yajraTableIndex');
+Route::resource('transport', TransportController::class);
+
 
 
 

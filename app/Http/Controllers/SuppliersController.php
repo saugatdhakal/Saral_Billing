@@ -22,7 +22,7 @@ class SuppliersController extends Controller
     }
 
     public function getSuppliers(Request $request){
-        if($request->ajax()){
+        // if($request->ajax()){
             $data = DB::table('suppliers')->where('deleted_by',NULL)->get(['id','name','address','contact_number','contact_person','email','remark']);
             
             return DataTables::of($data)
@@ -45,12 +45,12 @@ class SuppliersController extends Controller
             })
             ->rawColumns(['action'])
             ->make(true);
-        }
+        // }
         // return view('suppliers.index');
     }
 
     public function getTrash(Request $request){
-        if($request->ajax()){
+        // if($request->ajax()){
             $data = DB::table('suppliers')->whereNotNull('deleted_by')->get(['id','name','address','contact_number','contact_person','email','remark']);
             
             return DataTables::of($data)
@@ -73,7 +73,7 @@ class SuppliersController extends Controller
             })
             ->rawColumns(['action'])
             ->make(true);
-        }
+        // }
     }
     /**
      * Show the form for creating a new resource.

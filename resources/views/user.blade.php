@@ -35,7 +35,7 @@
                         <th>SN</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Position</th>
+                        <th>Role</th>
                         <th>Register at</th>
                         <th>Edit</th>
                     </tr>

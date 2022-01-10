@@ -187,7 +187,7 @@ var timer=null;
 
 
 $("#homeAddress").bind('keypress', function(){
-var radioname= $('input[name="CutomerType"]:checked').val();
+//var radioname= $('input[name="CutomerType"]:checked').val();
    
     if (timer){
 		clearTimeout(timer);
