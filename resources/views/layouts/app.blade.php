@@ -21,6 +21,12 @@
     <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js" rel="stylesheet">
 
+    {{-- Select 2 --}}
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.1.1/dist/select2-bootstrap-5-theme.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/saral.css') }}" rel="stylesheet">
@@ -30,6 +36,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    {{-- font awesome --}}
+    <link href="https://kit-pro.fontawesome.com/releases/v5.15.4/css/pro.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta3/css/all.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.15.1/js/all.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.15.1/js/v4-shims.js"></script>
+
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous">
     </script>
@@ -117,7 +129,7 @@
                         <div class="sb-sidenav-menu-heading">Interface</div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                             data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i id="userIcon" class="fas fa-users fa-lg"></i>
+                            <div class="sb-nav-link-icon"><i class="fad fa-users"></i>
                                 <!-- <i class="fas fa-columns"></i> Font Awesome fontawesome.com -->
                             </div>
                             Account
@@ -134,7 +146,7 @@
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{route('Account.index')}}"><i class="far fa-file-alt"></i>
+                                <a class="nav-link" href="{{route('Account.index')}}"><i class="fal fa-file-user"></i>
                                     &#160 Account Dashboard</a>
                                 <a class="nav-link" href="{{route('account.create')}}"><i class="fas fa-user-plus"></i>
                                     &#160 Create Account </a>
@@ -174,7 +186,7 @@
                         {{-- Tranport --}}
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#transport"
                             aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i id="truck" class="fa fa-truck"></i>
+                            <div class="sb-nav-link-icon"><i class="fad fa-truck"></i>
                                 <!-- <i class="fas fa-columns"></i> Font Awesome fontawesome.com -->
                             </div>
                             Transport
@@ -197,10 +209,44 @@
                                 <a class="nav-link" href="{{route('transport.create')}}"><i
                                         class="fas fa-user-plus"></i>
                                     &#160 Add Transport </a>
-                                <a class="nav-link" href="{{route('supplier.trash')}}"><i class="fas fa-user-slash"></i>
+                                <a class="nav-link" href="{{route('transport.trash')}}"><i
+                                        class="fas fa-user-slash"></i>
                                     &#160 Trash Account</a>
                             </nav>
                         </div>
+
+                        {{-- Product --}}
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#product" aria-expanded="false"
+                            aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i>
+                                <!-- <i class="fas fa-columns"></i> Font Awesome fontawesome.com -->
+                            </div>
+                            Product
+                            <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="true"
+                                    focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 320 512" data-fa-i2svg="">
+                                    <path fill="currentColor"
+                                        d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z">
+                                    </path>
+                                </svg><!-- <i class="fas fa-angle-down"></i> Font Awesome fontawesome.com -->
+                            </div>
+                        </a>
+                        <div class="collapse" id="product" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{{route('product.index')}}"><i class="far fa-file-alt"></i>&#160 Product
+                                    Dashboard</a>
+                                <a class="nav-link" href="{{route('product.create')}}"><i class="fas fa-plus-circle"></i>
+                                    &#160 Add Product </a>
+                                <a class="nav-link" href="{{route('transport.trash')}}"><i class="fas fa-user-slash"></i>
+                                    &#160 Trash Product</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link" href="{{route('category.index')}}">
+                            <div class="sb-nav-link-icon">
+                               <i class="fad fa-shapes"></i>
+                            </div>
+                            Category
+                        </a>
 
                         {{-- users --}}
                         <a class="nav-link" href="{{route('user')}}">
@@ -315,11 +361,13 @@
             </nav>
         </div>
         <div id="layoutSidenav_content">
-            
-                <main>
-                    @yield('content')
-                </main>
-           
+
+            <main>
+                <div class="container-fluid" >
+                @yield('content')
+                </div>
+            </main>
+
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
@@ -344,6 +392,8 @@
     {{-- Yajra Datatable --}}
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
 
+    {{-- select2 --}}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     @yield('userDetails')
     @yield('account.create')
@@ -356,6 +406,10 @@
     @yield('supplier.trash')
     @yield('transport.create')
     @yield('transport.index')
+    @yield('category.index')
+    @yield('category.trash')
+    @yield('product.index')
+    
 
 
 

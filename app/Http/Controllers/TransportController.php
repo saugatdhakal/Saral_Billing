@@ -71,10 +71,10 @@ class TransportController extends Controller
      */
     public function edit($id)
     {
-         $transport = DB::table('transports')->select('id','name',
-        'address',
-        'contact_number',
-        'remark',)->find($id);
+            $transport = DB::table('transports')->select('id','name',
+            'address',
+            'contact_number',
+            'remark',)->find($id);
        
         return view('transport.edit',['transport'=>$transport]);
     }
@@ -89,7 +89,7 @@ class TransportController extends Controller
     public function update(Request $request, $id)
     {
          $request->validate([
-        'name' => 'required|max:255',
+        'name' => 'required|max:50',
         'address' => 'required|max:255',
         'number'=> 'required|min:10|max:10',
         ]);
@@ -106,7 +106,7 @@ class TransportController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Ht   tp\Response
      */
     public function destroy($id)
     {
@@ -172,14 +172,13 @@ class TransportController extends Controller
         return $data;
     }
     public function restoreTransport($id){
-        $transport = Transport::withTrashed()->find($id);
+        $transport = Transport::onlyTrashed()->find($id);
         $transport->status = 'ACTIVE';
         $transport->restore();
         return "DataRestore";
     }
 
     public function forceDeleteTransport($id){
-        
         Transport::onlyTrashed()->find($id)->forceDelete();
         // Account::find($id)->forceDelete();
         return "DeleteSuccess";

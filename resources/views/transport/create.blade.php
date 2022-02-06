@@ -14,9 +14,10 @@
 </div>
 <h2 class="m-2">New Tranport Details</h2>
 @if ($errors->any())
-<div class="card ">
+<div class="alert alert-danger" role="alert">
 
     @foreach ($errors->all() as $err)
+
     <li style="color:red">{{$err}}</li>
     @endforeach
 

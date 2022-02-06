@@ -1,12 +1,13 @@
-.btnEdit{
-    color:black;
-}
-.deleteAccount,.deleteSupplier{
-    color:red;
-}
-.view{
-    color:darkslateblue;
-}
-.restoreTrash{
-    color:darkblue
-}
+    .btnEdit{
+        color:black;
+    }
+    .deleteAccount,.deleteSupplier{
+        color:red;
+    }
+    .view{
+        color:darkslateblue;
+    }
+    .restoreTrash{
+        color:darkblue
+    }
+    

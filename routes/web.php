@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TransportController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +73,24 @@ Route::get('/transport/trash',[App\Http\Controllers\TransportController::class, 
 Route::get('/transport/view/Model/{id}', [App\Http\Controllers\TransportController::class,'viewModel'])->name('transport.viewModel');
 Route::get('/transport/yajraTable', [App\Http\Controllers\TransportController::class, 'yajraTableIndex'])->name('transport.yajraTableIndex');
 Route::resource('transport', TransportController::class);
+
+// *? Product  **/
+Route::delete('/product/forceDeleteProduct/{id}', [App\Http\Controllers\ProductController::class, 'forceDeleteProduct'])->name('product.forceDeleteProduct');
+Route::post('/product/restoreProduct/{id}', [App\Http\Controllers\ProductController::class, 'restoreProduct'])->name('product.restoreProduct');
+Route::get('/product/productTrash', [App\Http\Controllers\ProductController::class, 'productTrash'])->name('product.productTrash');
+Route::get('/product/trashAjax', [App\Http\Controllers\ProductController::class, 'trashAjax'])->name('product.trashAjax');
+Route::get('/product/ajaxIndex', [App\Http\Controllers\ProductController::class, 'ajaxIndex'])->name('product.ajaxIndex');
+Route::resource('product',ProductController::class);
+
+
+// * *Category **/
+Route::delete('/category/forceDeleteCategory/{id}',[App\Http\Controllers\CategoryController::class, 'forceDeleteCategory'])->name('transport.forceDeleteCategory');
+Route::get('/category/restoreCategory/{id}',[App\Http\Controllers\CategoryController::class, 'restoreCategory'])->name('transport.restoreCategory');
+Route::get('/category/trash',[App\Http\Controllers\CategoryController::class, 'trash'])->name('category.trash');
+Route::get('/category/CategoryTrash',[App\Http\Controllers\CategoryController::class, 'CategoryTrash'])->name('category.CategoryTrash');
+Route::get('/category/categoryUpdate',[App\Http\Controllers\CategoryController::class,'categoryUpdate'])->name('category.categoryUpdate');
+Route::get('/category/yajraTable',[App\Http\Controllers\CategoryController::class,'yajraTableIndexs'])->name('category.yajraTableIndex');
+Route::resource('category',CategoryController::class);
 
 
 

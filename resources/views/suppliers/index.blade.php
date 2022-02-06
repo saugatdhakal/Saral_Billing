@@ -135,7 +135,7 @@
           <div class="row mb-1">
             <div class="col-sm-4"><b>Name:</b></div>
             <div class="col-sm-5">
-              <p class="name"></p>
+              <p id="name"></p>
             </div>
           </div>
           <div class="row mb-1">
@@ -177,12 +177,16 @@
       </div>
     </div>
   </div>
-{{-- Model ended --}}
+  {{-- Model ended --}}
   @section('supplier.index')
   <script>
     $(function(){
             // YajraBox-Datatable
             var table =$('.yajra-datatable').DataTable({
+              lengthMenu: [
+              [ 20, 30, 50, -1 ],
+              [ '15 rows', '25 rows', '50 rows', 'Show all' ]
+              ],
               processing:true,
               serverSide:true,
               ajax:"{{route('supplier.getSuppliers')}}",

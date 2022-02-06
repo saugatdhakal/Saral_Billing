@@ -45,27 +45,27 @@
     </div>
 </div>
 
-<div class="row mb-3 p-0 mt-2 mr-3">
+    <div class="row mb-3 p-0 mt-2 mr-3">
 
-    <div class="col-md-12 clearfix ">
-        <a class="float-right" href="{{route('transport.create')}}">
-            <button type="button" class="btn btn-outline-primary">
-                <i class="fa fa-user" aria-hidden="true"></i> Add Transport
-            </button>
-        </a>
+        <div class="col-md-12 clearfix ">
+            <a class="float-right" href="{{route('transport.create')}}">
+                <button type="button" class="btn btn-outline-primary">
+                    <i class="fa fa-user" aria-hidden="true"></i> Add Transport
+                </button>
+            </a>
 
 
 
-        <a class="float-right mr-2" href="{{route('transport.trash')}}">
-            <button type="button" class="btn btn-outline-danger">
-                <i class="fas fa-user-times"></i> Trash Transport
-            </button>
-        </a>
+            <a class="float-right mr-2" href="{{route('transport.trash')}}">
+                <button type="button" class="btn btn-outline-danger">
+                    <i class="fas fa-user-times"></i> Trash Transport
+                </button>
+            </a>
+        </div>
+
+
+
     </div>
-
-
-
-</div>
 
 <div class="card mb-4 m-2">
     <div class="card-header">
@@ -80,10 +80,10 @@
 
     <div class="card-body">
 
-        <table class="table table-bordered  yajra-datatable" width="100%">
+        <table class="table table-striped table-bordered  yajra-datatable" width="100%">
             <thead>
                 <tr>
-
+                    <th>Index</th>
                     <th>Name</th>
                     <th>Address</th>
                     <th>Contact Number</th>
@@ -154,18 +154,23 @@
     $(function(){
             // YajraBox-Datatable
             var table =$('.yajra-datatable').DataTable({
+            lengthMenu: [
+            [ 10, 25, 50, -1 ],
+            [ '10 rows', '25 rows', '50 rows', 'Show all' ]
+            ],
               processing:true,
               serverSide:true,
               ajax:"{{route('transport.yajraTableIndex')}}",
               columns:[
+                {data: 'DT_RowIndex'},
                 {data: 'name'},
                 {data: 'address' },
                 {data: 'contact_number'},
                 {data: 'remark'},
-               {
-                 data: 'action',orderable: true, searchable: true,
-               },
-              ]
+                {
+                    data: 'action',orderable: true, searchable: true,
+                },
+              ] 
             });
 
            
@@ -187,6 +192,7 @@
     $('.close').click(function () {
     $('#transportModel').modal('hide');
     });
+    
     $('body').on('click', '.deleteTransport', function () {
     var btnId = $(this).attr("id");
     swal({
