@@ -20,4 +20,5 @@ class Transport extends Model
         'contact_number',
         'remark',
     ];
+   
 }

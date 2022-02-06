@@ -16,7 +16,9 @@ class SuppliersController extends Controller
      */
     public function index()
     {
+        
         return view('suppliers.index');
+
         
         // return view('suppliers.index',["suppliers"=>$suppliers]);
     }
@@ -162,8 +164,11 @@ class SuppliersController extends Controller
     }
 
     public function view($id){  
-        
-        $suppliers = DB::table('suppliers')->select('name','address','contact_number','email','contact_person','remark')->find($id);
+        $suppliers= Suppliers::with('creator','editor')
+        ->where('id',$id)
+        ->get(['name','address','contact_number','email','contact_person','remark','created_by','updated_by'])
+        ->first();
+        // $suppliers = DB::table('suppliers')->select('name','address','contact_number','email','contact_person','remark')->find($id);
         return $suppliers;  
     }
     /**

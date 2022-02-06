@@ -237,7 +237,7 @@
                                     Dashboard</a>
                                 <a class="nav-link" href="{{route('product.create')}}"><i class="fas fa-plus-circle"></i>
                                     &#160 Add Product </a>
-                                <a class="nav-link" href="{{route('transport.trash')}}"><i class="fas fa-user-slash"></i>
+                                <a class="nav-link" href="{{route('product.productTrash')}}"><i class="fas fa-user-slash"></i>
                                     &#160 Trash Product</a>
                             </nav>
                         </div>

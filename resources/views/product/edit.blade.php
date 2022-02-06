@@ -9,7 +9,6 @@
 {{-- Error catch --}}
 
 <div class="container-fluid">
-   
     <div class="row">
         <div class="col-md-6">
             @if ($errors->any())

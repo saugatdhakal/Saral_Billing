@@ -138,6 +138,18 @@
                         <p id="remark"><strong></strong></p>
                     </div>
                 </div>
+                <div class="row mb-1">
+                    <div class="col-sm-4"><b>Created By:</b></div>
+                    <div class="col-sm-5">
+                        <p id="created_by"><strong></strong></p>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-sm-4"><b>Updated By:</b></div>
+                    <div class="col-sm-5">
+                        <p id="updated_by"><strong></strong></p>
+                    </div>
+                </div>
 
 
                 {{-- body stop --}}
@@ -186,6 +198,8 @@
      $('#address').html(data.address);
      $('#number').html(data.contact_number);
      $('#remark').html(data.remark);
+     $('#created_by').html(data.creator.name);
+    $('#updated_by').html(data.editor.name);
     }
     );
     });

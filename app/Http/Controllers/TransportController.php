@@ -168,8 +168,12 @@ class TransportController extends Controller
             ->make(true);
     }
     public function viewModel($id){
-        $data = DB::table('transports')->where('id', $id)->where('deleted_by',NULL)->get(['id','name','address','contact_number','remark'])->first();
-        return $data;
+        $transport= Transport::with('creator','editor')
+        ->where('id',$id)
+        ->get(['id','name','address','contact_number','remark','created_by','updated_by'])
+        ->first();  
+        // $data = DB::table('transports')->where('id', $id)->where('deleted_by',NULL)->get(['id','name','address','contact_number','remark'])->first();
+        return $transport;
     }
     public function restoreTransport($id){
         $transport = Transport::onlyTrashed()->find($id);
