@@ -7,6 +7,7 @@
 </div>
 <hr>
 {{-- // --}}
+<div class="container-fluid">
 <form class="row g-3 needs-validation" action="{{route('supplier.store')}}" method="POST" novalidate>
 @csrf
 
@@ -97,6 +98,7 @@
 </div>
 
 </form>
+</div>
 @section('supplier.create')
 <script>
     $(document).ready(function() {

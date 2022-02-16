@@ -8,8 +8,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <title>{{ config('Saral Billing', 'Saral Billing') }}</title>
+    {{-- <link rel="icon" href="../" type="image/icon type"> --}}
     <!-- Scripts -->
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 
@@ -241,6 +241,33 @@
                                     &#160 Trash Product</a>
                             </nav>
                         </div>
+                        {{-- Purchase --}}
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#purchase" aria-expanded="false"
+                            aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i>
+                                <!-- <i class="fas fa-columns"></i> Font Awesome fontawesome.com -->
+                            </div>
+                            Purchase
+                            <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="true"
+                                    focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 320 512" data-fa-i2svg="">
+                                    <path fill="currentColor"
+                                        d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z">
+                                    </path>
+                                </svg><!-- <i class="fas fa-angle-down"></i> Font Awesome fontawesome.com -->
+                            </div>
+                        </a>
+                        <div class="collapse" id="purchase" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{{route('purchase.index')}}"><i class="far fa-file-alt"></i>&#160 Product
+                                    Dashboard</a>
+                                <a class="nav-link" href="{{route('purchase.create')}}"><i class="fas fa-plus-circle"></i>
+                                    &#160 Create Purchase </a>
+                                <a class="nav-link" href="{{route('product.productTrash')}}"><i class="fas fa-user-slash"></i>
+                                    &#160 Trash Product</a>
+                            </nav>
+                        </div>
+
                         <a class="nav-link" href="{{route('category.index')}}">
                             <div class="sb-nav-link-icon">
                                <i class="fad fa-shapes"></i>
@@ -360,9 +387,9 @@
                 </div>
             </nav>
         </div>
-        <div id="layoutSidenav_content">
+        <div id="layoutSidenav_content" >
 
-            <main>
+            <main >
                 <div class="container-fluid" >
                 @yield('content')
                 </div>
@@ -409,6 +436,8 @@
     @yield('category.index')
     @yield('category.trash')
     @yield('product.index')
+    @yield('purchase.create')
+    @yield('purchase.purchaseOrder')
     
 
 

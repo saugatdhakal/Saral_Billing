@@ -6,6 +6,7 @@
 </div>
 <hr>
 {{-- // --}}
+<div class="container-fluid">
 <form class="row g-3 needs-validation" action="{{route('Account.add')}}" method="POST" novalidate>
     @csrf
     <div class="row m-2">
@@ -150,7 +151,7 @@
     </div>
 
 </form>
-
+</div>
 @section('account.create')
 <script>
     $(document).ready(function() {

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-
+<div class="container-fluid">
 <div class="row m-1">
     <div class="col-md-1"></div>
     <strong class="mt-2 " style="font-size:150%;">
@@ -23,7 +23,7 @@
 
 </div>
 @endif
-<div class="card flex-center m-2">
+
     <form class="row g-3 mt-2 needs-validation" action="{{route('transport.store')}}" method="POST" novalidate>
         @csrf
         <div class="row m-2">
@@ -86,7 +86,9 @@
             </div>
         </div>
     </form>
-    
+  
+
+</div>
     @section('transport.create')
     <script>
         $(document).ready(function() {
@@ -106,7 +108,7 @@
     });
     </script>
     @endsection
-</div>
+
 
 
 @endsection

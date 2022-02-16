@@ -16,6 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     { 
+        
         // return  Product::get_finacial_year_range();
         return view('product.index');
     }
@@ -67,12 +68,12 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-        'name' => 'required|max:50',
-        'code' => 'required|min:6|max:6',
-        'unit'=> 'required',
-        'category'=>'required'
-        ]);
+            $request->validate([
+            'name' => 'required|max:50',
+            'code' => 'required|min:6|max:6',
+            'unit'=> 'required',
+            'category'=>'required'
+            ]);
        
          //Checking if user edited code match with other product code    
         $isUnique = Product::isCodeUniqueCheck($request->code);
@@ -87,7 +88,7 @@ class ProductController extends Controller
         $product->unit = $request->unit;
         $product->category_id = $request->category;
         $product->save();
-        return redirect()->route('product.index');
+        return back();
     }
     
 

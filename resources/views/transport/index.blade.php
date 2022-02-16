@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-
+<div class="container-fluid">
 <div class="m-2">
     <h1>
         &#160 <u> Transport Dashboard</u>
@@ -79,7 +79,7 @@
     </div>
 
     <div class="card-body">
-
+        
         <table class="table table-striped table-bordered  yajra-datatable" width="100%">
             <thead>
                 <tr>
@@ -159,6 +159,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 {{-- Model end --}}
 @section('transport.index')

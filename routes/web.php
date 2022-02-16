@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TransportController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
-
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\PurchaseItemController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -66,34 +67,38 @@ Route::post('/supplier/restoreSupplier/{id}', [App\Http\Controllers\SuppliersCon
 Route::delete('/supplier/trashSupplier/{id}', [App\Http\Controllers\SuppliersController::class, 'trashSupplier'])->name('supplier.trashSupplier');
 
 //Transport Routes Resource
-Route::get('/transport/restoreTransport/{id}',[App\Http\Controllers\TransportController::class, 'restoreTransport'])->name('transport.restoreTransport');
-Route::delete('/transport/forceDeleteTransport/{id}',[App\Http\Controllers\TransportController::class, 'forceDeleteTransport'])->name('transport.forceDeleteTransport');
-Route::get('/transport/trashDataTable',[App\Http\Controllers\TransportController::class, 'trashDataTable'])->name('transport.trashDataTable');
-Route::get('/transport/trash',[App\Http\Controllers\TransportController::class, 'trash'])->name('transport.trash');
-Route::get('/transport/view/Model/{id}', [App\Http\Controllers\TransportController::class,'viewModel'])->name('transport.viewModel');
-Route::get('/transport/yajraTable', [App\Http\Controllers\TransportController::class, 'yajraTableIndex'])->name('transport.yajraTableIndex');
+Route::get('/transport/restoreTransport/{id}',[TransportController::class, 'restoreTransport'])->name('transport.restoreTransport');
+Route::delete('/transport/forceDeleteTransport/{id}',[TransportController::class, 'forceDeleteTransport'])->name('transport.forceDeleteTransport');
+Route::get('/transport/trashDataTable',[TransportController::class, 'trashDataTable'])->name('transport.trashDataTable');
+Route::get('/transport/trash',[TransportController::class, 'trash'])->name('transport.trash');
+Route::get('/transport/view/Model/{id}', [TransportController::class,'viewModel'])->name('transport.viewModel');
+Route::get('/transport/yajraTable', [TransportController::class, 'yajraTableIndex'])->name('transport.yajraTableIndex');
 Route::resource('transport', TransportController::class);
 
 // *? Product  **/
-Route::delete('/product/forceDeleteProduct/{id}', [App\Http\Controllers\ProductController::class, 'forceDeleteProduct'])->name('product.forceDeleteProduct');
-Route::post('/product/restoreProduct/{id}', [App\Http\Controllers\ProductController::class, 'restoreProduct'])->name('product.restoreProduct');
-Route::get('/product/productTrash', [App\Http\Controllers\ProductController::class, 'productTrash'])->name('product.productTrash');
-Route::get('/product/trashAjax', [App\Http\Controllers\ProductController::class, 'trashAjax'])->name('product.trashAjax');
-Route::get('/product/ajaxIndex', [App\Http\Controllers\ProductController::class, 'ajaxIndex'])->name('product.ajaxIndex');
+Route::delete('/product/forceDeleteProduct/{id}', [ProductController::class, 'forceDeleteProduct'])->name('product.forceDeleteProduct');
+Route::post('/product/restoreProduct/{id}', [ProductController::class, 'restoreProduct'])->name('product.restoreProduct');
+Route::get('/product/productTrash', [ProductController::class, 'productTrash'])->name('product.productTrash');
+Route::get('/product/trashAjax', [ProductController::class, 'trashAjax'])->name('product.trashAjax');
+Route::get('/product/ajaxIndex', [ProductController::class, 'ajaxIndex'])->name('product.ajaxIndex');
 Route::resource('product',ProductController::class);
 
 
 // * *Category **/
-Route::delete('/category/forceDeleteCategory/{id}',[App\Http\Controllers\CategoryController::class, 'forceDeleteCategory'])->name('transport.forceDeleteCategory');
-Route::get('/category/restoreCategory/{id}',[App\Http\Controllers\CategoryController::class, 'restoreCategory'])->name('transport.restoreCategory');
-Route::get('/category/trash',[App\Http\Controllers\CategoryController::class, 'trash'])->name('category.trash');
-Route::get('/category/CategoryTrash',[App\Http\Controllers\CategoryController::class, 'CategoryTrash'])->name('category.CategoryTrash');
-Route::get('/category/categoryUpdate',[App\Http\Controllers\CategoryController::class,'categoryUpdate'])->name('category.categoryUpdate');
-Route::get('/category/yajraTable',[App\Http\Controllers\CategoryController::class,'yajraTableIndexs'])->name('category.yajraTableIndex');
+Route::delete('/category/forceDeleteCategory/{id}',[CategoryController::class, 'forceDeleteCategory'])->name('transport.forceDeleteCategory');
+Route::get('/category/restoreCategory/{id}',[CategoryController::class, 'restoreCategory'])->name('transport.restoreCategory');
+Route::get('/category/trash',[CategoryController::class, 'trash'])->name('category.trash');
+Route::get('/category/CategoryTrash',[CategoryController::class, 'CategoryTrash'])->name('category.CategoryTrash');
+Route::get('/category/categoryUpdate',[CategoryController::class,'categoryUpdate'])->name('category.categoryUpdate');
+Route::get('/category/yajraTable',[CategoryController::class,'yajraTableIndexs'])->name('category.yajraTableIndex');
 Route::resource('category',CategoryController::class);
 
+// *?Purchase 
+Route::get('purchase/purchaseOrderView/{id}',[PurchaseController::class,'purchaseOrderView'])->name('purchase.purchaseOrderView');   
+Route::resource('purchase',PurchaseController::class);
 
-
-
+// **Purchase Item /
+Route::post('/purchaseItem/store/{id}',[PurchaseItemController::class,'store'])->name('purchaseItem.store');
+Route::get('/purchaseItem/getProductCode',[PurchaseItemController::class,'getProductCode'])->name('purchaseItem.getProductCode');
 
 }); 

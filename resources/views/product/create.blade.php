@@ -41,7 +41,7 @@
 <div class="row">
     <div class="col-md-10">
 
-        <div class="card  m-2">
+        <div class="container-fluid">
 
 
             <form class="row g-3 needs-validation" action="{{route('product.store')}}" method="POST" novalidate>
@@ -55,6 +55,8 @@
                     <div class="col-md-1 ">
                         <input class="form-check-input" type="radio" name="item_type" id="exampleRadios1" value="SALES"
                             checked>
+                    
+                           
                         <label class="form-check-label" for="exampleRadios1">
                             Sales
                         </label>
@@ -97,8 +99,8 @@
                     <div class="col-md-2 m-1" style="font-family:georgia,garamond,serif;">
                         Product Unit
                     </div>
-                    <div class="col-md-4    ">
-                        <select class="prod_unit form-control form-select" name="unit">
+                    <div class="col-md-4 col-sm-12 col-lg-4  ">
+                        <select class="select form-control form-select" style="width: 100%" name="unit">
                             <option value="" selected disabled>---Select Product Unit---</option>
                             <option value="mtr">MTR</option>
                             <option value="cm">CM</option>
@@ -114,9 +116,9 @@
                     <div class="col-md-2 m-1" style="font-family:georgia,garamond,serif;">
                         Product Category
                     </div>
-                    <div class="col-md-4">
-                        <select class="prod_unit form-control form-select" name="category">
-                            <option value="" selected disabled>---Select Product Unit---</option>
+                    <div class=" col-md-4 col-sm-12 col-lg-4">
+                        <select class="select form-control form-select" style="width: 100%" name="category">
+                            <option value="" selected disabled>---Select Category Unit---</option>
                             {{$rows = DB::table('categories')->where('deleted_by',NULL)->get(['id','name']);}}
                             @foreach ($rows as $row)
                             <option value={{$row->id}} >{{$row->name}}</option>
@@ -124,7 +126,7 @@
 
                         </select>
                         <div class="invalid-feedback">
-                            Unit code is Empty !!
+                            Category is Empty !!
                         </div>
                     </div>
 
@@ -175,11 +177,12 @@
     });
     
     $(document).ready(function() {
-    $('.prod_unit').select2(
-        {
+    $('.select').select2(
+        {  
         theme: "bootstrap-5",
         }
     );
+        
    
     });
 
