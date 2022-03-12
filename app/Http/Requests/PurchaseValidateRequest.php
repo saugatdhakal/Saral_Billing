@@ -27,7 +27,6 @@ class PurchaseValidateRequest extends FormRequest
             'billNo' => 'required|max:10',
             'billDate'=> 'required|date_format:Y-m-d',
             'transactionDate'=>'required|date_format:Y-m-d',
-            'purchaseDate'=> 'required|date_format:Y-m-d',
             'lrNo'=> 'required',
             'supplierId'=> 'required',
         ];

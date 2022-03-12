@@ -10,7 +10,7 @@ use Wildside\Userstamps\Userstamps;
 class Purchase extends Model
 {
     use HasFactory;
-     use SoftDeletes;
+    use SoftDeletes;
     use Userstamps;
     public $timestamps = false;
     protected $datas=['deleted_at'];
@@ -32,4 +32,12 @@ class Purchase extends Model
         'status'
 
     ];
+     public function items()
+    {
+        return $this->hasMany(PurchaseItem::class);
+    }
+     public function supplier()
+    {
+        return $this->belongsTo(Suppliers::class);
+    }
 }

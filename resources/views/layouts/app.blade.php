@@ -259,7 +259,7 @@
                         </a>
                         <div class="collapse" id="purchase" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{route('purchase.index')}}"><i class="far fa-file-alt"></i>&#160 Product
+                                <a class="nav-link" href="{{route('purchase.index')}}"><i class="far fa-file-alt"></i>&#160 Purchase
                                     Dashboard</a>
                                 <a class="nav-link" href="{{route('purchase.create')}}"><i class="fas fa-plus-circle"></i>
                                     &#160 Create Purchase </a>
@@ -438,7 +438,7 @@
     @yield('product.index')
     @yield('purchase.create')
     @yield('purchase.purchaseOrder')
-    
+    @yield('purchase.invoice')
 
 
 

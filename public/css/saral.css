@@ -1,12 +1,21 @@
     .btnEdit{
         color:black;
     }
-    .deleteAccount,.deleteSupplier{
+    .deleteAccount,.deleteSupplier,.delete{
         color:red;
     }
     .view{
         color:darkslateblue;
     }
-    .restoreTrash{
+    .restoreTrash,.edit,.btnComplete{
         color:darkblue
     }
+
+    .rectangle {
+  height: 30px;
+  width: 100px;
+  background-color: rgb(25, 47, 84);
+}
+.suppDetails{
+    font-size:25px;
+}

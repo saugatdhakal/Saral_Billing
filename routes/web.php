@@ -94,11 +94,19 @@ Route::get('/category/yajraTable',[CategoryController::class,'yajraTableIndexs']
 Route::resource('category',CategoryController::class);
 
 // *?Purchase 
+Route::get('/Purchase/invoice/{id}',[PurchaseController::class,'invoice'])->name('purchase.invoice');
+Route::get('/purchase/ajaxIndex',[PurchaseController::class,'ajaxIndex'])->name('purchase.ajaxIndex');
 Route::get('purchase/purchaseOrderView/{id}',[PurchaseController::class,'purchaseOrderView'])->name('purchase.purchaseOrderView');   
 Route::resource('purchase',PurchaseController::class);
 
 // **Purchase Item /
+Route::post('/purchaseItem/updateList',[PurchaseItemController::class,'updateList'])->name('purchaseItem.updateList');
+Route::get('/purchaseItem/editProductList/{id}',[PurchaseItemController::class,'editProductList'])->name('purchaseItem.editProductList');
 Route::post('/purchaseItem/store/{id}',[PurchaseItemController::class,'store'])->name('purchaseItem.store');
 Route::get('/purchaseItem/getProductCode',[PurchaseItemController::class,'getProductCode'])->name('purchaseItem.getProductCode');
+Route::delete('/purchaseItem/deletePurchaseList/{id}',[PurchaseItemController::class,'deletePurchaseList'])->name('purchaseItem.deletePurchaseList');
+Route::post('/purchaseItem/completeInvoice/{id}',[PurchaseItemController::class,'completeInvoice'])->name('purchaseItem.completeInvoice');
+Route::get('/Purchase/ajaxIndex',[PurchaseController::class,'ajaxIndex'])->name('purchaseItem.ajaxIndex');
+
 
 }); 

@@ -24,7 +24,7 @@ class PurchaseItemRequest extends FormRequest
     public function rules()
     {
         return [
-            'quantity'=> 'required|integer',
+            'quantity'=> 'required|numeric',
             'rate'=>'required|integer',
             'wholesalePrice'=> 'required|integer',
             'productId'=> 'required|integer',
@@ -33,7 +33,7 @@ class PurchaseItemRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            if($this->rate > $this->wholesalePrice){
+            if($this->rate > $this->wholesalePrice || $this->rate == $this->wholesalePrice  ){
                 $validator->errors()->add('field', 'Wholesale Price must be greater then purchase price!');
             }
         });

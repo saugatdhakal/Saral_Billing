@@ -21,15 +21,14 @@ class CreatePurchasesTable extends Migration
             $table->string('bill_date');
             $table->string('bill_no');
             $table->string('lr_no');
-            $table->string('purchase_date');
             $table->string('gts')->default('0');
             $table->string('total_amount')->default('0');
             $table->string('discount_amount')->default('0');
             $table->string('extra_charges')->default('0');
-            $table->string('rounding')->default('0');
+            $table->string('rounding')->default('0'); // *! Need to get some idea about it
             $table->string('net_amount')->default('0');
-            $table->enum('purchase_type',['DIRECT','ORDER','RETURN']);
-            $table->string('remark')->nullable();
+            $table->enum('purchase_type',['DIRECT','ORDER','RETURN']); // *! Need to get some idea about it
+            $table->string('remark')->nullable(); // *! Need to make remark box in a view 
             $table->foreignId('supplier_id')->constrained();
             $table->enum('status',['RUNNING','COMPLETED','CANCLED']);
             // softdelete,timestamp and userstamp
@@ -41,6 +40,8 @@ class CreatePurchasesTable extends Migration
             $table->foreign('deleted_by')->references('id')->on('users');
             $table->softDeletes();
             $table->timestamps();
+
+            
         });
     }
 

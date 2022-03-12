@@ -90,17 +90,6 @@
         </div>
     </div>
 
-    <div class="row m-2">
-        <div class="col-md-2 m-1" style="font-family:georgia,garamond,serif;">
-            Purchase Date
-        </div>
-        <div class="col-md-4">
-            <input type="date" id="" class="form-control" name="purchaseDate">
-            <div class="invalid-feedback">
-                Purchase Date is Empty !!
-            </div>
-        </div>
-    </div>
 
 
     <div class="row m-2">

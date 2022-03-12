@@ -1,6 +1,7 @@
 <?php
 use App\Libraries\Nepali_Calendar;
 use Illuminate\Support\Facades\DB;
+use App\Libraries\Format_Nepali_Money;  
 
 if(!function_exists('getFiscalYear')){
 function getFiscalYear(){
@@ -22,7 +23,14 @@ function getPurchaseInvoice(){
 if(!function_exists('getNepaliDate')){
 function getNepaliDate($date){
   $cal = new Nepali_Calendar();
-  return $cal->eng_to_nep(2008,11,23);  
+  return $cal->eng_to_nep($date);  
+}
+}
+
+if(!function_exists('nepaliCurrencyFormate')){
+function nepaliCurrencyFormate($num){
+    $mon = new Format_Nepali_Money();
+    return $mon->money_format_nep($num);
 }
 }
 ?>

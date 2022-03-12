@@ -15,7 +15,7 @@ class CreatePurchaseItemsTable extends Migration
     {
         Schema::create('purchase_items', function (Blueprint $table) {
              $table->id();
-            $table->string('quantity')->default('0');
+            $table->string('quantity');
             $table->string('rate');
             $table->string('amount');
             $table->string('discount_percent')->default('0');

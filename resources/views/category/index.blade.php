@@ -5,7 +5,7 @@
 
     <div class="col-md-12 clearfix ">
         <button type="button" id="add" class="btn btn-outline-primary float-right" data-bs-toggle="modal"
-            data-bs-target="#category">
+            data-bs-target="#category" autofouces >
             <i class="fa fa-user" aria-hidden="true"></i> Add Category
         </button>
         <a class="float-right mr-2" href="{{route('category.CategoryTrash')}}">
