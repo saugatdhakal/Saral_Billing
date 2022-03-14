@@ -33,4 +33,13 @@ function nepaliCurrencyFormate($num){
     return $mon->money_format_nep($num);
 }
 }
+
+if(!function_exists('covertShopCode')){
+function covertShopCode($num){
+    $code = ($num*2)+400;
+    return $code;
+}
+}
+
+
 ?>

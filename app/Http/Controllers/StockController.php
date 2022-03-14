@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Stock;
+use DataTables;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class StockController extends Controller
@@ -13,8 +15,43 @@ class StockController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {  
+        return view('stock.index');
+    }
+     public function getIndexAjax(Request $request){
+        // if($request->ajax()){
+           $data = DB::table('stocks')
+            ->join('purchase_items','purchase_items.id','=','stocks.purchase_item_id')
+            ->join('products','products.id','=','purchase_items.product_id')
+            ->select(['stocks.id','products.name as product_name','stocks.batch_number','stocks.product_shop_code','stocks.quantity','stocks.wholeSale_price','stocks.status'])
+            ->get()
+            ; 
+            return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('action',function($row){
+                $actionBtn ='';
+                if($row->status == 'ACTIVE'){
+                $actionBtn.='
+               <div class="form-check form-switch form-switch-md">
+                <input class="form-check-input" type="checkbox" data-id="'.$row->id.'" id="statusSwitch" >
+                
+                </div>
+                 &#160
+                ';
+                }else{
+                   $actionBtn.='
+               <div class="form-check form-switch form-switch-md">
+                <input class="form-check-input" type="checkbox" data-id="'.$row->id.'" id="statusSwitch" checked>
+                </div>
+                 &#160
+                '; 
+                }
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+        // }
+        // return view('suppliers.index');
     }
 
     /**
@@ -22,9 +59,15 @@ class StockController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function statusSwitch($id)
     {
-        //
+        $stock = Stock::find($id);
+        if($stock->status == 'ACTIVE'){
+            $stock->status = "INACTIVE";
+        }else{
+            $stock->status = 'ACTIVE';
+        }
+        $stock->save();
     }
 
     /**

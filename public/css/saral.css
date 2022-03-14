@@ -19,3 +19,22 @@
 .suppDetails{
     font-size:25px;
 }
+.statusSwitch{
+    margin-left: 20px;
+
+}
+/* switch */
+.form-switch.form-switch-md .form-check-input {
+  height: 1.5rem;
+  width: calc(2.5rem + 0.75rem);
+  border-radius: 3rem;
+  border-color: red;
+   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='red'/></svg>");
+}
+.form-switch .form-check-input:checked {
+    background-color: red;
+    border-color: #30D158;
+    border: none;
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba(255,255,255,1.0)'/></svg>");
+}
+

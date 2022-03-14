@@ -9,7 +9,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('Saral Billing', 'Saral Billing') }}</title>
-    {{-- <link rel="icon" href="../" type="image/icon type"> --}}
+    {{--
+    <link rel="icon" href="../" type="image/icon type"> --}}
     <!-- Scripts -->
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 
@@ -20,6 +21,9 @@
     {{-- Yajra Datatable --}}
     <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" rel="stylesheet">
+    
+
 
     {{-- Select 2 --}}
     <link rel="stylesheet"
@@ -127,6 +131,7 @@
 
 
                         <div class="sb-sidenav-menu-heading">Interface</div>
+                        {{-- Account --}}
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                             data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fad fa-users"></i>
@@ -216,61 +221,80 @@
                         </div>
 
                         {{-- Product --}}
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#product" aria-expanded="false"
-                            aria-controls="collapseLayouts">
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#product"
+                            aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i>
                                 <!-- <i class="fas fa-columns"></i> Font Awesome fontawesome.com -->
                             </div>
                             Product
-                            <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="true"
-                                    focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 320 512" data-fa-i2svg="">
+                            <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10"
+                                    aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down"
+                                    role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"
+                                    data-fa-i2svg="">
                                     <path fill="currentColor"
                                         d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z">
                                     </path>
                                 </svg><!-- <i class="fas fa-angle-down"></i> Font Awesome fontawesome.com -->
                             </div>
                         </a>
-                        <div class="collapse" id="product" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="product" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{route('product.index')}}"><i class="far fa-file-alt"></i>&#160 Product
+                                <a class="nav-link" href="{{route('product.index')}}"><i
+                                        class="far fa-file-alt"></i>&#160 Product
                                     Dashboard</a>
-                                <a class="nav-link" href="{{route('product.create')}}"><i class="fas fa-plus-circle"></i>
+                                <a class="nav-link" href="{{route('product.create')}}"><i
+                                        class="fas fa-plus-circle"></i>
                                     &#160 Add Product </a>
-                                <a class="nav-link" href="{{route('product.productTrash')}}"><i class="fas fa-user-slash"></i>
+                                <a class="nav-link" href="{{route('product.productTrash')}}"><i
+                                        class="fas fa-user-slash"></i>
                                     &#160 Trash Product</a>
                             </nav>
                         </div>
                         {{-- Purchase --}}
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#purchase" aria-expanded="false"
-                            aria-controls="collapseLayouts">
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#purchase"
+                            aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i>
                                 <!-- <i class="fas fa-columns"></i> Font Awesome fontawesome.com -->
                             </div>
                             Purchase
-                            <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="true"
-                                    focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 320 512" data-fa-i2svg="">
+                            <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10"
+                                    aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down"
+                                    role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"
+                                    data-fa-i2svg="">
                                     <path fill="currentColor"
                                         d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z">
                                     </path>
                                 </svg><!-- <i class="fas fa-angle-down"></i> Font Awesome fontawesome.com -->
                             </div>
                         </a>
-                        <div class="collapse" id="purchase" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="purchase" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{route('purchase.index')}}"><i class="far fa-file-alt"></i>&#160 Purchase
+                                <a class="nav-link" href="{{route('purchase.index')}}"><i
+                                        class="far fa-file-alt"></i>&#160 Purchase
                                     Dashboard</a>
-                                <a class="nav-link" href="{{route('purchase.create')}}"><i class="fas fa-plus-circle"></i>
+                                <a class="nav-link" href="{{route('purchase.create')}}"><i
+                                        class="fas fa-plus-circle"></i>
                                     &#160 Create Purchase </a>
-                                <a class="nav-link" href="{{route('product.productTrash')}}"><i class="fas fa-user-slash"></i>
+                                <a class="nav-link" href="{{route('product.productTrash')}}"><i
+                                        class="fas fa-user-slash"></i>
                                     &#160 Trash Product</a>
                             </nav>
                         </div>
+                        {{-- Stock --}}
+                        <a class="nav-link" href="{{route('stock.index')}}">
+                            <div class="sb-nav-link-icon">
+                                <i class="fa-solid fa-layer-group"></i>
+                            </div>
+                            Stock
+                        </a>
 
+
+                        {{-- Category --}}
                         <a class="nav-link" href="{{route('category.index')}}">
                             <div class="sb-nav-link-icon">
-                               <i class="fad fa-shapes"></i>
+                                <i class="fad fa-shapes"></i>
                             </div>
                             Category
                         </a>
@@ -387,11 +411,11 @@
                 </div>
             </nav>
         </div>
-        <div id="layoutSidenav_content" >
+        <div id="layoutSidenav_content">
 
-            <main >
-                <div class="container-fluid" >
-                @yield('content')
+            <main>
+                <div class="container-fluid">
+                    @yield('content')
                 </div>
             </main>
 
@@ -422,6 +446,14 @@
     {{-- select2 --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+    {{-- Datatable Buttons --}}
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+
     @yield('userDetails')
     @yield('account.create')
     @yield('account.update')
@@ -439,6 +471,7 @@
     @yield('purchase.create')
     @yield('purchase.purchaseOrder')
     @yield('purchase.invoice')
+    @yield('stock.index')
 
 
 

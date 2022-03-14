@@ -44,6 +44,21 @@
 
     </div>
     @endif
+    {{-- Error on repeated product --}}
+    <div class="row">
+        <div class="col-md">
+            @if (Session::has('fail'))
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach (Session::get('fail') as $session)
+                    <li>{{$session}}</li>
+                    @endforeach
+                    {{-- <li>{!! \Session::get('fail') !!}</li> --}}
+                </ul>
+            </div>
+            @endif
+        </div>
+    </div>
     <form action="{{route('purchaseItem.store',['id'=>$data->purchase_id])}}" method="POST">
         @csrf
         <div class="card m-2 shadow">

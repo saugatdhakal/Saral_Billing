@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\PurchaseItem;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\PurchaseItemRequest ;
@@ -11,10 +12,21 @@ use App\Http\Requests\PurchaseItemRequest ;
 class PurchaseItemController extends Controller
 {
    public function store(PurchaseItemRequest $request,$id){
-    $item = new PurchaseItem();
-    $item->storePurchase($item,$request,$id); //model
-    return back();
+      $repeat = PurchaseItem::checkUniqueProduct($id,$request->productId);
+      if($repeat){
+         return back()->withFail(['Product is repeated!! Update Exiting product or Create new']);
+      }
+      \DB::transaction(function()use($request,$id){
+      $item = new PurchaseItem();
+      $item->storeAndUpdatePurchase($item,$request,$id); //model
+
+      $stock = new Stock();
+      $item->storeAndUpdateStock($stock,$item);
+      
+      });
+      return back();
    }
+
    public function getProductCode(){
       $code=Product::generateUniqueNumber();
       return $code;
@@ -29,28 +41,23 @@ class PurchaseItemController extends Controller
         ->get()->first();
    }
    public function updateList(PurchaseItemRequest $request){
-      $item = PurchaseItem::get()->find($request->id);
-      $item->storePurchase($item,$request,$item->purchase_id);
+      \DB::transaction(function()use($request){
+         $item = PurchaseItem::where('id',$request->id)->get()->first();
+         $stock = Stock::where('purchase_item_id',$request->id)->get()->first();
+         $item->storeAndUpdatePurchase($item,$request,$item->purchase_id); //Purchase Item 
+         $item->storeAndUpdateStock($stock,$item); //Stock
+      });
+ 
       return back();
    }
 
    public function completeInvoice(Request $request,$id){
+     
        $purchase = Purchase::withSum('items','amount')
                                 ->withSum('items','discount_amount')
                                 ->find($id);
-
-       $roundedAmount =ceil($purchase->total_amount - $purchase->discount_amount);
-      
-       $purchase->gts =(!empty($request->gst)? $request->gst : '0' ) ; //*! Need to change gts into gts database
-       $purchase->extra_charges = (!empty($request->extra_amount)? $request->extra_amount : '0' );
-       $purchase->status = 'COMPLETED';
-       $purchase->total_amount = $purchase->items_sum_amount;
-       $purchase->discount_amount = $purchase->items_sum_discount_amount;
-       $purchase->rounding = round($roundedAmount-($purchase->total_amount - $purchase->discount_amount),2);
-       $purchase->net_amount = $roundedAmount + $purchase->gts + $purchase->extra_amount; // *! Need to complete it net amount
-       $purchase->remark = !empty($request->remark)?($request->remark) : null;   
-       $purchase->save();
-
+                                
+       PurchaseItem::invoiceSave($purchase,$request);
        return redirect()->route('purchase.index');
 
    }

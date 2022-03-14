@@ -5,6 +5,7 @@ use App\Http\Controllers\TransportController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\PurchaseItemController;
 /*
 |--------------------------------------------------------------------------
@@ -108,5 +109,9 @@ Route::delete('/purchaseItem/deletePurchaseList/{id}',[PurchaseItemController::c
 Route::post('/purchaseItem/completeInvoice/{id}',[PurchaseItemController::class,'completeInvoice'])->name('purchaseItem.completeInvoice');
 Route::get('/Purchase/ajaxIndex',[PurchaseController::class,'ajaxIndex'])->name('purchaseItem.ajaxIndex');
 
+
+Route::post('/stock/statusSwitch/{id}',[StockController::class,'statusSwitch'])->name('stock.statusSwitch');
+Route::get('/stock/getIndexAjax',[StockController::class,'getIndexAjax'])->name('stock.getIndexAjax');
+Route::resource('stock',StockController::class);
 
 }); 

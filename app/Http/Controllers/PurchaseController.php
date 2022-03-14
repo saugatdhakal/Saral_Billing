@@ -173,13 +173,16 @@ class PurchaseController extends Controller
 
 
     public function purchaseOrderView($id){
+         
         // start_measure('render','Time for rendering');
-        $purchase = DB::table('purchases')
-        ->where('purchases.deleted_by','=',NULL)
-        ->where('purchases.id', $id)
-        ->join('suppliers','purchases.supplier_id','=','suppliers.id')
-        ->select('purchases.id as purchase_id','purchases.invoice_number','purchases.transaction_date','purchases.bill_date','purchases.lr_no','purchases.bill_no','suppliers.id as supplier_id','suppliers.name as supplier_name','suppliers.address')
-        ->get()->first();
+        $purchase =   DB::table('purchases')
+            ->where('purchases.deleted_by','=',NULL)
+            ->where('purchases.id', $id)
+            ->join('suppliers','purchases.supplier_id','=','suppliers.id')
+            ->select('purchases.id as purchase_id','purchases.invoice_number','purchases.transaction_date','purchases.bill_date','purchases.lr_no','purchases.bill_no','suppliers.id as supplier_id','suppliers.name as supplier_name','suppliers.address')
+            ->get()->first();
+ 
+        
 
         $product = DB::table('products')->where('products.deleted_by','=',NULL)->get(['id','name','unit','product_code']);
         // Debugbar::startMeasure("Purchase Item DB");

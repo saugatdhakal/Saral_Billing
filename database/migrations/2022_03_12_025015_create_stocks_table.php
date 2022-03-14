@@ -15,6 +15,12 @@ class CreateStocksTable extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
+            $table->string('batch_number');
+            $table->string('product_shop_code');
+            $table->unsignedBigInteger('quantity');
+            $table->string('wholeSale_price');
+            $table->foreignId('purchase_item_id')->constrained()->cascadeOnDelete();
+            $table->enum('status',['ACTIVE','INACTIVE']);
             $table->timestamps();
         });
     }
