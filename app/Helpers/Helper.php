@@ -1,15 +1,22 @@
 <?php
 use App\Libraries\Nepali_Calendar;
 use Illuminate\Support\Facades\DB;
-use App\Libraries\Format_Nepali_Money;  
+use App\Models\Config;
+use App\Libraries\Format_Nepali_Money; 
+use App\Libraries\Number_Into_Words;  
 
+if(!function_exists('getConfig')){
+  function getConfig(){
+   return Config::where('id',1)->select('name','address','email','contact_number')->first(); 
+  }
+  }
 if(!function_exists('getFiscalYear')){
-function getFiscalYear(){
-   $fiscal= DB::table('configs')->get('fiscal_year')->first();
-   $split=str_split($fiscal->fiscal_year, 2);
-   return $split;
-}
-}
+  function getFiscalYear(){
+    $fiscal= DB::table('configs')->get('fiscal_year')->first();
+    $split=str_split($fiscal->fiscal_year, 2);
+    return $split;
+  }
+  }
 if(!function_exists('getPurchaseInvoice')){
 function getPurchaseInvoice(){
  $purchaseInvoice= DB::table('configs')->get('purchase_bill_number')->first();
@@ -41,5 +48,11 @@ function covertShopCode($num){
 }
 }
 
+if(!function_exists('intoWords')){
+function intoWords($num){
+  $words= new Number_Into_Words();
+  return $words->number_to_word($num);
+}
+}
 
 ?>

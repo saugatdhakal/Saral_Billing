@@ -23,7 +23,8 @@ class StockController extends Controller
            $data = DB::table('stocks')
             ->join('purchase_items','purchase_items.id','=','stocks.purchase_item_id')
             ->join('products','products.id','=','purchase_items.product_id')
-            ->select(['stocks.id','products.name as product_name','stocks.batch_number','stocks.product_shop_code','stocks.quantity','stocks.wholeSale_price','stocks.status'])
+            ->join('categories','categories.id','=','products.category_id')
+            ->select(['stocks.id','products.name as product_name','stocks.batch_number','stocks.product_shop_code','stocks.quantity','stocks.wholeSale_price','stocks.status','categories.name as category'])
             ->get()
             ; 
             return DataTables::of($data)

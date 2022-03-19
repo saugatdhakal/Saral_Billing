@@ -22,7 +22,7 @@
     <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" rel="stylesheet">
-    
+
 
 
     {{-- Select 2 --}}
@@ -49,6 +49,8 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous">
     </script>
+
+    
 </head>
 
 <body class="sb-nav-fixed">
@@ -472,6 +474,7 @@
     @yield('purchase.purchaseOrder')
     @yield('purchase.invoice')
     @yield('stock.index')
+    @yield('invoice2')
 
 
 

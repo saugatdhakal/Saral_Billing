@@ -16,4 +16,5 @@ class Stock extends Model
         'purchase_item_id',
         'status'
     ];
+    
 }

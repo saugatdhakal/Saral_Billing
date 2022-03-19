@@ -458,7 +458,6 @@
     
     $('.yajra-datatable').DataTable({
         "bPaginate": false,
-        
         "paging": false,
     });
 
@@ -508,6 +507,7 @@
                     dropdownParent: $('#productList .modal-content')
                    }
                ).trigger('change');
+               
                 $('#id').val(data.id);
                $('#modelQuantity').val(data.quantity);
                $('#modelRate').val(data.rate);

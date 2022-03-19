@@ -40,4 +40,20 @@ class Purchase extends Model
     {
         return $this->belongsTo(Suppliers::class);
     }
+    public function invoiceData($id){
+        return Purchase::where('id',$id)
+        ->with([
+        'supplier' => function ($supp) {
+            $supp->select('id','name','address','contact_number');
+        },
+        'items' => function ($query) {
+              $query->select('product_id','id','purchase_id','quantity','rate','amount','discount_percent','discount_amount','wholesale_price');     
+        },
+         'items.stock',
+        'items.product' => function ($prod) {
+             $prod->select('id','name','product_code','unit');
+        },
+        ])
+        ->first();
+    }
 }

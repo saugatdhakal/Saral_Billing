@@ -28,6 +28,10 @@ class PurchaseItem extends Model
     {
         return $this->belongsTo(Purchase::class);
     }
+     public function stock()
+    {
+        return $this->hasOne(Stock::class,'purchase_item_id')->select('id','purchase_item_id','batch_number');
+    }
     public function product()
     {
         return $this->belongsTo(Product::class);

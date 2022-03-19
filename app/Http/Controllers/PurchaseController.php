@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\PurchaseValidateRequest;
 use DataTables;
+use PDF;
 
 
 class PurchaseController extends Controller
@@ -106,22 +107,30 @@ class PurchaseController extends Controller
 
     public function invoice($id){
       
-        $config = Config::where('id',1)->select('name','address','email','contact_number')->first();
+        $config = getConfig();    
+        $obj = new Purchase();
+        $purchase = $obj->invoiceData($id);
+        
+        return view('purchase.invoice2',['purchase'=>$purchase,'config'=>$config]);
+    }
+
+    public function print($id){   
+       $config = getConfig();    
+        $obj = new Purchase();
+        $purchase = $obj->invoiceData($id);
+        return view('invoice.export',['purchase'=>$purchase,'config'=>$config]);
+    }
+    public function pdf($id){ 
+
+       $config = getConfig();    
+        $obj = new Purchase();
+        $purchase = $obj->invoiceData($id);
+
+     
+          
+        $pdf = PDF::loadView('invoice.export', ['purchase'=>$purchase,'config'=>$config]);
     
-        $purchase = Purchase::where('id',$id)
-        ->with([
-        'supplier' => function ($supp) {
-            $supp->select('id','name','address','contact_number');
-        },
-        'items' => function ($query) {
-              $query->select('product_id','id','purchase_id','quantity','rate','amount','discount_percent','discount_amount');   
-        },'items.product' => function ($prod) {
-             $prod->select('id','name','product_code','unit');
-        }, 
-        ])
-        ->first();
-        // return $purchase;
-        return view('purchase.invoice',['purchase'=>$purchase,'config'=>$config]);
+        return $pdf->download('saral.pdf');
     }
 
 
@@ -181,10 +190,8 @@ class PurchaseController extends Controller
             ->join('suppliers','purchases.supplier_id','=','suppliers.id')
             ->select('purchases.id as purchase_id','purchases.invoice_number','purchases.transaction_date','purchases.bill_date','purchases.lr_no','purchases.bill_no','suppliers.id as supplier_id','suppliers.name as supplier_name','suppliers.address')
             ->get()->first();
- 
-        
-
-        $product = DB::table('products')->where('products.deleted_by','=',NULL)->get(['id','name','unit','product_code']);
+            
+        $product = DB::table('products')->where('status','ACTIVE')->where('products.deleted_by','=',NULL)->get(['id','name','unit','product_code']);
         // Debugbar::startMeasure("Purchase Item DB");
        
         $list = DB::table('purchase_items')

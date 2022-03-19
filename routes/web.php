@@ -107,7 +107,10 @@ Route::post('/purchaseItem/store/{id}',[PurchaseItemController::class,'store'])-
 Route::get('/purchaseItem/getProductCode',[PurchaseItemController::class,'getProductCode'])->name('purchaseItem.getProductCode');
 Route::delete('/purchaseItem/deletePurchaseList/{id}',[PurchaseItemController::class,'deletePurchaseList'])->name('purchaseItem.deletePurchaseList');
 Route::post('/purchaseItem/completeInvoice/{id}',[PurchaseItemController::class,'completeInvoice'])->name('purchaseItem.completeInvoice');
-Route::get('/Purchase/ajaxIndex',[PurchaseController::class,'ajaxIndex'])->name('purchaseItem.ajaxIndex');
+Route::get('/Purchase/ajaxIndex',[PurchaseController::class,'ajaxIndex'])->name('Purchase.ajaxIndex');
+Route::get('/Purchase/print/{id}',[PurchaseController::class,'print'])->name('Purchase.print');
+Route::get('/purchase/pdf/{id}',[PurchaseController::class,'pdf'])->name('purchase.pdf');
+
 
 
 Route::post('/stock/statusSwitch/{id}',[StockController::class,'statusSwitch'])->name('stock.statusSwitch');
