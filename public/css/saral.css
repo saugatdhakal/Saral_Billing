@@ -37,14 +37,25 @@
     border: none;
     background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba(255,255,255,1.0)'/></svg>");
 }
+ table.stockTable{
+        width: 100%;
+        border-collapse: collapse;
+        }
+        table.stockTable th {
+        border:2px #000000;
+        border-collapse:collapse;
+        border-style: dashed none;
+        }
+        .table.stockTable td,.table.stockTable th {
+        padding:12px 15px;
+        border:2px #000000;
+        border-collapse:collapse;
+        border-style: dashed none ;
+        text-align: center;
+        font-size:16px;
+        }
 
-table.stockTable th {
-    border:2px #000000;
-    border-collapse:collapse;
-    border-style: dashed none;
-}
-table.stockTable td {
-    border:2px #000000;
-    border-collapse:collapse;
-    border-style: dashed none;
+.badge-mine {
+   color: #212529;
+   background-color: #808080;
 }

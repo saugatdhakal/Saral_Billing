@@ -60,9 +60,9 @@
         data: 'action',orderable: true, searchable: true,
         },
         ],
-        dom: 'Bfrtip',
+        dom: 'Blfrtip',
         buttons: [
-        'copy', 'csv', 'excel',
+          'excel',
          {
              extend: 'pdfHtml5',
                 text: 'PDF',

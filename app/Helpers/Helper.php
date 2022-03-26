@@ -29,8 +29,10 @@ function getPurchaseInvoice(){
 
 if(!function_exists('getNepaliDate')){
 function getNepaliDate($date){
+  $splitDate= explode("-",$date);
   $cal = new Nepali_Calendar();
-  return $cal->eng_to_nep($date);  
+  $nep=$cal->eng_to_nep($splitDate[0],$splitDate[1],$splitDate[2]); 
+  return ($nep["year"].'-'.$nep["month"].'-'.$nep["date"]); 
 }
 }
 

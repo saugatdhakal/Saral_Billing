@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\PurchaseItemController;
+use App\Http\Controllers\PurchaseEmailController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -95,9 +96,18 @@ Route::get('/category/yajraTable',[CategoryController::class,'yajraTableIndexs']
 Route::resource('category',CategoryController::class);
 
 // *?Purchase 
-Route::get('/Purchase/invoice/{id}',[PurchaseController::class,'invoice'])->name('purchase.invoice');
+Route::delete('/purchase/trashDelete/{id}',[PurchaseController::class, 'trashDelete'])->name('purchase.trashDelete');
+Route::post('/purchase/restorePurchase/{id}',[PurchaseController::class,'restorePurchase'])->name('purchase.restorePurchase');
+Route::get('/purchase/trashAjax',[PurchaseController::class,'trashAjax'])->name('purchase.trashAjax');
+Route::get('/purchase/trashPage',[PurchaseController::class,'trashPage'])->name('purchase.trashPage');
+Route::get('/purchase/moduleView/{id}',[PurchaseController::class,'moduleView'])->name('purchase.moduleView');
+Route::get('/purchase/invoice2/{id}',[PurchaseController::class,'invoice2'])->name('purchase.invoice2');
+Route::get('/purchase/invoice1/{id}',[PurchaseController::class,'invoice1'])->name('purchase.invoice1');
 Route::get('/purchase/ajaxIndex',[PurchaseController::class,'ajaxIndex'])->name('purchase.ajaxIndex');
 Route::get('purchase/purchaseOrderView/{id}',[PurchaseController::class,'purchaseOrderView'])->name('purchase.purchaseOrderView');   
+Route::get('/Purchase/ajaxIndex',[PurchaseController::class,'ajaxIndex'])->name('purchase.ajaxIndex');
+Route::get('/Purchase/print/{id}',[PurchaseController::class,'print'])->name('purchase.print');
+Route::get('/purchase/domPdf/{id}',[PurchaseController::class,'domPdf'])->name('purchase.domPdf');
 Route::resource('purchase',PurchaseController::class);
 
 // **Purchase Item /
@@ -107,14 +117,14 @@ Route::post('/purchaseItem/store/{id}',[PurchaseItemController::class,'store'])-
 Route::get('/purchaseItem/getProductCode',[PurchaseItemController::class,'getProductCode'])->name('purchaseItem.getProductCode');
 Route::delete('/purchaseItem/deletePurchaseList/{id}',[PurchaseItemController::class,'deletePurchaseList'])->name('purchaseItem.deletePurchaseList');
 Route::post('/purchaseItem/completeInvoice/{id}',[PurchaseItemController::class,'completeInvoice'])->name('purchaseItem.completeInvoice');
-Route::get('/Purchase/ajaxIndex',[PurchaseController::class,'ajaxIndex'])->name('Purchase.ajaxIndex');
-Route::get('/Purchase/print/{id}',[PurchaseController::class,'print'])->name('Purchase.print');
-Route::get('/purchase/pdf/{id}',[PurchaseController::class,'pdf'])->name('purchase.pdf');
 
 
 
+// *?Stock
 Route::post('/stock/statusSwitch/{id}',[StockController::class,'statusSwitch'])->name('stock.statusSwitch');
 Route::get('/stock/getIndexAjax',[StockController::class,'getIndexAjax'])->name('stock.getIndexAjax');
 Route::resource('stock',StockController::class);
+Route::get('/purchaseEmail/index',[PurchaseEmailController::class,'index'])->name('purchaseEmail.index');
+
 
 }); 

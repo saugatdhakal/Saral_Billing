@@ -1,22 +1,25 @@
 @extends('layouts.app')
 @section('content')
 
-<div class="row mb-3 p-0 mt-2 mr-3">
-    <div class="col-md-12 clearfix ">
-        <a class="float-right mr-2" href="{{route('purchase.create')}}">
-            <button type="button" id="add" class="btn btn-outline-primary float-right" data-bs-toggle="modal"
-                data-bs-target="#category" autofocus>
-                <i class="fa fa-user" aria-hidden="true"></i> Add Purchase
-            </button>
-        </a>
-        <a class="float-right mr-2" href="{{route('purchase.trashPage')}}">
-            <button type="button" class="btn btn-outline-danger">
-                <i class="fas fa-user-times"></i> Trash Purchase
-            </button>
-        </a>
+<div class="card-body">
+    <center>
+        <h1> Purchase Trash</h1>
+    </center>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        @if (Session::has('fail'))
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (Session::get('fail') as $session)
+                <li>{{$session}}</li>
+                @endforeach
+                {{-- <li>{!! \Session::get('fail') !!}</li> --}}
+            </ul>
+        </div>
+        @endif
     </div>
 </div>
-
 <div class="card mb-4 m-2">
     <div class="card-header">
         <svg class="svg-inline--fa fa-table fa-w-16 me-1" aria-hidden="tdue" focusable="false" data-prefix="fas"
@@ -25,7 +28,7 @@
                 d="M464 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM224 416H64v-96h160v96zm0-160H64v-96h160v96zm224 160H288v-96h160v96zm0-160H288v-96h160v96z">
             </path>
         </svg><!-- <i class="fas fa-table me-1"></i> Font Awesome fontawesome.com -->
-        Purchase List
+        Product List
     </div>
 
     <div class="card-body">
@@ -52,7 +55,6 @@
 
     </div>
 </div>
-{{-- Model --}}
 <div class="modal fade" id="purchaseModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -131,101 +133,134 @@
         </div>
     </div>
 </div>
-
-@section('product.index')
+@section('purchase.trashAjax')
 <script>
     $(function(){
-    // YajraBox-Datatable
-        var table =$('.yajra-datatable').DataTable({
-            lengthMenu: [
-                [ 30, 40, 50, -1 ],
-                [ '30 rows', '40 rows', '50 rows', 'Show all' ]
-            ],
-            processing:true,
-            serverSide:true,
-            ajax:"{{route('purchase.ajaxIndex')}}",
-            columns:[
-            {data: 'DT_RowIndex'},
-            {data: 'name'},
-            {data: 'invoice_number' },
-            {data: 'transaction_date'},
-            {data: 'bill_date'},
-            {data: 'bill_no'},
-            {data: 'lr_no'},
-            {data: 'net_amount'},
-            {
-            data: 'action',orderable: true, searchable: true,
-            },
+// YajraBox-Datatable
+    var table =$('.yajra-datatable').DataTable({
+    lengthMenu: [
+    [ 30, 40, 50, -1 ],
+    [ '30 rows', '40 rows', '50 rows', 'Show all' ]
+    ],
+    processing:true,
+    serverSide:true,
+    ajax:"{{route('purchase.trashAjax')}}",
+    columns:[
+    {data: 'DT_RowIndex'},
+    {data: 'name'},
+    {data: 'invoice_number' },
+    {data: 'transaction_date'},
+    {data: 'bill_date'},
+    {data: 'bill_no'},
+    {data: 'lr_no'},
+    {data: 'net_amount'},
+    {
+    data: 'action',orderable: true, searchable: true,
+    },
     ]
     });
+});
 
-    $('body').on('click', '.viewPurchase', function () {
-    var btnId = $(this).attr("id");
-    // alert(btnId);
-    $('#purchaseModel').modal('toggle');
-    $.get("/purchase/moduleView/"+btnId , function (data) {
-    // console.log(data);
-    $('#purchase_status').html(data.status);
-    $('#purchase_type').html(data.purchase_type);
-    $('#supplier_name').html(data.name);
-    $('#invoice_no').html(data.invoice_number);
-    $('#transaction_date').html(data.transaction_date);
-    $('#bill_date').html(data.bill_date);
-    $('#bill_no').html(data.bill_no);
-    $('#lr_no').html(data.lr_no);
-    $('#gst').html(data.gts);
-    $('#net_amount').html(data.net_amount);
-    }
-    );
-    });
-    $('.close').click(function () {
-    $('#purchaseModel').modal('toggle');
-    });
+$('body').on('click', '.viewPurchase', function () {
+var btnId = $(this).attr("id");
+// alert(btnId);
+$('#purchaseModel').modal('toggle');
+$.get("/purchase/moduleView/"+btnId , function (data) {
+// console.log('hello');
+$('#purchase_status').html(data.status);
+$('#purchase_type').html(data.purchase_type);
+$('#supplier_name').html(data.name);
+$('#invoice_no').html(data.invoice_number);
+$('#transaction_date').html(data.transaction_date);
+$('#bill_date').html(data.bill_date);
+$('#bill_no').html(data.bill_no);
+$('#lr_no').html(data.lr_no);
+$('#gst').html(data.gts);
+$('#net_amount').html(data.net_amount);
+}
+);
+});
+$('.close').click(function () {
+$('#purchaseModel').modal('toggle');
+});
 
-    //Delete Purchase 
-    $('body').on('click', '.deletePurchase', function () {
-    var btnId = $(this).attr("id");
+//Restore Deleted Data
+$('body').on('click', '.restoreTrash', function (e){
+
+e.preventDefault();
+var btnId = $(this).attr("id");
     swal({
     title: "Are you sure?",
-    text: "Deleted Data will move to Trash",
-    icon: "warning",
+    text: "Do you want to restore data!!",
+    icon: "info",
     buttons: true,
-    dangerMode: true,
-    })
-    .then((willDelete) => {
-    
-    if (willDelete) {
+    dangerMode: false,
+})
+.then((result) => {
+
+    if (result) {
     $.ajax({
-    type: "DELETE",
-    url:"purchase/"+btnId,
-    data: {
-    "_token":$('input[name="_token"]').val(),
-    "id":btnId,
-    },
-    success: function(data){
-    // alert(data);
-    if(data == "DeleteSuccess"){
-    swal(" Your Data has been Move to Trash!!", {
-    icon: "success",
-    }).then((willDelete)=>{
-    location.reload();
-    });
-    }
-    
-    }
-    })
-    }
-    
-    });
-    
-    });
+        type: "POST",
+        url:'/purchase/restorePurchase/'+btnId,
+        data: {
+            "_token":$('input[name="_token"]').val(),
+            "id":btnId,
+        },
+        success: function(data){
+            // alert(data);
+            if(data == "DataRestore"){
+                swal(" Your Data has been restore!!", {
+                icon: "success",
+                }).then((result)=>{
+                location.reload();
+                });
+            }
 
+        }
+    })  
+    }
 
-    });
-   
+});
+});
+//Category Permanent Delete
+$('body').on('click', '.deletePurchase', function () {
+var btnId = $(this).attr("id");
+swal({
+title: "Are you sure?",
+text: "Data will be permanently deleted !!",
+icon: "warning",
+buttons: true,
+dangerMode: true,
+})
+.then((willDelete) => {
 
+if (willDelete) {
+$.ajax({
+type: "DELETE",
+url:"/purchase/trashDelete/"+btnId,
+data: {
+"_token":$('input[name="_token"]').val(),
+"id":btnId,
+},
+success: function(data){
+alert(data);
+if(data == "DeleteSuccess"){
+swal(" Your data is permanently deleted!!", {
+icon: "success",
+}).then((willDelete)=>{
+location.reload();
+});
+}
+
+}
+})
+}
+
+});
+
+});
 </script>
-
 @endsection
+
 
 @endsection

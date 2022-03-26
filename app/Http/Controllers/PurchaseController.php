@@ -8,8 +8,10 @@ use App\Models\Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\PurchaseValidateRequest;
+use Illuminate\Support\Facades\Storage;
 use DataTables;
 use PDF;
+
 
 
 class PurchaseController extends Controller
@@ -46,7 +48,7 @@ class PurchaseController extends Controller
                 else if ($row->status == 'COMPLETED') {
                 $actionBtn.=
                 ' 
-                    <a class="btnComplete" href="'.route('purchase.invoice',["id"=>$row->id]).'" >
+                    <a class="btnComplete" href="'.route('purchase.invoice1',["id"=>$row->id]).'" >
                    <i class="fa-solid fa-file-invoice fa-xl"></i>
                     </a>
                     &#160
@@ -54,11 +56,11 @@ class PurchaseController extends Controller
                 }
                 
                 $actionBtn.=' 
-                    <a data-toggle="modal" class="viewSuppliers" id="'.$row->id.'"  data-target="#modal">
+                    <a data-toggle="modal" class="viewPurchase" id="'.$row->id.'"  data-target="#modal">
                         <i class="fa-solid fa-eye fa-xl"></i>
                     </a>
                     &#160
-                    <a  class="deleteSupplier" id="'.$row->id.'">
+                    <a  class="deletePurchase" id="'.$row->id.'">
                         <i class="fa-solid fa-trash-can-list fa-xl"></i>
                     </a>
                 ';
@@ -87,12 +89,14 @@ class PurchaseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(PurchaseValidateRequest $request)
-    {  
+    {   
        $fiscal=getFiscalYear();
        $purchase = new Purchase();
        $purchase->invoice_number = getPurchaseInvoice();//Helper
        $purchase->fiscal_year = '0'.$fiscal[0].'/'.'0'.$fiscal[1];
-       $purchase->transaction_date = $request->transactionDate;
+    
+       $purchase->transaction_date = getNepaliDate($request->transactionDate);
+       
        $purchase->bill_date = $request->billDate;
        $purchase->lr_no= $request->lrNo;
        $purchase->bill_no = $request->billNo;
@@ -105,7 +109,15 @@ class PurchaseController extends Controller
        return redirect()->route('purchase.purchaseOrderView',['id' => $purchase->id]);
     }
 
-    public function invoice($id){
+    public function invoice1($id){
+      
+        $config = getConfig();    
+        $obj = new Purchase();
+        $purchase = $obj->invoiceData($id);
+
+        return view('purchase.invoice1',['purchase'=>$purchase,'config'=>$config]);
+    }
+     public function invoice2($id){
       
         $config = getConfig();    
         $obj = new Purchase();
@@ -120,30 +132,22 @@ class PurchaseController extends Controller
         $purchase = $obj->invoiceData($id);
         return view('invoice.export',['purchase'=>$purchase,'config'=>$config]);
     }
-    public function pdf($id){ 
-
-       $config = getConfig();    
+ 
+    public function domPdf($id)
+    {
+         start_measure('render','Time for rendering');
+        $config = getConfig();    
         $obj = new Purchase();
         $purchase = $obj->invoiceData($id);
+        // return view('invoice.pdf',['purchase'=>$purchase,'config'=>$config]);
+       
 
-     
-          
-        $pdf = PDF::loadView('invoice.export', ['purchase'=>$purchase,'config'=>$config]);
-    
-        return $pdf->download('saral.pdf');
-    }
-
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Purchase  $purchase
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Purchase $purchase)
-    {
-        //
+        $pdf = PDF::loadView('invoice.pdf', ['purchase'=>$purchase,'config'=>$config]);
+        $pdf->setPaper('A3', 'landscape');
+        
+         stop_measure('render');
+         return $pdf->stream();
+        // return $pdf->download('saral.pdf');
     }
 
     /**
@@ -152,9 +156,15 @@ class PurchaseController extends Controller
      * @param  \App\Models\Purchase  $purchase
      * @return \Illuminate\Http\Response
      */
-    public function edit(Purchase $purchase)
+    public function moduleView($id)
     {
-        //
+        $data =DB::table('purchases')
+         
+        ->where('purchases.id',$id)
+         ->join('suppliers','purchases.supplier_id','=','suppliers.id')
+         ->select(['purchases.invoice_number','purchases.transaction_date','purchases.bill_date','purchases.bill_no','purchases.lr_no','purchases.gts','purchases.net_amount','suppliers.name','purchases.status','purchases.purchase_type'])
+         ->get()->first(); 
+         return $data;
     }
 
     /**
@@ -164,9 +174,49 @@ class PurchaseController extends Controller
      * @param  \App\Models\Purchase  $purchase
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Purchase $purchase)
+    public function trashPage()
     {
-        //
+        
+    
+        return view('purchase.trash');
+    }
+    public function trashAjax(){
+        $data =DB::table('purchases')
+         ->whereNotNull('purchases.deleted_by')
+         ->join('suppliers','purchases.supplier_id','=','suppliers.id')
+         ->select(['purchases.id','purchases.invoice_number','purchases.transaction_date','purchases.bill_date','purchases.bill_no','purchases.lr_no','purchases.net_amount','suppliers.name','purchases.status'])
+         ->get(); 
+            return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('action',function($row){
+                $actionBtn=''; 
+                $actionBtn.=
+                ' 
+                    <a class="restoreTrash" id="'.$row->id.'">
+                    <i class="fas fa-undo-alt fa-lg"></i>
+                    </a>
+                    &#160
+                ';
+              
+                
+                $actionBtn.=' 
+                    <a data-toggle="modal" class="viewPurchase" id="'.$row->id.'"  data-target="#modal">
+                        <i class="fa-solid fa-eye fa-xl"></i>
+                    </a>
+                    &#160
+                    <a  class="deletePurchase" id="'.$row->id.'">
+                        <i class="fa-solid fa-trash-can-list fa-xl"></i>
+                    </a>
+                ';
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+     public function restorePurchase($id){
+        $purchase = Purchase::onlyTrashed()->find($id);
+        $purchase->restore();
+        return "DataRestore";
     }
 
     /**
@@ -175,9 +225,12 @@ class PurchaseController extends Controller
      * @param  \App\Models\Purchase  $purchase
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Purchase $purchase)
+    public function destroy($id)
     {
-        //
+        $purchase = Purchase::find($id);
+        
+        $purchase->delete();
+        return "DeleteSuccess";
     }
 
 
@@ -203,6 +256,19 @@ class PurchaseController extends Controller
     // stop_measure('render');
 
         return view('purchase.purchaseOrder',['data'=>$purchase,'product'=>$product,'list'=>$list]);
+    }
+     public function trashDelete($id)
+    {  
+        try {
+        Purchase::onlyTrashed()->find($id)->forceDelete();
+        return "DeleteSuccess";
+        }
+        catch (\Exception $e) {
+           //! Not returning back with error message 
+        //  return redirect()->back()->withFail(['Code Match with other product','Please use default code']);// can add multiple value on error
+        }
+        
+       
     }
 
 

@@ -474,7 +474,9 @@
     @yield('purchase.purchaseOrder')
     @yield('purchase.invoice')
     @yield('stock.index')
+    @yield('invoice1')
     @yield('invoice2')
+    @yield('purchase.trashAjax')
 
 
 

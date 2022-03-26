@@ -49,16 +49,19 @@
             <thead>
                 <tr>
                     <th width="5%">SN</th>
-                    <th>Name</th>
-                    <th>code</th>
-                    <th>unit</th>
-                    <th>category</th>
+                    <th>Supplier Name</th>
+                    <th>Invoice No</th>
+                    <th>Transaction date</th>
+                    <th>Bill Date</th>
+                    <th>Bill No</th>
+                    <th>Lr No</th>
+                    <th>Net Amount</th>
                     <th width="9%">Action</th>
                 </tr>
             </thead>
-
+        
             <tbody>
-
+        
             </tbody>
         </table>
 

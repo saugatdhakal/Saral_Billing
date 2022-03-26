@@ -59,7 +59,7 @@
                         Bill No : <span>{{$purchase->bill_no}}</span>
                     </div>
                 </div>
-              
+              <hr style="border: 1px dashed  #000000;" />
                 <table class="table  stockTable" width="100%" style="border-style:dashed;">
                     <thead>
                         <tr>
@@ -90,8 +90,8 @@
                     </tbody>
                 </table>
                 <div class="row">
-                    <div class="col-md-7"></div>
-                    <div class="col-md-5">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4">
                         <table>
                             <tr>
                                 <td style="font-size:19px;font-weight:bold;">Sub Amount : </td>
@@ -156,6 +156,7 @@
                 </div>
               
             </div>
+            <hr style="border: 1px dashed  #000000;" /> 
             @section('invoice2')
             <script type="text/javascript">
                 function openWin()
