@@ -44,7 +44,7 @@
 
         <div class="card-body text-success">
           <h1>
-            <center>{{DB::table('accounts')->where('deleted_by',NULL)->where('account_type','Business')->count();}}
+            <center>{{DB::table('accounts')->where('deleted_by',NULL)->where('account_type','BUSINESS')->count();}}
             </center>
           </h1>
         </div>
@@ -61,7 +61,7 @@
 
         <div class="card-body text-success">
           <h1>
-            <center>{{DB::table('accounts')->where('deleted_by',NULL)->where('account_type','Individual')->count();}}
+            <center>{{DB::table('accounts')->where('deleted_by',NULL)->where('account_type','INDIVIDUAL')->count();}}
             </center>
           </h1>
         </div>
@@ -150,10 +150,10 @@
           <tr>
             <td>{{++$i}}</td>
             <td>
-              @if($row->account_type == "Business")
-              <span class="badge badge-primary">Business</span>
+              @if($row->account_type == "BUSINESS")
+              <span class="badge badge-primary">BUSINESS</span>
               @else
-              <span class="badge badge-secondary">Individual</span>
+              <span class="badge badge-secondary">INDIVIDUAL</span>
               @endif
             </td>
             <td>{{$row->name}}</td>
@@ -180,7 +180,7 @@
       </table>
     </div>
   </div>
-  
+
 
   {{-- Bootstrap model --}}
   <div class="modal fade" id="supplierDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -288,7 +288,7 @@
                },
                cache: false,
                success: function(data) {
-                if(data.account_type=="Individual"){
+                if(data.account_type=="INDIVIDUAL"){
                   $('#ShopNameDiv').hide();
                   $('#ShopAddress').hide();
                   $('#Phone2').hide();
@@ -296,7 +296,7 @@
                   $('#PANNO').hide();
                   
                 }
-                else if(data.account_type=="Business"){
+                else if(data.account_type=="BUSINESS"){
                   $('#ShopNameDiv').show();
                   $('#ShopAddress').show();
                   $('#Phone2').show();

@@ -15,7 +15,7 @@
         </div>
         <div class="col-md-1">
             <div class="form-check">
-                <input class="form-check-input" type="radio" id="Business" name="CutomerType" value="Business" required>
+                <input class="form-check-input" type="radio" id="BUSINESS" name="CutomerType" value="Business" required>
                 <label class="form-check-label" for="Business">
                     Business
                 </label>
@@ -23,7 +23,7 @@
         </div>
         <div class="col-md-1">
             <div class="form-check">
-                <input class="form-check-input" type="radio" id="Individual" name="CutomerType" value="Individual"
+                <input class="form-check-input" type="radio" id="INDIVIDUAL" name="CutomerType" value="Individual"
                     required>
                 <label class="form-check-label" for="Individual">
                     Individual

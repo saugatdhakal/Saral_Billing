@@ -14,7 +14,7 @@
     </div>
     <div class="col-md-1">
         <div class="form-check" id="bussinessRadio">
-            <input class="form-check-input" type="radio" id="Business"   name="CutomerType" value="Business"  required>
+            <input class="form-check-input" type="radio" id="Business"   name="CutomerType" value="BUSINESS"  required>
             <label class="form-check-label" for="Business">
               Business
             </label>
@@ -22,7 +22,7 @@
     </div>
     <div class="col-md-1">
         <div class="form-check" id="individualRadio">
-            <input class="form-check-input" type="radio" id="Individual" name="CutomerType" value="Individual" required>
+            <input class="form-check-input" type="radio" id="Individual" name="CutomerType" value="INDIVIDUAL" required>
             <label class="form-check-label" for="Individual">
               Individual
             </label>
@@ -156,7 +156,7 @@
         //Getting data from controller to script
         var acc = <?php echo json_encode($account->account_type); ?>;  
         
-            if(acc == "Business"){
+            if(acc == "BUSINESS"){
                 $('#Business').click();
                 radioBusiness();   
             }else{

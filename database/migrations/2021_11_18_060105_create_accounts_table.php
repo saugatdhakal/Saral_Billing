@@ -15,7 +15,7 @@ class CreateAccountsTable extends Migration
     {
         Schema::create('Accounts', function (Blueprint $table) {
         $table->id();
-        $table->String('account_type');
+        $table->enum('account_type',['BUSINESS','INDIVIDUAL']);
         $table->string('name');
         $table->string('shop_name')->nullable();
         $table->string('home_address')->nullable();

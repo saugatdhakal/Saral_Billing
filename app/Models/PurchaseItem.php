@@ -55,6 +55,7 @@ class PurchaseItem extends Model
         $stock->batch_number = time();
         $stock->product_shop_code = covertShopCode($item->wholesale_price);
         $stock->quantity = $item->quantity;
+        $stock->rate = $item->rate;
         $stock->wholeSale_price = $item->wholesale_price;
         $stock->purchase_item_id = $item->id;
         $stock->save();
@@ -70,7 +71,7 @@ class PurchaseItem extends Model
 
     public static function invoiceSave(Purchase $purchase,$request){
         $roundedAmount =ceil($purchase->items_sum_amount - $purchase->items_sum_discount_amount);
-       $purchase->gts =(!empty($request->gst)? $request->gst : 0 ) ; //*! Need to change gts into gts database
+       $purchase->gst =(!empty($request->gst)? $request->gst : 0 ) ; 
        $purchase->extra_charges = (!empty($request->extra_amount)? $request->extra_amount : 0 );
        $purchase->status = 'COMPLETED';
        $purchase->total_amount = $purchase->items_sum_amount;

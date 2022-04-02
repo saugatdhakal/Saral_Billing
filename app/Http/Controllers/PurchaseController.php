@@ -135,19 +135,12 @@ class PurchaseController extends Controller
  
     public function domPdf($id)
     {
-         start_measure('render','Time for rendering');
         $config = getConfig();    
         $obj = new Purchase();
         $purchase = $obj->invoiceData($id);
-        // return view('invoice.pdf',['purchase'=>$purchase,'config'=>$config]);
-       
-
         $pdf = PDF::loadView('invoice.pdf', ['purchase'=>$purchase,'config'=>$config]);
-        $pdf->setPaper('A3', 'landscape');
-        
-         stop_measure('render');
+        $pdf->setPaper('A3', 'landscape'); 
          return $pdf->stream();
-        // return $pdf->download('saral.pdf');
     }
 
     /**

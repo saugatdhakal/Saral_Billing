@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePurchaseItemsTable extends Migration
+class CreateChequesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,15 @@ class CreatePurchaseItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_items', function (Blueprint $table) {
-             $table->id();
-            $table->string('quantity');
-            $table->string('rate');
-            $table->string('amount');
-            $table->string('discount_percent')->default('0');
-            $table->string('discount_amount')->default('0');
-            $table->string('wholesale_price');
-            $table->string('margin_per_item')->default('0');
-            $table->string('margin_total')->default('0');
-            $table->enum('purchase_item_type',['PURCHASE','RETURN']);
-            $table->foreignId('product_id')->constrained();
-            $table->foreignId('purchase_id')->constrained();
+        Schema::create('cheques', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('account_id')->constrained();//! Need to think of it why did i put it. It's is already on sales_id
+            $table->foreignId('sales_id')->nullable()->constrained();
+            $table->string('cheque_no');
+            $table->string('date_of_cheque');
+            $table->string('account_name');
+            $table->string('account_no');
+            $table->string('bank_name');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users');
             $table->unsignedBigInteger('updated_by')->nullable();
@@ -43,6 +39,6 @@ class CreatePurchaseItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchase_items');
+        Schema::dropIfExists('cheques');
     }
 }

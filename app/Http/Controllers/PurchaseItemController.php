@@ -51,6 +51,7 @@ class PurchaseItemController extends Controller
       return back();
    }
 
+
    public function completeInvoice(Request $request,$id){
      
        $purchase = Purchase::withSum('items','amount')

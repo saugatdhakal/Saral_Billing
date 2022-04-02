@@ -6,6 +6,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SaleItemController;
 use App\Http\Controllers\PurchaseItemController;
 use App\Http\Controllers\PurchaseEmailController;
 /*
@@ -118,13 +120,18 @@ Route::get('/purchaseItem/getProductCode',[PurchaseItemController::class,'getPro
 Route::delete('/purchaseItem/deletePurchaseList/{id}',[PurchaseItemController::class,'deletePurchaseList'])->name('purchaseItem.deletePurchaseList');
 Route::post('/purchaseItem/completeInvoice/{id}',[PurchaseItemController::class,'completeInvoice'])->name('purchaseItem.completeInvoice');
 
-
-
 // *?Stock
 Route::post('/stock/statusSwitch/{id}',[StockController::class,'statusSwitch'])->name('stock.statusSwitch');
 Route::get('/stock/getIndexAjax',[StockController::class,'getIndexAjax'])->name('stock.getIndexAjax');
 Route::resource('stock',StockController::class);
 Route::get('/purchaseEmail/index',[PurchaseEmailController::class,'index'])->name('purchaseEmail.index');
 
+Route::get('/sale/salesItem/{id}',[SaleController::class,'salesItem'])->name('sales.salesItem');
+Route::resource('sale',SaleController::class);
 
+
+Route::post('/salesItem/updateSalesItem/{id}',[SaleItemController::class,'updateSalesItem'])->name('salesItem.updateSalesItem');
+Route::get('/salesItem/stockEdit/{id}',[SaleItemController::class,'stockEdit'])->name('salesItem.stockEdit');
+Route::get('/salesItem/stockSelect/{id}',[SaleItemController::class,'stockSelect'])->name('salesItem.stockSelect');
+Route::post('/salesItem/store/{id}',[SaleItemController::class,'store'])->name('salesItem.store');
 }); 

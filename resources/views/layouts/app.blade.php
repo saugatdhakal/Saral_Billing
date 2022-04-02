@@ -34,6 +34,10 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/saral.css') }}" rel="stylesheet">
+    {{-- toastr --}}
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+    <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 
     <!--here-->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -50,7 +54,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous">
     </script>
 
-    
+
 </head>
 
 <body class="sb-nav-fixed">
@@ -284,6 +288,37 @@
                                     &#160 Trash Product</a>
                             </nav>
                         </div>
+
+                        {{-- Sales --}}
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#sales"
+                            aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-tags"></i>
+                                <!-- <i class="fas fa-columns"></i> Font Awesome fontawesome.com -->
+                            </div>
+                            Sales
+                            <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10"
+                                    aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down"
+                                    role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"
+                                    data-fa-i2svg="">
+                                    <path fill="currentColor"
+                                        d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z">
+                                    </path>
+                                </svg><!-- <i class="fas fa-angle-down"></i> Font Awesome fontawesome.com -->
+                            </div>
+                        </a>
+                        <div class="collapse" id="sales" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{{route('sale.index')}}"><i class="fa-solid fa-tags"></i>&#160
+                                    Sales
+                                    Dashboard</a>
+                                <a class="nav-link" href="{{route('sale.create')}}"><i class="fas fa-plus-circle"></i>
+                                    &#160 Create Sales </a>
+                                <a class="nav-link" href="{{route('product.productTrash')}}"><i
+                                        class="fas fa-user-slash"></i>
+                                    &#160 Trash Sales</a>
+                            </nav>
+                        </div>
                         {{-- Stock --}}
                         <a class="nav-link" href="{{route('stock.index')}}">
                             <div class="sb-nav-link-icon">
@@ -477,6 +512,7 @@
     @yield('invoice1')
     @yield('invoice2')
     @yield('purchase.trashAjax')
+    @yield('sales.salesItem')
 
 
 

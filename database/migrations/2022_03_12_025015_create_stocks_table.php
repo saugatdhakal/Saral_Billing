@@ -19,6 +19,7 @@ class CreateStocksTable extends Migration
             $table->string('product_shop_code');
             $table->unsignedBigInteger('quantity');
             $table->string('wholeSale_price');
+            $table->string('rate');
             $table->foreignId('purchase_item_id')->constrained()->cascadeOnDelete();
             $table->enum('status',['ACTIVE','INACTIVE']);
             $table->timestamps();

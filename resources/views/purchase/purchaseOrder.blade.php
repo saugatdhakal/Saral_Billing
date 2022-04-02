@@ -466,8 +466,6 @@
         
         const unit= $(this).find(':selected').attr('data-id')
         $('#unit').html(unit);
-        
-        // alert(unit);
     });
     
     //Deleting Product list 
@@ -481,9 +479,6 @@
             "id":btnId,
         },
         success: function(data){
-        // alert(data);
-        // $('#sel_users').val(data.product_id);
-        // $('#sel_users').select2().trigger('change');
         window.location.reload();
         }
     }

@@ -41,7 +41,7 @@
     @endphp
     <div id="invoice">
         <center>
-            <p style="font-size:45px;font-weight:bold;margin-left:5%;margin-bottom:0%; padding:0%">{{$names}} SOFTWARE
+            <p style="font-size:45px;font-weight:bold;margin-left:20%;margin-bottom:0%; padding:0%">{{$names}} SOFTWARE
             </p>
             <p style="font-size:17px;margin:0%; padding:0%">{{$config->address}}</p>
             <p>Contact No : <span>{{$config->contact_number}}</span> , Email : <span>{{$config->email}}</span></p>
@@ -79,7 +79,7 @@
             </div>
         </div>
         <hr style="border: 1px dashed  #000000;" />
-        <table class="table  stockTable" width="100%" style="border-style:dashed 15x;">
+        <table class="table  stockTable" width="100%">
             <thead>
                 <tr>
                     <th width="5%">SN</th>
