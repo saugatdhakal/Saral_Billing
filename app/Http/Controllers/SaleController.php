@@ -43,15 +43,17 @@ class SaleController extends Controller
     {
         $fiscal=getFiscalYear();
         $sale = new Sale();
+        
         \DB::transaction(function()use($request,$fiscal,$sale){
         $sale->fiscal_year = '0'.$fiscal[0].'/'.'0'.$fiscal[1];
         $sale->invoice_number =getSalesInvoice();   
         $sale->storeSale($sale,$request);
-        
         $config = Config::get()->first();
         $config->sales_bill_number = $config->sales_bill_number + 1;
         $config->save();
         });
+       
+        
         return redirect()->route('sales.salesItem',['id'=>$sale->id]);
     }
 
@@ -73,6 +75,7 @@ class SaleController extends Controller
         ->join('purchase_items', 'purchase_items.id','=','stocks.purchase_item_id')
         ->join('products','products.id','=','purchase_items.product_id')
         ->select(['products.id','products.name','products.unit','products.product_code'])
+        ->distinct() // ? Getting unique product from stocks
         ->get();
 
         $saleItems = DB::table('sale_items')

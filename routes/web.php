@@ -129,7 +129,8 @@ Route::get('/purchaseEmail/index',[PurchaseEmailController::class,'index'])->nam
 Route::get('/sale/salesItem/{id}',[SaleController::class,'salesItem'])->name('sales.salesItem');
 Route::resource('sale',SaleController::class);
 
-
+Route::post('/salesItem/completeSales/{id}',[SaleItemController::class,'completeSales'])->name('salesItem.completeSales');
+Route::delete('/salesItem/deleteSaleItem/{id}',[SaleItemController::class,'deleteSaleItem'])->name('salesItem.deleteSaleItem');
 Route::post('/salesItem/updateSalesItem/{id}',[SaleItemController::class,'updateSalesItem'])->name('salesItem.updateSalesItem');
 Route::get('/salesItem/stockEdit/{id}',[SaleItemController::class,'stockEdit'])->name('salesItem.stockEdit');
 Route::get('/salesItem/stockSelect/{id}',[SaleItemController::class,'stockSelect'])->name('salesItem.stockSelect');

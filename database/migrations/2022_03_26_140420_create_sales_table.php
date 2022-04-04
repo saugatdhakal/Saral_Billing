@@ -29,9 +29,7 @@ class CreateSalesTable extends Migration
             $table->string('printed_by')->nullable();
             $table->enum('sales_type',['DEBIT','CREDIT']);
             $table->string('paymode')->nullable();
-            
-            // $table->enum('paymode',['DUE','CASH','CHEQUE','BANK TRANSFER','MOBILE BANKING']);
-            $table->enum('status',['RUNNING','COMPLETED','CANCLED']);
+            $table->enum('status',['RUNNING','COMPLETED','RETURN']);
             // softdelete,timestamp and userstamp
             $table->unsignedBigInteger('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users');

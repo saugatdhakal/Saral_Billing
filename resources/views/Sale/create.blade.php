@@ -80,8 +80,8 @@
             <div class="col-md-4">
                 <select class="selects form-control form-select" style="width: 100%" name="saleType">
                     <option value="" selected disabled>---Select Sales Type ---</option>
-                    <option value="DEBIT">CASH</option>
-                    <option value="CREDIT">CREDIT</option>
+                    <option value="DIRECT">DIRECT</option>
+                    <option value="RETURN">RETURN</option>
                 </select>
                 <div class="invalid-feedback">
                     Sale Type is Empty !!

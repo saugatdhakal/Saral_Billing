@@ -29,8 +29,11 @@ class Sale extends Model
         $sale->account_id = $request->accountId;
         $sale->transaction_date = getNepaliDate($request->transactionDate);
         $sale->sales_date = $request->saleDate;
-        $sale->sales_type = $request->saleType;
+        if($request->saleType == 'RETURN'){
+            $sale->sales_type = $request->saleType;
+        }
         $sale->save();
     }
+
 
 }

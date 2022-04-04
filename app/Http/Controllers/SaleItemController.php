@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SaleItem;
+use App\Models\Sale;
+use App\Models\Cheque;
+
+
 use App\Http\Requests\SaleItemRequest;
 use Illuminate\Support\Facades\DB;
 use Brian2694\Toastr\Facades\Toastr;
@@ -15,7 +19,7 @@ class SaleItemController extends Controller
       
         $saleItem = new SaleItem();
         $saleItem->storeUpdate($saleItem,$request,$id);
-        Toastr::success('Post added successfully :)','Success');
+        Toastr::success('hello','msg');
         return redirect()->back();
 
         
@@ -26,7 +30,10 @@ class SaleItemController extends Controller
         $saleItem = SaleItem::find($request->id);
         $saleItem->storeUpdate($saleItem,$request,$request->id);
         return back();
-    }
+    }   
+    public function deleteSaleItem($id){
+      SaleItem::find($id)->delete();
+   }
 
     public function stockSelect($id){
        return  DB::table('stocks')
@@ -42,5 +49,9 @@ class SaleItemController extends Controller
         ->where('sale_items.id',$id)
         ->get(['id','stock_id','rate','quantity','product_id','discount_amount'])->first();
         
+    }
+    public function completeSales(Request $request,$id){
+        SaleItem::completeSalesInvoice($request,$id);
+        return redirect()->route('sale.index');
     }
 }

@@ -21,6 +21,7 @@ class CreateChequesTable extends Migration
             $table->string('date_of_cheque');
             $table->string('account_name');
             $table->string('account_no');
+            $table->string('amount');
             $table->string('bank_name');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users');

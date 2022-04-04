@@ -17,7 +17,7 @@ class CreateSaleItemsTable extends Migration
             $table->id();
             $table->string('invoice_number');
             $table->string('batch_number');
-            $table->unsignedBigInteger('quantity');
+            $table->string('quantity');
             $table->string('rate');
             $table->string('amount');
             $table->string('discount_percent')->default('0');
