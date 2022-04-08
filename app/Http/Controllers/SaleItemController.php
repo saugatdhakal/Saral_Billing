@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\SaleItem;
 use App\Models\Sale;
 use App\Models\Cheque;
+use App\Models\Stock;
 
 
 use App\Http\Requests\SaleItemRequest;
@@ -16,23 +17,40 @@ use Brian2694\Toastr\Facades\Toastr;
 class SaleItemController extends Controller
 {
     public function store(SaleItemRequest $request,$id){
-      
         $saleItem = new SaleItem();
-        $saleItem->storeUpdate($saleItem,$request,$id);
+        \DB::transaction(function()use($saleItem,$request,$id){
+            $saleItem->storeUpdate($saleItem,$request,$id);
+            $stock = Stock::where('id',$request->stockId)->get(['id','quantity'])->first();
+            $stock->quantity = $stock->quantity - $request->quantity;
+            $stock->save();
+        });
         Toastr::success('hello','msg');
         return redirect()->back();
-
-        
     }
 
     public function updateSalesItem(SaleItemRequest $request)
     {
         $saleItem = SaleItem::find($request->id);
-        $saleItem->storeUpdate($saleItem,$request,$request->id);
+        $stock = Stock::where('id',$request->stockId)->get(['id','quantity'])->first();
+         \DB::transaction(function()use($saleItem,$request,$stock){
+            $stock = Stock::where('id',$request->stockId)->get(['id','quantity'])->first();
+            $quantityOriginal = $stock->quantity + $saleItem->quantity; // ? Retutn to original quantity of stock
+            $stock->quantity = $quantityOriginal - $request->quantity;
+            $stock->save();
+            $saleItem->storeUpdate($saleItem,$request,$saleItem->sales_id);
+         });
         return back();
-    }   
+    } 
+
     public function deleteSaleItem($id){
-      SaleItem::find($id)->delete();
+    \DB::transaction(function()use($id){
+      $saleItem = SaleItem::find($id);
+      $stock = Stock::where('id',$saleItem->stock_id)->get(['id','quantity'])->first();
+      $stock->quantity = $stock->quantity + $saleItem->quantity;
+      $stock->save();
+      $saleItem->delete();
+    });
+    
    }
 
     public function stockSelect($id){

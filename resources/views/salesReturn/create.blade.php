@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="m-1">
-    <p style="font-size:30px;font-family:georgia,garamond,serif;">New Sale Form</p>
+    <p style="font-size:30px;font-family:georgia,garamond,serif;">New Sale Return Form</p>
 </div>
 <hr>
 @if ($errors->any())
@@ -16,16 +16,16 @@
 
 </div>
 @endif
-{{-- // --}}
 <div class="container-fluid">
-    <form class="row g-3 needs-validation" action="{{route('sale.store')}}" method="POST" novalidate>
+    <form class="row g-3 needs-validation" action="{{route('salesReturn.store')}}" method="POST" novalidate>
         @csrf
         <div class="row m-2">
             <div class="col-md-2 m-1" style="font-family:georgia,garamond,serif;">
                 Invoice Number
             </div>
             <div class="col-md-4">
-                <input type="text" class="form-control" value="{{$salesInvoice}}" name="invoiceNo" placeholder="Invoice Number" disabled required>
+                <input type="text" class="form-control" value="{{$invoice}}" name="invoiceNo"
+                    placeholder="Invoice Number" disabled required>
                 <div class="invalid-feedback">
                     Invoice Number is Empty!!
                 </div>
@@ -34,14 +34,14 @@
 
         <div class="row m-2" id="company">
             <div class="col-md-2 m-1" style="font-family:georgia,garamond,serif;">
-                Customer Name
+                Sale Date / Sale Invoice / Customer Name
             </div>
             <div class="col-md-4">
-                <select class="selects form-control form-select" style="width: 100%" name="accountId">
-                    <option value="" selected disabled>---Select Customer ---</option>
-                    {{$rows = DB::table('Accounts')->where('deleted_by',NULL)->get(['id','name']);}}
-                    @foreach ($rows as $row)
-                    <option value={{$row->id}} >{{$row->name}}</option>
+                <select class="selects form-select" style="width: 100%" name="salesId">
+                    <option value="" selected disabled>---Select Sales Invoice ---</option>
+
+                    @foreach ($sale as $row)
+                    <option value={{$row->id}} > Date:- {{$row->sales_date}} / Invoice:- {{$row->invoice_number}}/ Name:- {{$row->name}}</option>
                     @endforeach
 
                 </select>
@@ -67,7 +67,7 @@
                 Sale Date
             </div>
             <div class="col-md-4">
-                <input type="date" id="" class="form-control" name="saleDate">
+                <input type="date" id="" class="form-control" name="saleReturnDate">
                 <div class="invalid-feedback">
                     Sale Date is Empty !!
                 </div>

@@ -16,7 +16,7 @@ class CreateSalesReturnsTable extends Migration
         Schema::create('sales_returns', function (Blueprint $table) {
             $table->id();
             $table->string('fiscal_year');
-            $table->string('transection_date');
+            $table->string('transaction_date');
             $table->string('sales_return_date');
             $table->string('invoice_number')->unique();
             $table->string('total_amount')->default('0');
@@ -46,6 +46,8 @@ class CreateSalesReturnsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sales_returns');
+        Schema::table('sales_returns',function(Blueprint $table){
+            $table->dropSoftDeletes();
+        });
     }
 }

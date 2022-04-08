@@ -13,8 +13,7 @@ class SaleItem extends Model
     public function storeUpdate(SaleItem $saleItem,$request,$id){
         $stockItems = DB::table('stocks')
         ->where('stocks.id',$request->stockId)
-        ->select(['stocks.rate','stocks.batch_number','stocks.wholeSale_price'])
-        ->get()
+        ->get(['stocks.rate','stocks.batch_number','stocks.wholeSale_price'])
         ->first();
 
         $sale = DB::table('sales')
@@ -43,8 +42,8 @@ class SaleItem extends Model
         $saleItem->sales_id = $id;
         $saleItem->profit_per_item = $saleItem->rate - $stockItems->rate;//* purchase cost - (reRate or WholeSale Price)
         $saleItem->profit_total = $saleItem->profit_per_item * $saleItem->quantity;
-        
         $saleItem->save();
+
     }
 
 

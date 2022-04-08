@@ -7,8 +7,12 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SalesReturnController;
 use App\Http\Controllers\SaleItemController;
+use App\Http\Controllers\SalesReturn;
 use App\Http\Controllers\PurchaseItemController;
+use App\Http\Controllers\SupplierLedgerController;
+
 use App\Http\Controllers\PurchaseEmailController;
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //
 
-//User Routes
+//? User Routes
 Route::get('/user', [App\Http\Controllers\Users::class, 'index'])->name('user');
 Route::get('/user/changepassword', [App\Http\Controllers\Users::class, 'changepassword'])->name('user.changePassword');
 Route::get('/user/changeDetails', [App\Http\Controllers\Users::class, 'changeDetails'])->name('user.changeDeatils'); //AJAX
@@ -43,7 +47,7 @@ Route::get('/user/updatePassword', [App\Http\Controllers\Users::class, 'updatePa
 Route::get('/user/addUser', [App\Http\Controllers\Users::class, 'addUser'])->name('user.addUser');
 //
 
-//Account Routes
+//* Account Routes
 Route::get('/account/index', [App\Http\Controllers\AccountController::class, 'index'])->name('Account.index');
 Route::get('/account/create', [App\Http\Controllers\AccountController::class, 'create'])->name('account.create');
 Route::post('/account/add', [App\Http\Controllers\AccountController::class, 'add'])->name('Account.add');
@@ -56,7 +60,7 @@ Route::delete('/account/trashDelete/{id}', [App\Http\Controllers\AccountControll
 Route::post('/account/trashRestore/{id}', [App\Http\Controllers\AccountController::class, 'trashRestore'])->name('account.trashRestore');
 //
 
-//Suppliers Routes
+//? Suppliers Routes
 Route::get('/supplier/index', [App\Http\Controllers\SuppliersController::class, 'index'])->name('supplier.index');
 Route::get('/supplier/getSuppliers', [App\Http\Controllers\SuppliersController::class, 'getSuppliers'])->name('supplier.getSuppliers'); //Yajra Box Datatable
 Route::get('/supplier/create', [App\Http\Controllers\SuppliersController::class, 'create'])->name('supplier.create');
@@ -69,8 +73,12 @@ Route::get('/supplier/trash', [App\Http\Controllers\SuppliersController::class, 
 Route::get('/supplier/getTrash', [App\Http\Controllers\SuppliersController::class, 'getTrash'])->name('supplier.getTrash'); //Yajra Box Datatable
 Route::post('/supplier/restoreSupplier/{id}', [App\Http\Controllers\SuppliersController::class, 'restoreSupplier'])->name('supplier.restoreSupplier');
 Route::delete('/supplier/trashSupplier/{id}', [App\Http\Controllers\SuppliersController::class, 'trashSupplier'])->name('supplier.trashSupplier');
+Route::get('/supplier/paymentView', [App\Http\Controllers\SuppliersController::class, 'paymentView'])->name('supplier.paymentView');
+Route::post('/supplier/paymentStore', [App\Http\Controllers\SuppliersController::class, 'paymentStore'])->name('supplier.paymentStore');
+Route::get('/supplier/invoiceSearch/{id}', [App\Http\Controllers\SuppliersController::class, 'invoiceSearch'])->name('supplier.invoiceSearch');
 
-//Transport Routes Resource
+
+//* Transport Routes Resource
 Route::get('/transport/restoreTransport/{id}',[TransportController::class, 'restoreTransport'])->name('transport.restoreTransport');
 Route::delete('/transport/forceDeleteTransport/{id}',[TransportController::class, 'forceDeleteTransport'])->name('transport.forceDeleteTransport');
 Route::get('/transport/trashDataTable',[TransportController::class, 'trashDataTable'])->name('transport.trashDataTable');
@@ -124,15 +132,38 @@ Route::post('/purchaseItem/completeInvoice/{id}',[PurchaseItemController::class,
 Route::post('/stock/statusSwitch/{id}',[StockController::class,'statusSwitch'])->name('stock.statusSwitch');
 Route::get('/stock/getIndexAjax',[StockController::class,'getIndexAjax'])->name('stock.getIndexAjax');
 Route::resource('stock',StockController::class);
+
+//!Email 
 Route::get('/purchaseEmail/index',[PurchaseEmailController::class,'index'])->name('purchaseEmail.index');
 
+//* Sale
+Route::get('/sale/domPdf/{id}',[SaleController::class,'domPdf'])->name('sales.domPdf');
+Route::get('/sale/print/{id}',[SaleController::class,'print'])->name('sales.print');
+Route::get('/sale/invoiceView/{id}',[SaleController::class,'invoiceView'])->name('sales.invoiceView');
+Route::get('/sale/moduleView/{id}',[SaleController::class,'moduleView'])->name('sales.moduleView');
+Route::get('/sale/ajaxIndex',[SaleController::class,'ajaxIndex'])->name('sales.ajaxIndex');
 Route::get('/sale/salesItem/{id}',[SaleController::class,'salesItem'])->name('sales.salesItem');
 Route::resource('sale',SaleController::class);
 
+// ? SaleItem
 Route::post('/salesItem/completeSales/{id}',[SaleItemController::class,'completeSales'])->name('salesItem.completeSales');
 Route::delete('/salesItem/deleteSaleItem/{id}',[SaleItemController::class,'deleteSaleItem'])->name('salesItem.deleteSaleItem');
 Route::post('/salesItem/updateSalesItem/{id}',[SaleItemController::class,'updateSalesItem'])->name('salesItem.updateSalesItem');
 Route::get('/salesItem/stockEdit/{id}',[SaleItemController::class,'stockEdit'])->name('salesItem.stockEdit');
 Route::get('/salesItem/stockSelect/{id}',[SaleItemController::class,'stockSelect'])->name('salesItem.stockSelect');
 Route::post('/salesItem/store/{id}',[SaleItemController::class,'store'])->name('salesItem.store');
+
+//* SALE RETURN
+Route::get('/salesReturn/moduleView/{id}',[SalesReturnController::class,'moduleView'])->name('salesReturn.moduleView');
+Route::get('/salesReturn/ajaxIndex',[SalesReturnController::class,'ajaxIndex'])->name('salesReturn.ajaxIndex');
+Route::post('/salesReturn/returnItemComplete/{id}',[SalesReturnController::class,'returnItemComplete'])->name('salesReturn.returnItemComplete');
+Route::delete('/salesReturn/returnItemDelete/{id}',[SalesReturnController::class,'returnItemDelete'])->name('salesReturn.returnItemDelete');
+Route::post('/salesReturn/returnItemSave/{id}',[SalesReturnController::class,'returnItemSave'])->name('salesReturn.returnItemSave');
+Route::get('/salesReturn/returnItem/{id}',[SalesReturnController::class,'returnItem'])->name('salesReturn.returnItem');
+Route::resource('salesReturn',SalesReturnController::class);
+
+//? Supplier Ledger
+Route::get('/supplierLedger/searchLedger',[SupplierLedgerController::class,'searchLedger'])->name('supplierLedger.searchLedger');
+Route::resource('supplierLedger', SupplierLedgerController::class);
+
 }); 

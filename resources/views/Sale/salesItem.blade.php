@@ -487,7 +487,7 @@
         </div>
     </div>
 </div>
-<div class="" style=></div>
+
 
 @section('sales.salesItem')
 {!! Toastr::message() !!}
@@ -644,6 +644,7 @@
     //Deleting sales Item list 
    $('body').on('click', '.delete', function () {
     var btnId = $(this).attr("data-id");
+    alert(btnId);   
     $.ajax({
         type: "DELETE",
         url:"/salesItem/deleteSaleItem/"+btnId,

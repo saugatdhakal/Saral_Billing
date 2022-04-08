@@ -5,9 +5,10 @@ use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\PurchaseItem;
 use App\Models\Stock;
+use App\Models\SupplierLedger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\PurchaseItemRequest ;
+use App\Http\Requests\PurchaseItemRequest;
 
 class PurchaseItemController extends Controller
 {
@@ -22,7 +23,7 @@ class PurchaseItemController extends Controller
 
       $stock = new Stock();
       $item->storeAndUpdateStock($stock,$item);
-      
+
       });
       return back();
    }
@@ -55,10 +56,16 @@ class PurchaseItemController extends Controller
    public function completeInvoice(Request $request,$id){
      
        $purchase = Purchase::withSum('items','amount')
-                                ->withSum('items','discount_amount')
-                                ->find($id);
-                                
+         ->withSum('items','discount_amount')
+         ->find($id);
+         
+      \DB::transaction(function()use($purchase,$request,$id){
        PurchaseItem::invoiceSave($purchase,$request);
+      
+       $supplierLedger = new SupplierLedger();
+      $supplierLedger->storeLedger($supplierLedger,$purchase,$purchase->supplier_id);
+      
+      });
        return redirect()->route('purchase.index');
 
    }

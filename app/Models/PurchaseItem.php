@@ -37,6 +37,7 @@ class PurchaseItem extends Model
         return $this->belongsTo(Product::class);
     }
 
+   
 
     public  function storeAndUpdatePurchase(PurchaseItem $item, $request,$id){
         $item->quantity = $request->quantity;//5

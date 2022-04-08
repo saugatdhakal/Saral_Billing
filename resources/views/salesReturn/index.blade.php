@@ -1,22 +1,22 @@
 @extends('layouts.app')
 @section('content')
-
+{{-- Buttons --}}
 <div class="row mb-3 p-0 mt-2 mr-3">
     <div class="col-md-12 clearfix ">
-        <a class="float-right mr-2" href="{{route('purchase.create')}}">
+        <a class="float-right mr-2" href="{{route('sale.create')}}">
             <button type="button" id="add" class="btn btn-outline-primary float-right" data-bs-toggle="modal"
                 data-bs-target="#category" autofocus>
-                <i class="fa fa-user" aria-hidden="true"></i> Add Purchase
+                <i class="fa fa-user" aria-hidden="true"></i> Create Sales
             </button>
         </a>
         <a class="float-right mr-2" href="{{route('purchase.trashPage')}}">
             <button type="button" class="btn btn-outline-danger">
-                <i class="fas fa-user-times"></i> Trash Purchase
+                <i class="fas fa-user-times"></i> Trash Sales
             </button>
         </a>
     </div>
 </div>
-
+{{-- Table --}}
 <div class="card mb-4 m-2">
     <div class="card-header">
         <svg class="svg-inline--fa fa-table fa-w-16 me-1" aria-hidden="tdue" focusable="false" data-prefix="fas"
@@ -25,7 +25,7 @@
                 d="M464 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM224 416H64v-96h160v96zm0-160H64v-96h160v96zm224 160H288v-96h160v96zm0-160H288v-96h160v96z">
             </path>
         </svg><!-- <i class="fas fa-table me-1"></i> Font Awesome fontawesome.com -->
-        Purchase List
+        Sales Return List
     </div>
 
     <div class="card-body">
@@ -34,12 +34,10 @@
             <thead>
                 <tr>
                     <th width="5%">SN</th>
-                    <th>Supplier Name</th>
+                    <th>Customer Name</th>
                     <th>Invoice No</th>
                     <th>Transaction date</th>
-                    <th>Bill Date</th>
-                    <th>Bill No</th>
-                    <th>Lr No</th>
+                    <th>Sales Return Date</th>
                     <th>Net Amount</th>
                     <th width="9%">Action</th>
                 </tr>
@@ -53,7 +51,7 @@
     </div>
 </div>
 {{-- Model --}}
-<div class="modal fade" id="purchaseModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="saleModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -67,12 +65,8 @@
             <div class="modal-body">
                 {{-- body start --}}
                 <div class="row mb-3">
-                    <div class="col-sm-4"><b>Purchase Status:</b></div>
-                    <div class="col-sm-5"><span id="purchase_status" class="badge bg-warning"></span></div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-sm-4"><b>Purchase Type:</b></div>
-                    <div class="col-sm-5"><span id="purchase_type" class="badge badge-dark"></span></div>
+                    <div class="col-sm-4"><b>Return Status:</b></div>
+                    <div class="col-sm-5"><span id="sales_status" class="badge bg-warning"></span></div>
                 </div>
                 <div class="row mb-1">
                     <div class="col-sm-4"><b>Invoice No:</b></div>
@@ -81,9 +75,9 @@
                     </div>
                 </div>
                 <div class="row mb-1">
-                    <div class="col-sm-4"><b>Supplier Name:</b></div>
+                    <div class="col-sm-4"><b>Account Name:</b></div>
                     <div class="col-sm-5">
-                        <p id="supplier_name"></p>
+                        <p id="account_name"></p>
                     </div>
                 </div>
                 <div class="row mb-1">
@@ -93,36 +87,26 @@
                     </div>
                 </div>
                 <div class="row mb-1">
-                    <div class="col-sm-4"><b>Bill Date:</b></div>
+                    <div class="col-sm-4"><b>Return Date:</b></div>
                     <div class="col-sm-5">
-                        <p id="bill_date"><strong></strong></p>
+                        <p id="sales_date"><strong></strong></p>
                     </div>
                 </div>
 
                 <div class="row mb-1">
-                    <div class="col-sm-4"><b>Bill No:</b></div>
+                    <div class="col-sm-4"><b>Total Amount:</b></div>
                     <div class="col-sm-5">
-                        <p id="bill_no"><strong></strong></p>
-                    </div>
-                </div>
-                <div class="row mb-1">
-                    <div class="col-sm-4"><b>LR NO:</b></div>
-                    <div class="col-sm-5">
-                        <p id="lr_no"><strong></strong></p>
-                    </div>
-                </div>
-                <div class="row mb-1">
-                    <div class="col-sm-4"><b>Gst:</b></div>
-                    <div class="col-sm-5">
-                        <p id="gst"><strong></strong></p>
+                        <p id="total_amt"><strong></strong></p>
                     </div>
                 </div>
                 <div class="row mb-1">
                     <div class="col-sm-4"><b>Net Amount:</b></div>
                     <div class="col-sm-5">
-                        <p style="font-weight:bold;font-size:20px" id="net_amount"></p>
+                        <p style="font-weight:bold;font-size:20px" id="net_amount"><strong></strong></p>
                     </div>
                 </div>
+
+
                 {{-- body stop --}}
             </div>
             <div class="modal-footer">
@@ -131,60 +115,54 @@
         </div>
     </div>
 </div>
-
-@section('product.index')
+@section('sales.index')
 <script>
     $(function(){
     // YajraBox-Datatable
-        var table =$('.yajra-datatable').DataTable({
-            lengthMenu: [
-                [ 30, 40, 50, -1 ],
-                [ '30 rows', '40 rows', '50 rows', 'Show all' ]
-            ],
-            processing:true,
-            serverSide:true,
-            ajax:"{{route('purchase.ajaxIndex')}}",
-            columns:[
-            {data: 'DT_RowIndex'},
-            {data: 'name'},
-            {data: 'invoice_number' },
-            {data: 'transaction_date'},
-            {data: 'bill_date'},
-            {data: 'bill_no'},
-            {data: 'lr_no'},
-            {data: 'net_amount'},
-            {
-            data: 'action',orderable: true, searchable: true,
-            },
+    var table =$('.yajra-datatable').DataTable({
+    lengthMenu: [
+    [ 30, 40, 50, -1 ],
+    [ '30 rows', '40 rows', '50 rows', 'Show all' ]
+    ],
+    processing:true,
+    serverSide:true,
+    ajax:"{{route('salesReturn.ajaxIndex')}}",
+    columns:[
+    {data: 'DT_RowIndex'},
+    {data: 'name'},
+    {data: 'invoice_number' },
+    {data: 'transaction_date'},
+    {data: 'sales_return_date'},
+    {data: 'net_amount'},
+    {
+    data: 'action',orderable: true, searchable: true,
+    },
     ]
     });
-
-    $('body').on('click', '.viewPurchase', function () {
+    //!! Model
+    $('body').on('click', '.viewSaleReturn', function () {
     var btnId = $(this).attr("id");
     // alert(btnId);
-    $('#purchaseModel').modal('toggle');
-    $.get("/purchase/moduleView/"+btnId , function (data) {
+    $('#saleModel').modal('toggle');
+    $.get("/salesReturn/moduleView/"+btnId , function (data) {
     // console.log(data);
-    $('#purchase_status').html(data.status);
-    $('#purchase_type').html(data.purchase_type);
-    $('#supplier_name').html(data.name);
+    $('#sales_status').html(data.status);
+    $('#account_name').html(data.name);
     $('#invoice_no').html(data.invoice_number);
     $('#transaction_date').html(data.transaction_date);
-    $('#bill_date').html(data.bill_date);
-    $('#bill_no').html(data.bill_no);
-    $('#lr_no').html(data.lr_no);
-    $('#gst').html(data.gts);
+    $('#sales_date').html(data.sales_return_date);
+    $('#total_amt').html(data.total_amount);
     $('#net_amount').html(data.net_amount);
     }
     );
     });
     
+    //Moving into trash(soft Delete)
     $('.close').click(function () {
-    $('#purchaseModel').modal('toggle');
+    $('#saleModel').modal('toggle');
     });
 
-    //Delete Purchase 
-    $('body').on('click', '.deletePurchase', function () {
+    $('body').on('click', '.deleteSaleReturn', function () {
     var btnId = $(this).attr("id");
     swal({
     title: "Are you sure?",
@@ -198,13 +176,13 @@
     if (willDelete) {
     $.ajax({
     type: "DELETE",
-    url:"purchase/"+btnId,
+    url:"salesReturn/"+btnId,
     data: {
     "_token":$('input[name="_token"]').val(),
     "id":btnId,
     },
     success: function(data){
-    // alert(data);
+    alert(data);
     if(data == "DeleteSuccess"){
     swal(" Your Data has been Move to Trash!!", {
     icon: "success",
@@ -220,13 +198,11 @@
     });
     
     });
-
-
+    
+    
     });
-   
+
 
 </script>
-
 @endsection
-
 @endsection

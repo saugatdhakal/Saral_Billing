@@ -155,7 +155,7 @@ class PurchaseController extends Controller
          
         ->where('purchases.id',$id)
          ->join('suppliers','purchases.supplier_id','=','suppliers.id')
-         ->select(['purchases.invoice_number','purchases.transaction_date','purchases.bill_date','purchases.bill_no','purchases.lr_no','purchases.gts','purchases.net_amount','suppliers.name','purchases.status','purchases.purchase_type'])
+         ->select(['purchases.invoice_number','purchases.transaction_date','purchases.bill_date','purchases.bill_no','purchases.lr_no','purchases.gst','purchases.net_amount','suppliers.name','purchases.status','purchases.purchase_type'])
          ->get()->first(); 
          return $data;
     }

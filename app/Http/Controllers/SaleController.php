@@ -7,6 +7,9 @@ use App\Http\Requests\SaleRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Config;
+use DataTables;
+use PDF;
+use Illuminate\Support\Facades\Storage;
 
 
 class SaleController extends Controller
@@ -17,8 +20,7 @@ class SaleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    { 
-        
+    {  
         return view('sale.index');
     }
 
@@ -31,6 +33,78 @@ class SaleController extends Controller
     {
         $salesInvoice = getSalesInvoice(); 
         return view('sale.create',compact('salesInvoice'));
+    }
+
+    public function ajaxIndex(){
+         $data =DB::table('sales')
+         ->where('sales.deleted_by',NULL)
+         ->join('accounts','sales.account_id','=','accounts.id')
+         ->select(['sales.id','sales.invoice_number','sales.transaction_date','sales.sales_date','sales.net_amount','sales.sales_type','sales.paymode','accounts.name','sales.status'])
+         ->get();
+            return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('action',function($row){
+                $actionBtn='';
+
+                if ($row->status == 'RUNNING') {
+                $actionBtn.=
+                ' 
+                    <a class="btnEdit" href="'.route('sales.salesItem',["id"=>$row->id]).'" >
+                    <i class="fa-solid fa-money-check-pen fa-xl"></i>
+                    </a>
+                    &#160
+                ';
+                }
+                else if ($row->status == 'COMPLETED') {
+                $actionBtn.=
+                ' 
+                    <a class="btnComplete" href="'.route('sales.invoiceView',["id"=>$row->id]).'" >
+                   <i class="fa-solid fa-file-invoice fa-xl"></i>
+                    </a>
+                    &#160
+                ';
+                }
+                
+                $actionBtn.=' 
+                    <a data-toggle="modal" class="viewSale" id="'.$row->id.'"  data-target="#modal">
+                        <i class="fa-solid fa-eye fa-xl"></i>
+                    </a>
+                    &#160
+                    <a  class="deleteSale" id="'.$row->id.'">
+                        <i class="fa-solid fa-trash-can-list fa-xl"></i>
+                    </a>
+                ';
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            
+            ->make(true);
+    }
+    public function invoiceView($id){
+
+        $config = getConfig();
+        $saleDetails = Sale::saleInvoiceData($id);
+        $sale= $saleDetails[0];
+        $saleItem = $saleDetails[1];
+        return view('sale.invoiceLayout',compact('sale','config','saleItem'));
+        
+    }
+     public function print($id){   
+       $config = getConfig();    
+         $saleDetails = Sale::saleInvoiceData($id);
+        $sale= $saleDetails[0];
+        $saleItem = $saleDetails[1];
+        return view('salesInvoice.export',compact('sale','config','saleItem'));
+    }
+     public function domPdf($id)
+    {
+        $config = getConfig();    
+        $saleDetails = Sale::saleInvoiceData($id);
+        $sale= $saleDetails[0];
+        $saleItem = $saleDetails[1];
+        $pdf = PDF::loadView('salesInvoice.pdf', compact('sale','config','saleItem'));
+        $pdf->setPaper('A3', 'landscape'); 
+         return $pdf->stream();
     }
 
     /**
@@ -55,6 +129,26 @@ class SaleController extends Controller
        
         
         return redirect()->route('sales.salesItem',['id'=>$sale->id]);
+    }
+    public function moduleView($id)
+    {
+        return DB::table('sales')
+        ->where('sales.id',$id)
+         ->join('accounts','sales.account_id','=','accounts.id')
+         ->select([
+         'sales.invoice_number',
+         'sales.transaction_date',
+         'sales.sales_date',
+         'sales.invoice_number',
+         'sales.total_amount',
+         'sales.discount_amount',
+         'sales.net_amount',
+         'accounts.name',
+         'sales.status',
+         'sales.extra_charges',
+         'sales.sales_type'
+         ])
+         ->get()->first(); 
     }
 
     /**
@@ -85,6 +179,19 @@ class SaleController extends Controller
         ->get();
         return view('Sale.salesItem',compact('sales','product','saleItems'));
     }
+
+    //  public function trashDelete($id)
+    // {  
+    //     try {
+    //     Sale::find($id)->delete();
+    //     return "DeleteSuccess";
+    //     }
+    //     catch (\Exception $e) {
+    //        //! Not returning back with error message 
+    //     //  return redirect()->back()->withFail(['Code Match with other product','Please use default code']);// can add multiple value on error
+    //     }
+    // }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -117,6 +224,15 @@ class SaleController extends Controller
      */
     public function destroy(Sale $sale)
     {
-        //
+        try {
+         $sale->delete();
+         return "DeleteSuccess";
+         }
+        catch (\Exception $e) 
+        {
+             //! Not returning back with error message 
+            //  return redirect()->back()->withFail(['Code Match with other product','Please use default code']);// can add multiple value on error
+        }
     }
+        
 }

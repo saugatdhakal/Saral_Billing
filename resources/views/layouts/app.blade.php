@@ -192,6 +192,8 @@
                                     &#160 Add Suppliers </a>
                                 <a class="nav-link" href="{{route('supplier.trash')}}"><i class="fas fa-user-slash"></i>
                                     &#160 Trash Account</a>
+                                <a class="nav-link" href="{{route('supplier.paymentView')}}"><i class="fa-solid fa-money-check"></i>
+                                    &#160 Payment</a>                                    
                             </nav>
                         </div>
 
@@ -320,6 +322,34 @@
                                     &#160 Trash Sales</a>
                             </nav>
                         </div>
+
+                        {{-- Sales --}}
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#salesReturn" aria-expanded="false"
+                            aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-tags"></i>
+                                <!-- <i class="fas fa-columns"></i> Font Awesome fontawesome.com -->
+                            </div>
+                            Sales Return
+                            <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="true"
+                                    focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 320 512" data-fa-i2svg="">
+                                    <path fill="currentColor"
+                                        d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z">
+                                    </path>
+                                </svg><!-- <i class="fas fa-angle-down"></i> Font Awesome fontawesome.com -->
+                            </div>
+                        </a>
+                        <div class="collapse" id="salesReturn" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{{route('salesReturn.index')}}"><i class="fa-solid fa-tags"></i>&#160
+                                    Sales Return
+                                    Dashboard</a>
+                                <a class="nav-link" href="{{route('salesReturn.create')}}"><i class="fas fa-plus-circle"></i>
+                                    &#160 Create Sales Return </a>
+                                <a class="nav-link" href="{{route('product.productTrash')}}"><i class="fas fa-user-slash"></i>
+                                    &#160 Trash Sales Return</a>
+                            </nav>
+                        </div>
                         {{-- Stock --}}
                         <a class="nav-link" href="{{route('stock.index')}}">
                             <div class="sb-nav-link-icon">
@@ -328,7 +358,13 @@
                             Stock
                         </a>
 
-
+                        {{-- Supplier Ledger --}}
+                        <a class="nav-link" href="{{route('supplierLedger.index')}}">
+                            <div class="sb-nav-link-icon">
+                                <i class="fad fa-shapes"></i>
+                            </div>
+                            Supplier Ledger
+                        </a>
                         {{-- Category --}}
                         <a class="nav-link" href="{{route('category.index')}}">
                             <div class="sb-nav-link-icon">
@@ -479,7 +515,7 @@
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/datatables-simple-demo.js') }}"></script>
+
 
     {{-- Yajra Datatable --}}
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
@@ -517,6 +553,10 @@
     @yield('invoice2')
     @yield('purchase.trashAjax')
     @yield('sales.salesItem')
+    @yield('sales.index')
+    @yield('salesReturn.index')
+    @yield('supplierLedger.index')
+    @yield('supplierLedger.create')
 
 
 

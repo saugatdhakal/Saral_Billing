@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Suppliers;
+use App\Models\SupplierLedger;
 use Illuminate\Http\Request;
+use App\Http\Requests\SupplierPaymentRequest;
 use Illuminate\Support\Facades\DB;
 use DataTables;
 
@@ -21,6 +23,37 @@ class SuppliersController extends Controller
 
         
         // return view('suppliers.index',["suppliers"=>$suppliers]);
+    }
+
+    public function paymentView(){
+        return view('suppliers.payment');
+    }
+    public function paymentStore(SupplierPaymentRequest $request){
+
+        $supplier = DB::table('purchases')->where('id',$request->purchase_id)->get(['invoice_number'])->first();
+        
+         $old_supplierLedger = DB::table('supplier_ledgers')
+         ->where('supplier_id',$request->supplier_id)
+         ->get('balance')
+         ->last();
+        if ($old_supplierLedger->balance < $request->amount) {
+            // return redirect()->back()->with('Error', 'Amount is Greater then Balance');
+             return redirect()->back()->withFail(['Amount is Greater then Balance','Check your balance']);// can add multiple value on error
+        }
+        $ledger = new SupplierLedger();
+        $ledger->date = $request->payment_date;
+        $ledger->purchase_type = $request->pay_mode;
+        $ledger->debit_amount = $request->amount;
+        $ledger->credit_amount = 0;
+        $ledger->balance= $old_supplierLedger->balance - $request->amount;
+        $ledger->supplier_id = $request->supplier_id;
+        $ledger->invoice_number = $supplier->invoice_number;
+        $ledger->save();
+        return redirect()->route('supplierLedger.index');
+    }
+
+    public function invoiceSearch($id){
+       return DB::table('purchases')->where('id',$id)->get(['id','invoice_number','bill_date']);
     }
 
     public function getSuppliers(Request $request){
