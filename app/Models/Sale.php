@@ -24,6 +24,10 @@ class Sale extends Model
         'rounding',
         'net_amount',
     ];
+     public function Saleitems()
+    {
+        return $this->hasMany(SaleItem::class,'sales_id');
+    }
 
     public function storeSale($sale,$request){
         

@@ -2,7 +2,7 @@
 @section('content')
 <center class="m-3">
     <p style="font-size: 40px;font-weight:bold;">
-        <i class="fa-regular fa-money-bills-simple"></i> SUPPLIER PAYMENT
+        <i class="fa-regular fa-money-bills-simple"></i> ACCOUNT PAYMENT
     </p>
 </center>
 <hr>
@@ -17,23 +17,24 @@
 </div>
 @endif
 <div style="margin-top:30px;">
-    <form class="row g-3 needs-validation" action="{{route('supplier.paymentStore')}}" method="POST" novalidate>
+    <form class="row g-3 needs-validation" action="{{route('account.savePayment')}}" method="POST" novalidate>
         @csrf
         <div class="row m-2" id="company">
             <div class="col-md-2 m-1" style="font-family:georgia,garamond,serif;">
-                Supplier Name
+                Account Name
             </div>
             <div class=" col-md-4 col-sm-12 col-lg-4">
-                <select class="selects form-control form-select" style="width: 100%" id="supplierSelect" name="supplier_id" autofocus>
-                    <option value="" selected disabled>---Select Supplier---</option>
-                    {{$rows = DB::table('Suppliers')->where('deleted_by',NULL)->get(['id','name']);}}
+                <select class="selects form-control form-select" style="width: 100%" id="supplierSelect"
+                    name="account_id" autofocus>
+                    <option value="" selected disabled>---Select Account Name---</option>
+                    {{$rows = DB::table('accounts')->where('deleted_by',NULL)->get(['id','name']);}}
                     @foreach ($rows as $row)
                     <option value={{$row->id}} >{{$row->name}}</option>
                     @endforeach
 
                 </select>
                 <div class="invalid-feedback">
-                    Supplier Name is Empty !!
+                    Account Name is Empty !!
                 </div>
             </div>
 
@@ -43,14 +44,14 @@
                 Invoice Number
             </div>
             <div class=" col-md-4 col-sm-12 col-lg-4">
-                <select name="purchase_id" class="form-select" id="invoice_num">
-                   
+                <select name="sale_id" class="form-select" id="invoice_num">
+
                 </select>
                 <div class="invalid-feedback">
                     Invoice Number is Empty !!
                 </div>
             </div>
-        
+
         </div>
         <div class="row m-2" id="company">
             <div class="col-md-2 m-1" style="font-family:georgia,garamond,serif;">
@@ -68,7 +69,7 @@
                     Payment Mode is Empty !!
                 </div>
             </div>
-        
+
         </div>
 
 
@@ -89,7 +90,8 @@
                 Payment Amount
             </div>
             <div class="col-md-4">
-                <input type="number" id="name" class="form-control" name="amount" placeholder="Amount" autofocus required>
+                <input type="number" id="name" class="form-control" name="amount" placeholder="Amount" autofocus
+                    required>
                 <div class="invalid-feedback">
                     Payment Amount is Empty!!
                 </div>
@@ -115,24 +117,23 @@
 </div>
 @section('supplierLedger.create')
 <script>
-
-$("#supplierSelect").change(function() {
-var supplier_id= $(this).val();
+    $("#supplierSelect").change(function() {
+var account_id= $(this).val();
 // console.log(product_id);
 // alert(product_id);
 $.ajax({
 type: "GET",
-url:"/supplier/invoiceSearch/"+supplier_id,
-data:{supplier_id},
+url:"/account/searchSaleInvoice/"+account_id,
+data:{account_id},
 success: function(data) {
 // console.log(data);a
 $('#invoiceDiv').show();
 $('#invoice_num').empty();
 $.each(data,function(index,row){
-console.log(row);
+// console.log(row);
 $('#invoice_num').append('<option  value="'+ row.id + '">'+'Invoice Number:-' +
     row.invoice_number + ' / '+'Bill Date:-'
-    + row.bill_date + '</option>');
+    + row.sales_date  + '</option>');
 
 })
 },

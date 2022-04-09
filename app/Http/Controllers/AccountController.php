@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\Sale;
+use App\Models\AccountLedger;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\AccountPaymentRequest;
+
+use Illuminate\Support\Arr;
 class AccountController extends Controller
 {
     /**
@@ -13,7 +19,10 @@ class AccountController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
+        
+
+
         $users = DB::table('accounts')->where('deleted_by',NULL)->get(['id','name','account_type','shop_address','home_address','contact_number_1','vat_number','pan_number']);
         
         return view('account.index',['users'=>$users]);
@@ -27,6 +36,55 @@ class AccountController extends Controller
     public function create()
     {
         return view('account.create');
+    }
+
+    public function  paymentView(){
+        return view('account.payment');
+    }
+
+    public function searchSaleInvoice($account_id){
+
+        // $accountLedger =DB::table('account_ledgers')
+        // ->where('account_id',2)->get(['id','credit']);
+        // // return $accountLedger;
+        return DB::table('sales')
+        ->where('sales.account_id',2)
+        ->where('sales.sales_type','CREDIT')
+        ->get(['sales.id','sales.invoice_number','sales.sales_date']);
+        
+        // $index=0;
+        // foreach($sale as $row){
+        //     $row=Arr::add($row, 'balance' , empty($accountLedger[$index]->credit)? 0:$accountLedger[$index]->balance);
+        //     $index++;   
+        // };
+
+        // return $sale;
+        
+    }
+
+    public function savePayment(AccountPaymentRequest $request){
+        $supplier = DB::table('sales')->where('id',$request->sale_id)->get(['invoice_number'])->first();
+        
+         $old_supplierLedger = DB::table('account_ledgers')
+         ->where('account_id',$request->account_id)
+         ->get('balance')
+         ->last();
+
+        if ($old_supplierLedger->balance < $request->amount) {
+            // return redirect()->back()->with('Error', 'Amount is Greater then Balance');
+             return redirect()->back()->withFail(['Amount is Greater then Balance','Check your balance']);// can add multiple value on error
+        }
+        $ledger = new AccountLedger();
+        $ledger->date = $request->payment_date;
+        $ledger->particular = $request->pay_mode;
+        $ledger->debit_amount = $request->amount;
+        $ledger->credit_amount = 0;
+        $ledger->balance= $old_supplierLedger->balance - $request->amount;
+        $ledger->account_id = $request->account_id;
+        $ledger->invoice_number = $supplier->invoice_number;
+        $ledger->save();
+
+        return redirect()->route('accountLedger.index');
     }
 
     /**

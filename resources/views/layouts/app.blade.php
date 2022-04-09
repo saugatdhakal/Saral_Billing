@@ -164,6 +164,8 @@
                                     &#160 Create Account </a>
                                 <a class="nav-link" href="{{route('account.trash')}}"><i class="fas fa-user-slash"></i>
                                     &#160 Trash Account</a>
+                                <a class="nav-link" href="{{route('account.paymentView')}}"><i class="fa-solid fa-money-check"></i>
+                                    &#160 Payment</a>
                             </nav>
                         </div>
                         {{-- Supplier --}}
@@ -192,8 +194,9 @@
                                     &#160 Add Suppliers </a>
                                 <a class="nav-link" href="{{route('supplier.trash')}}"><i class="fas fa-user-slash"></i>
                                     &#160 Trash Account</a>
-                                <a class="nav-link" href="{{route('supplier.paymentView')}}"><i class="fa-solid fa-money-check"></i>
-                                    &#160 Payment</a>                                    
+                                <a class="nav-link" href="{{route('supplier.paymentView')}}"><i
+                                        class="fa-solid fa-money-check"></i>
+                                    &#160 Payment</a>
                             </nav>
                         </div>
 
@@ -324,29 +327,34 @@
                         </div>
 
                         {{-- Sales --}}
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#salesReturn" aria-expanded="false"
-                            aria-controls="collapseLayouts">
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#salesReturn"
+                            aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-tags"></i>
                                 <!-- <i class="fas fa-columns"></i> Font Awesome fontawesome.com -->
                             </div>
                             Sales Return
-                            <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="true"
-                                    focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 320 512" data-fa-i2svg="">
+                            <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10"
+                                    aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down"
+                                    role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"
+                                    data-fa-i2svg="">
                                     <path fill="currentColor"
                                         d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z">
                                     </path>
                                 </svg><!-- <i class="fas fa-angle-down"></i> Font Awesome fontawesome.com -->
                             </div>
                         </a>
-                        <div class="collapse" id="salesReturn" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="salesReturn" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{route('salesReturn.index')}}"><i class="fa-solid fa-tags"></i>&#160
+                                <a class="nav-link" href="{{route('salesReturn.index')}}"><i
+                                        class="fa-solid fa-tags"></i>&#160
                                     Sales Return
                                     Dashboard</a>
-                                <a class="nav-link" href="{{route('salesReturn.create')}}"><i class="fas fa-plus-circle"></i>
+                                <a class="nav-link" href="{{route('salesReturn.create')}}"><i
+                                        class="fas fa-plus-circle"></i>
                                     &#160 Create Sales Return </a>
-                                <a class="nav-link" href="{{route('product.productTrash')}}"><i class="fas fa-user-slash"></i>
+                                <a class="nav-link" href="{{route('product.productTrash')}}"><i
+                                        class="fas fa-user-slash"></i>
                                     &#160 Trash Sales Return</a>
                             </nav>
                         </div>
@@ -364,6 +372,13 @@
                                 <i class="fad fa-shapes"></i>
                             </div>
                             Supplier Ledger
+                        </a>
+                        {{-- Accounnt Ledger --}}
+                        <a class="nav-link" href="{{route('accountLedger.index')}}">
+                            <div class="sb-nav-link-icon">
+                                <i class="fad fa-shapes"></i>
+                            </div>
+                            Account Ledger
                         </a>
                         {{-- Category --}}
                         <a class="nav-link" href="{{route('category.index')}}">
@@ -557,6 +572,7 @@
     @yield('salesReturn.index')
     @yield('supplierLedger.index')
     @yield('supplierLedger.create')
+    @yield('accountLedger.create')
 
 
 

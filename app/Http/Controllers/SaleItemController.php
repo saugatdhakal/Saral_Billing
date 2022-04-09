@@ -70,6 +70,7 @@ class SaleItemController extends Controller
     }
     public function completeSales(Request $request,$id){
         SaleItem::completeSalesInvoice($request,$id);
+        
         return redirect()->route('sale.index');
     }
 }

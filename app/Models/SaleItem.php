@@ -8,7 +8,24 @@ use Illuminate\Support\Facades\DB;
 class SaleItem extends Model
 {
     use HasFactory;
+    protected $fillable=[
+        'invoice_number',
+        'batch_number',
+        'quantity',
+        'rate',
+        'amount',
+        'discount_amount',
+        'profit_per_item',
+        'profit_total',
+        'sale_id',
+        'stock_id',
+        'product_id',
+    ];
 
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 
     public function storeUpdate(SaleItem $saleItem,$request,$id){
         $stockItems = DB::table('stocks')
@@ -40,7 +57,7 @@ class SaleItem extends Model
         $saleItem->invoice_number = $sale->invoice_number;
         $saleItem->stock_id = $request->stockId;
         $saleItem->sales_id = $id;
-        $saleItem->profit_per_item = $saleItem->rate - $stockItems->rate;//* purchase cost - (reRate or WholeSale Price)
+        $saleItem->profit_per_item = $saleItem->rate - $stockItems->rate;//* sale cost - (reRate or WholeSale Price)
         $saleItem->profit_total = $saleItem->profit_per_item * $saleItem->quantity;
         $saleItem->save();
 
@@ -48,7 +65,7 @@ class SaleItem extends Model
 
 
      public static function completeSalesInvoice($request,$id){
-
+    \DB::transaction(function()use($request,$id){
          $saleItem = DB::table('sale_items')
         ->where('sales_id',$id)
         ->get(['amount','discount_amount']);
@@ -86,12 +103,44 @@ class SaleItem extends Model
         $sale->paymode = empty($request->pay_mode) ? null : $request->pay_mode;
         
         //Received Amount not equal to received_amount then it will be due 
-        if($request->received_amount != $sale->net_amount || $request->pay_mode == null){
+        if($request->received_amount != $sale->net_amount || $request->pay_mode == null || empty($request->received_amount)){
             $sale->sales_type ="CREDIT";
         }   
         $sale->status = 'COMPLETED';
         $sale->save();
+        //TODO:: Account Ledger     
+        $saleLedgerAmout = DB::table('account_ledgers')->where('account_id',$sale->account_id)->get('balance')->first();
+        $balances = empty($saleLedgerAmout->balance)? 0 : $saleLedgerAmout->balance;
+        $accountLedger = new AccountLedger();
+        $accountLedger->date = $sale->sales_date;
+        $accountLedger->particular =$sale->sales_type;
+        $accountLedger->invoice_number = $sale->invoice_number;
+        if($sale->sales_type =="DEBIT"){
+            $accountLedger->debit_amount = $sale->net_amount;
+             $accountLedger->credit_amount = 0;
+            $accountLedger->balance = $balances;
+        }
+        else{ //Credit
+            //Checking wheather received amount is empty or not
+            if(!empty($request->received_amount)){
+                //Calculating remaining amount
+                $remainingBal = $sale->net_amount - $request->received_amount;
+                $accountLedger->credit_amount = $remainingBal;
+                $accountLedger->debit_amount = $request->received_amount;
+                $accountLedger->balance = $balances + $accountLedger->credit_amount;
+            }
+            else{ //id received amount is empty
+                $accountLedger->debit_amount = 0;
+                $accountLedger->credit_amount = (int)$sale->net_amount;
+                 $accountLedger->balance = (int)$sale->net_amount + $balances;
+            }
+        }
+        $accountLedger->sales_id = $sale->id;
+        $accountLedger->account_id = $sale->account_id;
+        $accountLedger->save();
         
+    });
     }
+
    
 }

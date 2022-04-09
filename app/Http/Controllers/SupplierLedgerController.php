@@ -73,10 +73,6 @@ class SupplierLedgerController extends Controller
             'crAmount'=>$crAmount,
             'purchases'=>$purchases
         ]);
-
-
-
-        
     }
 
     /**

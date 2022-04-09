@@ -12,7 +12,7 @@ use App\Http\Controllers\SaleItemController;
 use App\Http\Controllers\SalesReturn;
 use App\Http\Controllers\PurchaseItemController;
 use App\Http\Controllers\SupplierLedgerController;
-
+use App\Http\Controllers\AccountLedgerController;
 use App\Http\Controllers\PurchaseEmailController;
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +48,9 @@ Route::get('/user/addUser', [App\Http\Controllers\Users::class, 'addUser'])->nam
 //
 
 //* Account Routes
+Route::post('/account/savePayment', [App\Http\Controllers\AccountController::class,'savePayment'])->name('account.savePayment');
+Route::get('/account/searchSaleInvoice/{id}', [App\Http\Controllers\AccountController::class,'searchSaleInvoice'])->name('account.searchSaleInvoice');
+Route::get('/account/paymentView', [App\Http\Controllers\AccountController::class,'paymentView'])->name('account.paymentView');
 Route::get('/account/index', [App\Http\Controllers\AccountController::class, 'index'])->name('Account.index');
 Route::get('/account/create', [App\Http\Controllers\AccountController::class, 'create'])->name('account.create');
 Route::post('/account/add', [App\Http\Controllers\AccountController::class, 'add'])->name('Account.add');
@@ -165,5 +168,10 @@ Route::resource('salesReturn',SalesReturnController::class);
 //? Supplier Ledger
 Route::get('/supplierLedger/searchLedger',[SupplierLedgerController::class,'searchLedger'])->name('supplierLedger.searchLedger');
 Route::resource('supplierLedger', SupplierLedgerController::class);
+
+//* Account Ledger
+
+Route::get('/accountLedger',[AccountLedgerController::class,'index'])->name('accountLedger.index');
+Route::get('/accountLedger/searchLedger',[AccountLedgerController::class,'searchLedger'])->name('accountLedger.searchLedger');
 
 }); 
