@@ -124,6 +124,7 @@
 
                         <div class="sb-sidenav-menu-heading">Core</div>
                         <a class="nav-link" href="{{route('home')}}">
+                            {{-- Dashboard --}}
                             <div class="sb-nav-link-icon"><svg class="svg-inline--fa fa-tachometer-alt fa-w-18"
                                     aria-hidden="true" focusable="false" data-prefix="fas" data-icon="tachometer-alt"
                                     role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
@@ -380,6 +381,13 @@
                             </div>
                             Account Ledger
                         </a>
+                        {{-- Sales Reoprt --}}
+                        <a class="nav-link" href="{{route('salesReport.index')}}">
+                            <div class="sb-nav-link-icon">
+                               <i class="fa-solid fa-chart-user"></i>
+                            </div>
+                            Sales Report
+                        </a>
                         {{-- Category --}}
                         <a class="nav-link" href="{{route('category.index')}}">
                             <div class="sb-nav-link-icon">
@@ -395,7 +403,7 @@
                             </div>
                             Users
                         </a>
-
+                        {{-- Pages --}}
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
                             aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><svg class="svg-inline--fa fa-book-open fa-w-18"
@@ -573,6 +581,7 @@
     @yield('supplierLedger.index')
     @yield('supplierLedger.create')
     @yield('accountLedger.create')
+    @yield('salesReport')
 
 
 

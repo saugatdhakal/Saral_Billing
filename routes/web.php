@@ -10,6 +10,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SalesReturnController;
 use App\Http\Controllers\SaleItemController;
 use App\Http\Controllers\SalesReturn;
+use App\Http\Controllers\SalesReportController;
 use App\Http\Controllers\PurchaseItemController;
 use App\Http\Controllers\SupplierLedgerController;
 use App\Http\Controllers\AccountLedgerController;
@@ -173,5 +174,8 @@ Route::resource('supplierLedger', SupplierLedgerController::class);
 
 Route::get('/accountLedger',[AccountLedgerController::class,'index'])->name('accountLedger.index');
 Route::get('/accountLedger/searchLedger',[AccountLedgerController::class,'searchLedger'])->name('accountLedger.searchLedger');
+
+Route::get('/salesReport',[SalesReportController::class,'index'])->name('salesReport.index');
+Route::get('/salesReport/searchReport',[SalesReportController::class,'searchReport'])->name('salesReport.searchReport');
 
 }); 

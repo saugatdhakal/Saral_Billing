@@ -7,6 +7,7 @@ use App\Models\PurchaseItem;
 use App\Models\Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 use App\Http\Requests\PurchaseValidateRequest;
 use Illuminate\Support\Facades\Storage;
 use DataTables;
