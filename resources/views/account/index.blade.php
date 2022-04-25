@@ -129,7 +129,7 @@
 
     <div class="card-body">
 
-      <table id="datatablesSimple">
+      <table id="datatable">
         <thead>
           <tr>
             <th>SN</th>
@@ -268,6 +268,9 @@
 {{-- Ajax --}}
 @section('account.index')
 <script>
+  $('#datatable').DataTable({
+    
+  })
   $(document).ready(function() {
 
         $(".close").click(function(){

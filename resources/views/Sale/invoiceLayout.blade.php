@@ -16,6 +16,11 @@
                             class="fa-solid fa-print"></i>&#160Print</button></a>
 
                 &#160; &#160;
+                <a href="{{route('sales.email',['id'=>$sale->id])}}" target="_blank">
+                    <button type="button" class="btn btn btn-dark" style="font-size:19px;"><i
+                            class="fa-solid fa-envelope"></i>&#160Email</button></a>
+
+                &#160; &#160;
             </div>
         </div>
 
@@ -59,7 +64,7 @@
             </div>
             <div class="col-6"></div>
             <div class="col-md-3" style="font-size:17px;">
-                
+
             </div>
         </div>
         <hr style="border: 1px dashed  #000000;" />

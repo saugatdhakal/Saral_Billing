@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-<div class="row">
+{{-- <div class="row">
     <div class="col">
         <div class="card m-3 " style="background-color:#FAFAFA">
             <strong class="mt-2 ml-1" style="font-size:130%;">
@@ -13,8 +13,12 @@
             </strong>
         </div>
     </div>
+</div> --}}
+<div class="m-2">
+    <h1>
+        &#160 <u> Product Dashboard</u>
+    </h1>
 </div>
-
 
 <div class="row mb-3 p-0 mt-2 mr-3">
 

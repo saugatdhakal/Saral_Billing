@@ -41,7 +41,8 @@
                     <option value="" selected disabled>---Select Sales Invoice ---</option>
 
                     @foreach ($sale as $row)
-                    <option value={{$row->id}} > Date:- {{$row->sales_date}} / Invoice:- {{$row->invoice_number}}/ Name:- {{$row->name}}</option>
+                    <option value={{$row->id}} > Date:- {{$row->sales_date}} / Invoice:- {{$row->invoice_number}}/
+                        Name:- {{$row->name}}</option>
                     @endforeach
 
                 </select>
@@ -64,7 +65,7 @@
         </div>
         <div class="row m-2">
             <div class="col-md-2 m-1" style="font-family:georgia,garamond,serif;">
-                Sale Date
+                Sale Return Date
             </div>
             <div class="col-md-4">
                 <input type="date" id="" class="form-control" name="saleReturnDate">
@@ -97,7 +98,7 @@
                 <button type="submit" style="font-family:georgia,garamond,serif;"
                     class="btn btn-outline-primary">Continue</button>
                 &ensp;&ensp;
-                <a href="{{route('sale.index')}}">
+                <a href="{{route('salesReturn.index')}}">
                     <button type="button" style="font-family:georgia,garamond,serif;"
                         class="btn btn-outline-danger ">Cancel</button>
                 </a>

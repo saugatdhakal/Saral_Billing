@@ -101,9 +101,10 @@
 
         <td class="fw-bold text-end ">{{$drAmount}}</td>
         <td class="fw-bold text-end ">{{$crAmount}}</td>
-        {{-- @if($accountLedger!=null && $accountLedger->last()->balance !=null )
+        
+        @if($accountLedger!=null && $accountLedger->last()->balance !=null )
         <td class="fw-bold text-end ">{{($accountLedger->last()->balance)}}</td>
-        @endif --}}
+        @endif
     </tfoot>
 </table>
 @section('accountLedger.create')

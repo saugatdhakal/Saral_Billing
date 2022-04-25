@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('content')
 {{-- Buttons --}}
+<center>
+    <h1>
+        &#160 <u> Sales Dashboard</u>
+    </h1>
+</center>
 <div class="row mb-3 p-0 mt-2 mr-3">
     <div class="col-md-12 clearfix ">
         <a class="float-right mr-2" href="{{route('sale.create')}}">
@@ -52,6 +57,7 @@
 
     </div>
 </div>
+
 {{-- Model --}}
 <div class="modal fade" id="saleModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">

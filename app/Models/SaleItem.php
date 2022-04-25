@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 class SaleItem extends Model
 {
-    use HasFactory;
+    use HasFactory,LogsActivity;
     protected $fillable=[
         'invoice_number',
         'batch_number',
@@ -20,7 +22,25 @@ class SaleItem extends Model
         'sale_id',
         'stock_id',
         'product_id',
+        'created_by',
+        'updated_by'
     ];
+     public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->useLogName('salesItem')
+        ->logOnly(['product.name','invoice_number', 'batch_number','quantity','rate','createBy.name','updatedBy.name']);
+        // Chain fluent methods for configuration options
+    }
+
+   public function createBy()
+    {
+        return $this->belongsTo(User::class,'created_by');
+    }
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class,'updated_by');
+    }
 
     public function product()
     {
@@ -109,7 +129,7 @@ class SaleItem extends Model
         $sale->status = 'COMPLETED';
         $sale->save();
         //TODO:: Account Ledger     
-        $saleLedgerAmout = DB::table('account_ledgers')->where('account_id',$sale->account_id)->get('balance')->first();
+        $saleLedgerAmout = DB::table('account_ledgers')->where('account_id',$sale->account_id)->get('balance')->last();
         $balances = empty($saleLedgerAmout->balance)? 0 : $saleLedgerAmout->balance;
         $accountLedger = new AccountLedger();
         $accountLedger->date = $sale->sales_date;
@@ -138,6 +158,12 @@ class SaleItem extends Model
         $accountLedger->sales_id = $sale->id;
         $accountLedger->account_id = $sale->account_id;
         $accountLedger->save();
+        //! Sending  if ledger balance cross above 50,000
+        $configMinCredit = DB::table('configs')->get('credit_over_due_warning')->first();
+
+        if($accountLedger->balance > $configMinCredit->credit_over_due_warning ){
+            creditOverDue($accountLedger->balance,$accountLedger->account_id);
+        }
         
     });
     }

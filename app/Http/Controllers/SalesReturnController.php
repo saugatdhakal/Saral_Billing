@@ -7,6 +7,7 @@ use App\Models\SaleItem;
 
 use App\Models\SalesReturnItems;
 use App\Models\Stock;
+use App\Models\Sale;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\SalesReturnRequest;
@@ -35,9 +36,9 @@ class SalesReturnController extends Controller
     public function ajaxIndex(){
          $data =DB::table('sales_returns')
          ->where('sales_returns.deleted_by',NULL)
-         
          ->join('accounts','sales_returns.account_id','=','accounts.id')
-         ->select(['sales_returns.id','sales_returns.invoice_number','sales_returns.transaction_date','sales_returns.sales_return_date','sales_returns.net_amount','accounts.name','sales_returns.status'])
+         ->select(['sales_returns.id','sales_returns.invoice_number','sales_returns.transaction_date',
+         'sales_returns.sales_return_date','sales_returns.net_amount','accounts.name','sales_returns.status'])
          ->get();
             return DataTables::of($data)
             ->addIndexColumn()
@@ -79,6 +80,64 @@ class SalesReturnController extends Controller
             ->make(true);
     }
 
+    public function trashIndex()
+    {
+        
+        return view('salesReturn.trash');
+    }
+
+    public function trashAjaxIndex(){
+         $data =DB::table('sales_returns')
+         ->whereNotNull('sales_returns.deleted_by')
+         ->join('accounts','sales_returns.account_id','=','accounts.id')
+         ->select(['sales_returns.id','sales_returns.invoice_number',
+         'sales_returns.transaction_date','sales_returns.sales_return_date',
+         'sales_returns.net_amount','accounts.name','sales_returns.status'])
+         ->get();
+            return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('action',function($row){
+                $actionBtn='';
+
+                if ($row->status == 'RUNNING') {
+                $actionBtn.=
+                ' 
+                    <a class="btnEdit" href="'.route('salesReturn.returnItem',["id"=>$row->id]).'" >
+                    <i class="fa-solid fa-money-check-pen fa-xl"></i>
+                    </a>
+                    &#160
+                ';
+                }
+                else if ($row->status == 'COMPLETED') {
+                $actionBtn.=
+                ' 
+                    <a class="btnComplete" href="'.route('purchase.invoice1',["id"=>$row->id]).'" >
+                   <i class="fa-solid fa-file-invoice fa-xl"></i>
+                    </a>
+                    &#160
+                ';
+                }
+                
+                $actionBtn.=' 
+                    <a data-toggle="modal" class="viewSaleReturn" id="'.$row->id.'"  data-target="#modal">
+                        <i class="fa-solid fa-eye fa-xl"></i>
+                    </a>
+                    &#160
+                    <a  class="deleteSaleReturn" id="'.$row->id.'">
+                        <i class="fa-solid fa-trash-can-list fa-xl"></i>
+                    </a>
+                ';
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            
+            ->make(true);
+    }
+
+
+
+    
+
     
 
     public function moduleView($id)
@@ -107,6 +166,7 @@ class SalesReturnController extends Controller
     public function create()
     {
         $sale = DB::table('sales')
+        ->where('sales.status','COMPLETED')
         ->join('accounts','accounts.id','=','sales.account_id')
         ->get(['sales.id','sales.sales_date','sales.invoice_number','accounts.id as account_id','accounts.name']);
         
@@ -200,14 +260,19 @@ class SalesReturnController extends Controller
         
         $sumAmount = $return_item->sum('amount');  
         $roundedAmount =ceil($sumAmount);
-
+        \DB::transaction(function()use($sales_return_id,$return_item, $sumAmount,$roundedAmount){
         $saleReturn = SalesReturn::where('id',$sales_return_id)->get()->first();
         $saleReturn->total_amount = $sumAmount;
         $saleReturn->rounding =round($roundedAmount-($sumAmount),2);
         $saleReturn->net_amount = $roundedAmount;
         $saleReturn->status = 'COMPLETED';
         $saleReturn->save();
-        
+
+        $sale = Sale::where('id',$saleReturn->sales_id)->get()->first();
+        $sale->status = "RETURN";
+        $sale->save();
+        });
+
         return redirect()->route('salesReturn.index');
     }
 

@@ -1,19 +1,26 @@
 @extends('layouts.app')
 @section('content')
 {{-- Buttons --}}
+<center>
+    <h1>
+        &#160 <u> Sales Return Dashboard</u>
+    </h1>
+</center>
+
+    
 <div class="row mb-3 p-0 mt-2 mr-3">
     <div class="col-md-12 clearfix ">
-        <a class="float-right mr-2" href="{{route('sale.create')}}">
+        <a class="float-right mr-2" href="{{route('salesReturn.create')}}">
             <button type="button" id="add" class="btn btn-outline-primary float-right" data-bs-toggle="modal"
                 data-bs-target="#category" autofocus>
-                <i class="fa fa-user" aria-hidden="true"></i> Create Sales
+                <i class="fa fa-user" aria-hidden="true"></i> Create Sales Return
             </button>
         </a>
-        <a class="float-right mr-2" href="{{route('purchase.trashPage')}}">
+        {{-- <a class="float-right mr-2" href="{{route('salesReturn.trashIndex')}}">
             <button type="button" class="btn btn-outline-danger">
-                <i class="fas fa-user-times"></i> Trash Sales
+                <i class="fas fa-user-times"></i> Trash Sales Return
             </button>
-        </a>
+        </a> --}}
     </div>
 </div>
 {{-- Table --}}

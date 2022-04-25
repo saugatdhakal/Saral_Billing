@@ -7,7 +7,7 @@
 
 <div class="card-body m-2">
         
-    <table id="datatablesSimple">
+    <table id="datatable">
         <thead>
             <tr>
                 <th>SN</th>
@@ -20,18 +20,7 @@
                 <th>Action</th>
             </tr>
         </thead>
-        <tfoot>
-            <tr>
-                <th>SN</th>
-                <th>Customer Type</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Contact Number</th>
-                <th>Vat Number</th>
-                <th>Pan Number</th>
-                <th>Action</th>
-            </tr>
-        </tfoot>
+       
         <tbody>
             @php $i=0; @endphp
             @foreach ($trash as $row )
@@ -66,7 +55,7 @@
 </div>
 @section('account.trash')
 <script>
-
+  $('#datatable').DataTable({});
    /// Restore Trash
    $(document).ready(function(){
         $(".restoreTrash").click(function(e){

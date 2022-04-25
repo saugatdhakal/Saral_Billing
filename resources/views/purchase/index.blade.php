@@ -1,5 +1,13 @@
 @extends('layouts.app')
 @section('content')
+<div class="m-2">
+    <center>
+        <h1>
+            &#160 <u> Purchase Dashboard</u>
+        </h1>
+    </center>
+    
+</div>
 
 <div class="row mb-3 p-0 mt-2 mr-3">
     <div class="col-md-12 clearfix ">

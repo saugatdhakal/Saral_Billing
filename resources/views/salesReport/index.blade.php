@@ -34,9 +34,9 @@
     <div class="card-body shadow">
         <div class="row m-2">
             <div class="col-md-3">
-                <label for="" style="font-size: 20px;font-weight:bold;">Supplier Name</label>
+                <label for="" style="font-size: 20px;font-weight:bold;">Account Name</label>
                 <select class="form-select" name="account_id" id="supplierSelect">
-                    <option value="" selected disabled>---------------Select Supplier--------------</option>
+                    <option value="" selected disabled>---------------Select Account--------------</option>
                     @foreach ($account as $row)
                     <option value="{{$row->id}}">{{$row->name}}</option>
                     @endforeach

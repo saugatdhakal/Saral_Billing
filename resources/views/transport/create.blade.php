@@ -2,28 +2,29 @@
 @section('content')
 
 <div class="container-fluid">
-<div class="row m-1">
-    <div class="col-md-1"></div>
-    <strong class="mt-2 " style="font-size:150%;">
-        <ol class="breadcrumb" style="background-color: #ffffff;">
-            <li class="breadcrumb-item "><a href={{route("transport.index")}}>Transport</a></li>
-            <li class="breadcrumb-item active " aria-current="page">Create</li>
-        </ol>
-    </strong>
+    <div class="row m-1">
+        {{-- <div class="col-md-1"></div>
+        <strong class="mt-2 " style="font-size:150%;">
+            <ol class="breadcrumb" style="background-color: #ffffff;">
+                <li class="breadcrumb-item "><a href={{route("transport.index")}}>Transport</a></li>
+                <li class="breadcrumb-item active " aria-current="page">Create</li>
+            </ol>
+        </strong>
 
-</div>
-<h2 class="m-2">New Tranport Details</h2>
-@if ($errors->any())
-<div class="alert alert-danger" role="alert">
+    </div> --}}
+    <h2 class="m-2">New Tranport Details</h2>
+    @if ($errors->any())
+    <div class="alert alert-danger" role="alert">
 
-    @foreach ($errors->all() as $err)
+        @foreach ($errors->all() as $err)
 
-    <li style="color:red">{{$err}}</li>
-    @endforeach
+        <li style="color:red">{{$err}}</li>
+        @endforeach
 
-</div>
-@endif
+    </div>
 
+    @endif
+<hr>
     <form class="row g-3 mt-2 needs-validation" action="{{route('transport.store')}}" method="POST" novalidate>
         @csrf
         <div class="row m-2">
@@ -86,12 +87,12 @@
             </div>
         </div>
     </form>
-  
+
 
 </div>
-    @section('transport.create')
-    <script>
-        $(document).ready(function() {
+@section('transport.create')
+<script>
+    $(document).ready(function() {
         var forms = document.querySelectorAll(".needs-validation");
         Array.prototype.slice.call(forms).forEach( function( form)
         {
@@ -106,8 +107,8 @@
             }, false);
         });
     });
-    </script>
-    @endsection
+</script>
+@endsection
 
 
 

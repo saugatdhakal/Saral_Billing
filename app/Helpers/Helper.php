@@ -4,11 +4,27 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Config;
 use App\Libraries\Format_Nepali_Money; 
 use App\Libraries\Number_Into_Words;  
+use Illuminate\Support\Facades\Mail;
 
 if(!function_exists('getConfig')){
   function getConfig(){
    return Config::where('id',1)->select('name','address','email','contact_number')->first(); 
   }
+  }
+  if(!function_exists('creditOverDue')){
+    function creditOverDue($balance,$account_id){
+      
+      $account = DB::table('accounts')->where('id',$account_id)->get(['name','email'])->first();
+      $data['balance'] = $balance;
+      $data['name'] =$account->name;
+
+        $mail=Mail::send('Mail.CreditOverDueMail',$data,function($message) use ($account){
+            $message->from('pujafancystore1@gmail.com');
+            $message->to($account->email);//Receiver Email Address
+            $message->subject("CREDIT OVER DUE EMAIL'.$account->name.'");
+        });
+
+    }
   }
 if(!function_exists('getFiscalYear')){
   function getFiscalYear(){
@@ -52,6 +68,14 @@ function getNepaliDate($date){
   $splitDate= explode("-",$date);
   $cal = new Nepali_Calendar();
   $nep=$cal->eng_to_nep($splitDate[0],$splitDate[1],$splitDate[2]); 
+  return ($nep["year"].'-'.$nep["month"].'-'.$nep["date"]); 
+}
+}
+if(!function_exists('getTodayNepaliDate')){
+function getTodayNepaliDate($yy,$mm,$dd){
+  $splitDate= explode("-",$date);
+  $cal = new Nepali_Calendar();
+  $nep=$cal->eng_to_nep($yy,$mm,$dd); 
   return ($nep["year"].'-'.$nep["month"].'-'.$nep["date"]); 
 }
 }

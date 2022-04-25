@@ -29,7 +29,8 @@ class Purchase extends Model
         'net_amount',
         'purchase_type',
         'remark',
-        'status'
+        'status',
+        'supplier_id'
 
     ];
      public function items()
@@ -38,7 +39,7 @@ class Purchase extends Model
     }
      public function supplier()
     {
-        return $this->belongsTo(Suppliers::class);
+        return $this->belongsTo(Suppliers::class,'supplier_id');
     }
     public function invoiceData($id){
         return Purchase::where('id',$id)

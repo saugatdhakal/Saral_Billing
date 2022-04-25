@@ -61,7 +61,7 @@ class PurchaseController extends Controller
                         <i class="fa-solid fa-eye fa-xl"></i>
                     </a>
                     &#160
-                    <a  class="deletePurchase" id="'.$row->id.'">
+                    <a  class="deletePurchase" style="color:red" id="'.$row->id.'">
                         <i class="fa-solid fa-trash-can-list fa-xl"></i>
                     </a>
                 ';
@@ -116,6 +116,7 @@ class PurchaseController extends Controller
         $obj = new Purchase();
         $purchase = $obj->invoiceData($id);
 
+
         return view('purchase.invoice1',['purchase'=>$purchase,'config'=>$config]);
     }
      public function invoice2($id){
@@ -123,6 +124,7 @@ class PurchaseController extends Controller
         $config = getConfig();    
         $obj = new Purchase();
         $purchase = $obj->invoiceData($id);
+        
         
         return view('purchase.invoice2',['purchase'=>$purchase,'config'=>$config]);
     }
@@ -156,7 +158,8 @@ class PurchaseController extends Controller
          
         ->where('purchases.id',$id)
          ->join('suppliers','purchases.supplier_id','=','suppliers.id')
-         ->select(['purchases.invoice_number','purchases.transaction_date','purchases.bill_date','purchases.bill_no','purchases.lr_no','purchases.gst','purchases.net_amount','suppliers.name','purchases.status','purchases.purchase_type'])
+         ->select(['purchases.invoice_number','purchases.transaction_date','purchases.bill_date','purchases.bill_no',
+         'purchases.lr_no','purchases.gst','purchases.net_amount','suppliers.name','purchases.status','purchases.purchase_type'])
          ->get()->first(); 
          return $data;
     }
@@ -178,7 +181,8 @@ class PurchaseController extends Controller
         $data =DB::table('purchases')
          ->whereNotNull('purchases.deleted_by')
          ->join('suppliers','purchases.supplier_id','=','suppliers.id')
-         ->select(['purchases.id','purchases.invoice_number','purchases.transaction_date','purchases.bill_date','purchases.bill_no','purchases.lr_no','purchases.net_amount','suppliers.name','purchases.status'])
+         ->select(['purchases.id','purchases.invoice_number','purchases.transaction_date',
+         'purchases.bill_date','purchases.bill_no','purchases.lr_no','purchases.net_amount','suppliers.name','purchases.status'])
          ->get(); 
             return DataTables::of($data)
             ->addIndexColumn()
@@ -235,7 +239,8 @@ class PurchaseController extends Controller
             ->where('purchases.deleted_by','=',NULL)
             ->where('purchases.id', $id)
             ->join('suppliers','purchases.supplier_id','=','suppliers.id')
-            ->select('purchases.id as purchase_id','purchases.invoice_number','purchases.transaction_date','purchases.bill_date','purchases.lr_no','purchases.bill_no','suppliers.id as supplier_id','suppliers.name as supplier_name','suppliers.address')
+            ->select('purchases.id as purchase_id','purchases.invoice_number','purchases.transaction_date',
+            'purchases.bill_date','purchases.lr_no','purchases.bill_no','suppliers.id as supplier_id','suppliers.name as supplier_name','suppliers.address')
             ->get()->first();
             
         $product = DB::table('products')->where('status','ACTIVE')->where('products.deleted_by','=',NULL)->get(['id','name','unit','product_code']);
@@ -244,7 +249,8 @@ class PurchaseController extends Controller
         $list = DB::table('purchase_items')
         ->where('purchase_items.purchase_id',$id)
         ->join('products','purchase_items.product_id','=','products.id')
-        ->select('purchase_items.id','products.product_code','products.name','products.unit','purchase_items.discount_percent','purchase_items.quantity','purchase_items.rate','purchase_items.amount','purchase_items.wholesale_price','purchase_items.margin_total','purchase_items.discount_amount')
+        ->select('purchase_items.id','products.product_code','products.name','products.unit','purchase_items.discount_percent','purchase_items.quantity',
+        'purchase_items.rate','purchase_items.amount','purchase_items.wholesale_price','purchase_items.margin_total','purchase_items.discount_amount')
         ->get();
     //   
     // stop_measure('render');

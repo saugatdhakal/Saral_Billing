@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
+use Carbon\Carbon;
+use APP\Charts\SalesChart;
+
 use App\Http\Requests\SaleRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +28,11 @@ class SaleController extends Controller
         return view('sale.index');
     }
 
+    public function salesChart(){
+
+        return view('charts.salesChart');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -34,6 +42,14 @@ class SaleController extends Controller
     {
         $salesInvoice = getSalesInvoice(); 
         return view('sale.create',compact('salesInvoice'));
+    }
+    public function email($id){
+        $config = DB::table('configs')->get('email')->first();
+        $account = DB::table('sales')->where('sales.id',$id)
+        ->join('accounts', 'accounts.id','=','sales.account_id')
+        ->select(['accounts.email','accounts.id as account_id','sales.id as sales_id'])->first();
+        // return $account;
+        return view('mail.index',compact('config','account'));
     }
 
     public function ajaxIndex(){
@@ -56,7 +72,7 @@ class SaleController extends Controller
                     &#160
                 ';
                 }
-                else if ($row->status == 'COMPLETED') {
+                else if ($row->status == 'COMPLETED' || $row->status == 'RETURN') {
                 $actionBtn.=
                 ' 
                     <a class="btnComplete" href="'.route('sales.invoiceView',["id"=>$row->id]).'" >
@@ -68,11 +84,11 @@ class SaleController extends Controller
                 
                 $actionBtn.=' 
                     <a data-toggle="modal" class="viewSale" id="'.$row->id.'"  data-target="#modal">
-                        <i class="fa-solid fa-eye fa-xl"></i>
+                        <i class="fa-solid fa-eye fa-xl" ></i>
                     </a>
                     &#160
                     <a  class="deleteSale" id="'.$row->id.'">
-                        <i class="fa-solid fa-trash-can-list fa-xl"></i>
+                        <i class="fa-solid fa-trash-can-list fa-xl" style="color:red"></i>
                     </a>
                 ';
                 return $actionBtn;

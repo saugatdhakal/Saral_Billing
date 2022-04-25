@@ -56,6 +56,8 @@
     </script>
 
 
+
+
 </head>
 
 <body class="sb-nav-fixed">
@@ -123,7 +125,7 @@
                     <div class="nav">
 
                         <div class="sb-sidenav-menu-heading">Core</div>
-                        <a class="nav-link" href="{{route('home')}}">
+                        <a class="nav-link" href="/home">
                             {{-- Dashboard --}}
                             <div class="sb-nav-link-icon"><svg class="svg-inline--fa fa-tachometer-alt fa-w-18"
                                     aria-hidden="true" focusable="false" data-prefix="fas" data-icon="tachometer-alt"
@@ -165,10 +167,14 @@
                                     &#160 Create Account </a>
                                 <a class="nav-link" href="{{route('account.trash')}}"><i class="fas fa-user-slash"></i>
                                     &#160 Trash Account</a>
-                                <a class="nav-link" href="{{route('account.paymentView')}}"><i class="fa-solid fa-money-check"></i>
+                                <a class="nav-link" href="{{route('account.paymentView')}}"><i
+                                        class="fa-solid fa-money-check"></i>
                                     &#160 Payment</a>
                             </nav>
                         </div>
+                        @if (Auth::user()->isadmin == 1)
+
+
                         {{-- Supplier --}}
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#suppliers"
                             aria-expanded="false" aria-controls="collapseLayouts">
@@ -295,6 +301,73 @@
                                     &#160 Trash Product</a>
                             </nav>
                         </div>
+                        {{-- Stock --}}
+                        <a class="nav-link" href="{{route('stock.index')}}">
+                            <div class="sb-nav-link-icon">
+                                <i class="fa-solid fa-layer-group"></i>
+                            </div>
+                            Stock
+                        </a>
+
+                        {{-- Supplier Ledger --}}
+                        <a class="nav-link" href="{{route('supplierLedger.index')}}">
+                            <div class="sb-nav-link-icon">
+                                <i class="fad fa-shapes"></i>
+                            </div>
+                            Supplier Ledger
+                        </a>
+
+                        {{-- Sales Reoprt --}}
+                        <a class="nav-link" href="{{route('salesReport.index')}}">
+                            <div class="sb-nav-link-icon">
+                                <i class="fa-solid fa-chart-user"></i>
+                            </div>
+                            Sales Report
+                        </a>
+                        {{-- Category --}}
+                        <a class="nav-link" href="{{route('category.index')}}">
+                            <div class="sb-nav-link-icon">
+                                <i class="fad fa-shapes"></i>
+                            </div>
+                            Category
+                        </a>
+
+                        {{-- Activity Log --}}
+                        <a class="nav-link" href="{{route('activityLog.index')}}">
+                            <div class="sb-nav-link-icon">
+                                <i class="fad fa-shapes"></i>
+                            </div>
+                            Activity Log
+                        </a>
+
+                        {{-- users --}}
+                        <a class="nav-link" href="{{route('user')}}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i>
+                                <!-- <i class="fas fa-tachometer-alt"></i> Font Awesome fontawesome.com -->
+                            </div>
+                            Users
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Addons</div>
+                        <a class="nav-link" href="{{route('sales.salesChart')}}">
+                            <div class="sb-nav-link-icon"><svg class="svg-inline--fa fa-chart-area fa-w-16"
+                                    aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chart-area"
+                                    role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                    data-fa-i2svg="">
+                                    <path fill="currentColor"
+                                        d="M500 384c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H12c-6.6 0-12-5.4-12-12V76c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v308h436zM372.7 159.5L288 216l-85.3-113.7c-5.1-6.8-15.5-6.3-19.9 1L96 248v104h384l-89.9-187.8c-3.2-6.5-11.4-8.7-17.4-4.7z">
+                                    </path>
+                                </svg><!-- <i class="fas fa-chart-area"></i> Font Awesome fontawesome.com -->
+                            </div>
+                            Charts
+                        </a>
+                        {{-- Category --}}
+                        <a class="nav-link" href="{{route('configuration.index')}}">
+                            <div class="sb-nav-link-icon">
+                                <i class="fa-solid fa-gears"></i>
+                            </div>
+                            Configuration
+                        </a>
+                        @endif
 
                         {{-- Sales --}}
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#sales"
@@ -359,21 +432,9 @@
                                     &#160 Trash Sales Return</a>
                             </nav>
                         </div>
-                        {{-- Stock --}}
-                        <a class="nav-link" href="{{route('stock.index')}}">
-                            <div class="sb-nav-link-icon">
-                                <i class="fa-solid fa-layer-group"></i>
-                            </div>
-                            Stock
-                        </a>
 
-                        {{-- Supplier Ledger --}}
-                        <a class="nav-link" href="{{route('supplierLedger.index')}}">
-                            <div class="sb-nav-link-icon">
-                                <i class="fad fa-shapes"></i>
-                            </div>
-                            Supplier Ledger
-                        </a>
+
+
                         {{-- Accounnt Ledger --}}
                         <a class="nav-link" href="{{route('accountLedger.index')}}">
                             <div class="sb-nav-link-icon">
@@ -381,31 +442,10 @@
                             </div>
                             Account Ledger
                         </a>
-                        {{-- Sales Reoprt --}}
-                        <a class="nav-link" href="{{route('salesReport.index')}}">
-                            <div class="sb-nav-link-icon">
-                               <i class="fa-solid fa-chart-user"></i>
-                            </div>
-                            Sales Report
-                        </a>
-                        {{-- Category --}}
-                        <a class="nav-link" href="{{route('category.index')}}">
-                            <div class="sb-nav-link-icon">
-                                <i class="fad fa-shapes"></i>
-                            </div>
-                            Category
-                        </a>
 
-                        {{-- users --}}
-                        <a class="nav-link" href="{{route('user')}}">
-                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i>
-                                <!-- <i class="fas fa-tachometer-alt"></i> Font Awesome fontawesome.com -->
-                            </div>
-                            Users
-                        </a>
                         {{-- Pages --}}
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
-                            aria-expanded="false" aria-controls="collapsePages">
+                        {{-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><svg class="svg-inline--fa fa-book-open fa-w-18"
                                     aria-hidden="true" focusable="false" data-prefix="fas" data-icon="book-open"
                                     role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
@@ -425,8 +465,8 @@
                                     </path>
                                 </svg><!-- <i class="fas fa-angle-down"></i> Font Awesome fontawesome.com -->
                             </div>
-                        </a>
-                        <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
+                        </a> --}}
+                        {{-- <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
@@ -474,31 +514,8 @@
                                     </nav>
                                 </div>
                             </nav>
-                        </div>
-                        <div class="sb-sidenav-menu-heading">Addons</div>
-                        <a class="nav-link" href="charts.html">
-                            <div class="sb-nav-link-icon"><svg class="svg-inline--fa fa-chart-area fa-w-16"
-                                    aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chart-area"
-                                    role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                    data-fa-i2svg="">
-                                    <path fill="currentColor"
-                                        d="M500 384c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H12c-6.6 0-12-5.4-12-12V76c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v308h436zM372.7 159.5L288 216l-85.3-113.7c-5.1-6.8-15.5-6.3-19.9 1L96 248v104h384l-89.9-187.8c-3.2-6.5-11.4-8.7-17.4-4.7z">
-                                    </path>
-                                </svg><!-- <i class="fas fa-chart-area"></i> Font Awesome fontawesome.com -->
-                            </div>
-                            Charts
-                        </a>
-                        <a class="nav-link" href="tables.html">
-                            <div class="sb-nav-link-icon"><svg class="svg-inline--fa fa-table fa-w-16"
-                                    aria-hidden="true" focusable="false" data-prefix="fas" data-icon="table" role="img"
-                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
-                                    <path fill="currentColor"
-                                        d="M464 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM224 416H64v-96h160v96zm0-160H64v-96h160v96zm224 160H288v-96h160v96zm0-160H288v-96h160v96z">
-                                    </path>
-                                </svg><!-- <i class="fas fa-table"></i> Font Awesome fontawesome.com -->
-                            </div>
-                            Tables
-                        </a>
+                        </div> --}}
+
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
@@ -539,6 +556,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 
+    <!-- Charting library -->
+    <script src="https://unpkg.com/chart.js@^2.9.3/dist/Chart.min.js"></script>
+    <!-- Chartisan -->
+    <script src="https://unpkg.com/@chartisan/chartjs@^2.1.0/dist/chartisan_chartjs.umd.js"></script>
+
+
+    {{-- Charts
+    <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
+    <!-- Chartisan -->
+    <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script> --}}
 
     {{-- Yajra Datatable --}}
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
@@ -582,7 +609,9 @@
     @yield('supplierLedger.create')
     @yield('accountLedger.create')
     @yield('salesReport')
-
+    @yield('salesChart')
+    @yield('config')
+    @yield('dashboard')
 
 
 
