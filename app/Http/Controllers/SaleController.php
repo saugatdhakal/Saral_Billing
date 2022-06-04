@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Sale;
 use Carbon\Carbon;
 use APP\Charts\SalesChart;
-
 use App\Http\Requests\SaleRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -123,6 +122,44 @@ class SaleController extends Controller
         $pdf->setPaper('A3', 'landscape'); 
          return $pdf->stream();
     }
+    public function trashPage(){
+        return view('Sale.trash');
+    }
+    public function trashAjax(){
+        $data =DB::table('sales')
+         ->whereNotNull('sales.deleted_by')
+         ->join('accounts','sales.account_id','=','accounts.id')
+         ->select(['sales.id','sales.invoice_number','sales.transaction_date','sales.sales_date','sales.net_amount','sales.sales_type','sales.paymode','accounts.name','sales.status'])
+         ->get();
+            return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('action',function($row){
+                $actionBtn=''; 
+                $actionBtn.=
+                ' 
+                    <a class="restoreTrash" id="'.$row->id.'">
+                    <i class="fas fa-undo-alt fa-lg"></i>
+                    </a>
+                    &#160
+                ';
+              
+                
+                $actionBtn.=' 
+                   &#160
+                    <a  class="deleteSale" id="'.$row->id.'">
+                        <i class="fa-solid fa-trash-can-list fa-xl"></i>
+                    </a>
+                ';
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+    public function restoreSale($id){
+        $sale = Sale::onlyTrashed()->find($id);
+        $sale->restore();
+        return "DataRestore";   
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -194,9 +231,22 @@ class SaleController extends Controller
         ->join('products','products.id','=','sale_items.product_id')
         ->select(['sale_items.id','products.unit','products.name','sale_items.quantity','sale_items.rate','sale_items.amount','sale_items.discount_amount'])
         ->get();
+        
         return view('Sale.salesItem',compact('sales','product','saleItems'));
     }
 
+    public function trashDelete($id)
+    {  
+        try {
+        Sale::onlyTrashed()->find($id)->forceDelete();
+        return "DeleteSuccess";
+        }
+        catch (\Exception $e) {
+            return "fail";
+           //! Not returning back with error message 
+        //  return redirect()->back()->withFail(['Code Match with other product','Please use default code']);// can add multiple value on error
+        }   
+    }
     //  public function trashDelete($id)
     // {  
     //     try {

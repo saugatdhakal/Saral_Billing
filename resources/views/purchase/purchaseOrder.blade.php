@@ -65,7 +65,7 @@
             <div class="row m-2">
                 <div class="col-md-3 col-sm-12">
                     <div class="form-group">
-                        <label class="fw-bold" for="exampleInputEmail1">Product Name / Code</label>
+                        <label class="fw-bold" for="exampleInputEmail1">Product Name</label>
                         <select class="selects form-control form-select " style="width: 100%" name="productId"
                             autofocus>
                             <option value="" selected disabled>---Select Product -----</option>
@@ -199,7 +199,7 @@
                 </div>
                 <br>
                 <br>
-                
+
                 <div class="row float-right">
                     <p class="fw-bold" style="font-size:18px">Discount Amount : <span id="discountAmount">
                             @if ($discount == 0)
@@ -217,12 +217,12 @@
                 $rounded=round($roundedAmount-($amount - $discount),2);
                 @endphp
                 <div class="row float-right ">
-                
+
                     <p class="fw-bold" style="font-size:18px">Round Up : <span id="roundUp">
                             @if ($amount == 0)
                             0
                             @else
-                           
+
                             {{$rounded}}
                             @endif
                         </span></p>
@@ -255,14 +255,14 @@
                 <div class="col-md-3">
                     <label class="fw-bold">GST</label>
                     <div class="input-group">
-                        <input type="number" class="form-control" name="gst" step="0.01"  placeholder="Amount">
+                        <input type="number" class="form-control" name="gst" step="0.01" placeholder="Amount">
 
                         <span class="input-group-text fw-bold" id="unit"><i class="fa-solid fa-coin"></i></span>
                     </div>
                     <br>
                     <label class="fw-bold">Extra charge</label>
                     <div class="input-group">
-                        <input type="number" class="form-control" name="extra_amount"  step="0.01" placeholder="Amount">
+                        <input type="number" class="form-control" name="extra_amount" step="0.01" placeholder="Amount">
 
                         <span class="input-group-text fw-bold" id="unit"><i
                                 class="fa-solid fa-truck-container"></i></span>

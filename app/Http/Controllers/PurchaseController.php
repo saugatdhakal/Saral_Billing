@@ -226,7 +226,6 @@ class PurchaseController extends Controller
     public function destroy($id)
     {
         $purchase = Purchase::find($id);
-        
         $purchase->delete();
         return "DeleteSuccess";
     }

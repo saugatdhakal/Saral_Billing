@@ -282,7 +282,7 @@
             $(".view").click(function(){
             $('#supplierDetails').modal('toggle');
            const id = $(this).attr("data-id");
-           console.log(id); 
+          //  console.log(id); 
            $.ajax({
                type: "GET",
                url:"view/"+id,

@@ -22,7 +22,7 @@ class AccountController extends Controller
     {   
         
         $users = DB::table('accounts')->where('deleted_by',NULL)->get(['id','name','account_type','shop_address','home_address','contact_number_1','vat_number','pan_number']);
-        
+
         return view('account.index',['users'=>$users]);
     }
 

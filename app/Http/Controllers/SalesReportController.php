@@ -20,7 +20,11 @@ class SalesReportController extends Controller
         if($sales=='error'){
             return redirect()->back()->withFail(['Every Filed should not be Empty','Wrong Search']);     
         }
-        $sum = $sales->sum('net_amount');
+        $sum=0;
+        if($sales){
+            $sum = $sales->sum('net_amount');
+        }
+        
         return view('salesReport.index',['account'=>$account,'sales'=>$sales,'sum'=>$sum]);
 
     }

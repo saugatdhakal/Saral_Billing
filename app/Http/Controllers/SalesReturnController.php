@@ -211,12 +211,13 @@ class SalesReturnController extends Controller
     public function returnItem($id)
     {
         //salesReturn details top 
+        
         $salesReturn = DB::table('sales_returns')
         ->where('sales_returns.id',$id)
         ->join('accounts', 'accounts.id','=','sales_returns.account_id')
         ->select(['sales_returns.id','accounts.name','sales_returns.sales_id','accounts.home_address','accounts.shop_address','sales_returns.transaction_date','sales_returns.sales_return_date','sales_returns.invoice_number'])
         ->get()->first();
-
+        
         //Select Data from Sale Items of particular sales_id
         $saleItem = DB::table('sale_items')
         ->join('products','products.id','=','sale_items.product_id')
@@ -231,7 +232,7 @@ class SalesReturnController extends Controller
         ->join('products','products.id','=','sales_return_items.product_id')
         ->join('stocks','stocks.id','=','sales_return_items.stock_id')
         ->get(['sales_return_items.id','sales_return_items.quantity','products.unit','sales_return_items.rate','sales_return_items.amount','products.name','stocks.batch_number']);
-
+      
         return view('salesReturn.saleReturnItem',compact('salesReturn','saleItem','saleReturnItem'));
     }
 
@@ -294,18 +295,17 @@ class SalesReturnController extends Controller
      * @param  \App\Models\SalesReturn  $salesReturnsReturn
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-
-         try {
-            $salesReturn = SalesReturn::find($id)->get();
-            $salesReturn->delete();
-            return "DeleteSuccess";
-         }
-        catch (\Exception $e) 
-        {
-             //! Not returning back with error message 
-            //  return redirect()->back()->withFail(['Code Match with other product','Please use default code']);// can add multiple value on error
-        }
+    public function destroy(SalesReturn $salesReturnsReturn)
+    {  
+        //  try {
+             $salesReturnsReturn->delete();
+            // $salesReturn = SalesReturn::find($id)->get();
+            // $salesReturn->delete();
+            // return "DeleteSuccess";
+        //  }
+        // catch (\Exception $e) 
+        // {
+        //     return "fail";
+        // }
     }
 }

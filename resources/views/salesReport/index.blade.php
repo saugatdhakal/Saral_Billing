@@ -43,7 +43,8 @@
                 </select>
             </div>
             <div class="col-md-4">
-                <label for="" ><span style="font-size: 20px;font-weight:bold;">Sales Type</span> (click to select)</label>
+                <label for=""><span style="font-size: 20px;font-weight:bold;">Sales Type</span> (click to
+                    select)</label>
                 <select class="form-select" id="sales_type" name="sales_type[]" multiple>
                     <option value="" disabled>Select Sales Type</option>
                     <option value="DEBIT">DEBIT</option>
@@ -63,8 +64,8 @@
                 <label for="" style="font-size: 20px;font-weight:bold;">To Date</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">To</span>
-                    <input type="date" name="toDate" class="form-control" placeholder="Date" aria-label="Username"
-                        aria-describedby="basic-addon1">
+                    <input type="date" id="toDate" name="toDate" class="form-control" placeholder="Date"
+                        aria-label="Username" aria-describedby="basic-addon1">
                 </div>
             </div>
             <div class="col-md-1" style="margin-top:38px">
@@ -73,6 +74,9 @@
         </div>
     </div>
 </form>
+<div class="card shadow">
+
+</div>
 <div class="card shadow">
     <table class="table">
         <thead>
@@ -125,12 +129,12 @@
 
 @section('salesReport')
 <script>
+   document.getElementById("toDate").valueAsDate = new Date();
     $('#sales_type,#supplierSelect').select2(
         {
         theme: "bootstrap-5",
-        
         }
-        );
+    );
         // * Alert Animation //
         $(".alert").first().hide().slideDown(500).delay(4000).slideUp(500, function () {
         $(this).remove();

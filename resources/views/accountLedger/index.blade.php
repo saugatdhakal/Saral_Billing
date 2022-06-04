@@ -40,8 +40,8 @@
                 <label for="" style="font-size: 20px;font-weight:bold;">To Date</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">To</span>
-                    <input type="date" name="toDate" class="form-control" placeholder="Date" aria-label="Username"
-                        aria-describedby="basic-addon1">
+                    <input type="date" name="toDate" class="form-control" id="toDate" placeholder="Date"
+                        aria-label="Username" aria-describedby="basic-addon1">
                 </div>
             </div>
             <div class="col-md-1" style="margin-top:38px">
@@ -50,7 +50,33 @@
         </div>
     </div>
 </form>
-<table class="table table-striped yajra-datatable" style="margin-top:10px   " width="90%">
+@if ($accountLedger)
+<div class="row">
+    <div class="card-body" style="margin-top:10px;margin-button:10px;">
+
+        <div class="row">
+            <div class="col-md-4">
+                Name : {{$searchedAccount->name}}
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                Account Type : {{$searchedAccount->account_type}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                Contact Number : {{$searchedAccount->contact_number_1}}
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                Account Type : {{$searchedAccount->email}}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<table class="table table-striped yajra-datatable" style="margin-top:20px" width="90%">
     <thead>
         <th style="width: 10%">Date</th>
         <th>Account Description</th>
@@ -59,7 +85,7 @@
         <th style="width: 5%">Balance</th>
     </thead>
     <tbody>
-        @if ($accountLedger)
+
         @php $i=0;@endphp
         @forelse ($accountLedger as $row)
         <tr>
@@ -97,18 +123,23 @@
         @endif
     </tbody>
     <tfoot class="table table-bordered" style="border-top: inset">
+        @if ($accountLedger)
         <td colspan="2" class="fw-bold">Total Ledger Amount</td>
 
         <td class="fw-bold text-end ">{{$drAmount}}</td>
         <td class="fw-bold text-end ">{{$crAmount}}</td>
-        
-        @if($accountLedger!=null && $accountLedger->last()->balance !=null )
-        <td class="fw-bold text-end ">{{($accountLedger->last()->balance)}}</td>
-        @endif
+
+
+        <td class="fw-bold text-end ">{{($balance)}}</td>
+
+
     </tfoot>
+
 </table>
+@endif
 @section('accountLedger.create')
 <script>
+    // document.getElementById("toDate").valueAsDate = new Date();
     $('#accountSelect').select2(
     {
     theme: "bootstrap-5",

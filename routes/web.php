@@ -160,6 +160,10 @@ Route::get('/sale/invoiceView/{id}',[SaleController::class,'invoiceView'])->name
 Route::get('/sale/moduleView/{id}',[SaleController::class,'moduleView'])->name('sales.moduleView');
 Route::get('/sale/ajaxIndex',[SaleController::class,'ajaxIndex'])->name('sales.ajaxIndex');
 Route::get('/sale/salesItem/{id}',[SaleController::class,'salesItem'])->name('sales.salesItem');
+Route::get('/sale/trashPage',[SaleController::class,'trashPage'])->name('sales.trashPage');
+Route::get('/sale/trashAjax',[SaleController::class,'trashAjax'])->name('sales.trashAjax');
+Route::post('/sale/restoreSale/{id}',[SaleController::class,'restoreSale'])->name('sales.restoreSale');
+Route::delete('/sale/trashDelete/{id}',[SaleController::class,'trashDelete'])->name('sales.trashDelete');
 Route::resource('sale',SaleController::class);
 
 // ? SaleItem

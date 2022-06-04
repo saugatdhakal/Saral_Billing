@@ -7,7 +7,7 @@
     </h1>
 </center>
 
-    
+
 <div class="row mb-3 p-0 mt-2 mr-3">
     <div class="col-md-12 clearfix ">
         <a class="float-right mr-2" href="{{route('salesReturn.create')}}">
@@ -171,6 +171,7 @@
 
     $('body').on('click', '.deleteSaleReturn', function () {
     var btnId = $(this).attr("id");
+    alert(btnId);
     swal({
     title: "Are you sure?",
     text: "Deleted Data will move to Trash",
@@ -179,17 +180,15 @@
     dangerMode: true,
     })
     .then((willDelete) => {
-    
     if (willDelete) {
     $.ajax({
     type: "DELETE",
-    url:"salesReturn/"+btnId,
+    url:"/salesReturn/"+btnId,
     data: {
     "_token":$('input[name="_token"]').val(),
     "id":btnId,
     },
     success: function(data){
-    alert(data);
     if(data == "DeleteSuccess"){
     swal(" Your Data has been Move to Trash!!", {
     icon: "success",

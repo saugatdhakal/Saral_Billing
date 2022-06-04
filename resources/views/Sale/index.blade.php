@@ -14,7 +14,7 @@
                 <i class="fa fa-user" aria-hidden="true"></i> Create Sales
             </button>
         </a>
-        <a class="float-right mr-2" href="{{route('purchase.trashPage')}}">
+        <a class="float-right mr-2" href="{{route('sales.trashPage')}}">
             <button type="button" class="btn btn-outline-danger">
                 <i class="fas fa-user-times"></i> Trash Sales
             </button>
@@ -144,7 +144,7 @@
 <script>
     $(function(){
     // YajraBox-Datatable
-    var table =$('.yajra-datatable').DataTable({
+     var table =$('.yajra-datatable').DataTable({   
     lengthMenu: [
     [ 30, 40, 50, -1 ],
     [ '30 rows', '40 rows', '50 rows', 'Show all' ]

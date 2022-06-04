@@ -9,6 +9,10 @@ use Wildside\Userstamps\Userstamps;
 
 class SalesReturn extends Model
 {
+    use HasFactory;
+    use SoftDeletes;
+    use Userstamps;
+    
     protected $datas=['deleted_at'];
    
     protected $fillable=[

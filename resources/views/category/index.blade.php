@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('content')
-
+<center>
+    <h1>
+        &#160 <u> Category Dashboard</u>
+    </h1>
+</center>
 <div class="row mb-3 p-0 mt-2 mr-3">
 
     <div class="col-md-12 clearfix ">
@@ -94,7 +98,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Add Category</h5>
+                <h5 class="modal-title" id="staticBackdropLabel"><i class="fa-solid fa-pen-line"></i>Edit Category</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
