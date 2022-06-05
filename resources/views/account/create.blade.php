@@ -5,7 +5,16 @@
     <p style="font-size:30px">New Account</p>
 </div>
 <hr>
-{{-- // --}}
+@if ($errors->any())
+<div class="alert alert-danger" role="alert">
+
+    @foreach ($errors->all() as $err)
+
+    <li style="color:red">{{$err}}</li>
+    @endforeach
+
+</div>
+@endif
 <div class="container-fluid">
     <form class="row g-3 needs-validation" action="{{route('Account.add')}}" method="POST" novalidate>
         @csrf
@@ -233,5 +242,9 @@ $("#homeAddress").bind('keypress', function(){
       }, false);
     }
     );
+    $(".alert").first().hide().slideDown(500).delay(4000).slideUp(500, function () {
+    
+    $(this).remove();
+    });
 </script>
 @endsection

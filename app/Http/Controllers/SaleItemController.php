@@ -7,8 +7,6 @@ use App\Models\SaleItem;
 use App\Models\Sale;
 use App\Models\Cheque;
 use App\Models\Stock;
-
-
 use App\Http\Requests\SaleItemRequest;
 use Illuminate\Support\Facades\DB;
 use Brian2694\Toastr\Facades\Toastr;

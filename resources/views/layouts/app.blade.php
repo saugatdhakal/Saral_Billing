@@ -63,7 +63,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html">SARAL BILLING</a>
+        <a class="navbar-brand ps-3" href="{{route('home')}}">SARAL BILLING</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><svg
                 class="svg-inline--fa fa-bars fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas"
@@ -90,14 +90,17 @@
                         </path>
                     </svg><!-- <i class="fas fa-user fa-fw"></i> Font Awesome fontawesome.com --></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#!">Settings</a></li>
-                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li><a class="dropdown-item" href="{{route('configuration.index')}}"><i
+                                class="fa-solid fa-gear"></i> Settings</a></li>
+                    <li><a class="dropdown-item" href="{{route('activityLog.index')}}"><i
+                                class="fa-solid fa-bars-staggered"></i> Activity Log</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
                     <li>
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                     document.getElementById('logout-form').submit();"><i
+                                class="fa-solid fa-right-from-bracket"></i>
                             {{ __('Logout') }}
                         </a>
 
@@ -527,11 +530,9 @@
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright © Your Website 2021</div>
+                        <div class="text-muted">Copyright © Your Website 2022</div>
                         <div>
-                            <a href="#">Privacy Policy</a>
-
-                            <a href="#">Terms &amp; Conditions</a>
+                            <a href="{{route('home')}}">Develop By: Saugat Dhakal</a>
                         </div>
                     </div>
                 </div>

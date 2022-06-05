@@ -161,7 +161,7 @@ class SaleItem extends Model
         //! Sending  if ledger balance cross above 50,000
         $configMinCredit = DB::table('configs')->get('credit_over_due_warning')->first();
 
-        if($accountLedger->balance > $configMinCredit->credit_over_due_warning ){
+        if($accountLedger->balance >= $configMinCredit->credit_over_due_warning ){
             creditOverDue($accountLedger->balance,$accountLedger->account_id);
         }
         

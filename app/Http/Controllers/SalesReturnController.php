@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\SalesReturn;
 use App\Models\SaleItem;
-
 use App\Models\SalesReturnItems;
 use App\Models\Stock;
 use App\Models\Sale;
-
 use Illuminate\Http\Request;
 use App\Http\Requests\SalesReturnRequest;
 use App\Http\Requests\SalesReturnItemRequest;
@@ -97,48 +95,35 @@ class SalesReturnController extends Controller
             return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action',function($row){
-                $actionBtn='';
-
-                if ($row->status == 'RUNNING') {
+                $actionBtn=''; 
                 $actionBtn.=
                 ' 
-                    <a class="btnEdit" href="'.route('salesReturn.returnItem',["id"=>$row->id]).'" >
-                    <i class="fa-solid fa-money-check-pen fa-xl"></i>
+                    <a class="restoreTrash" id="'.$row->id.'">
+                    <i class="fas fa-undo-alt fa-lg"></i>
                     </a>
                     &#160
                 ';
-                }
-                else if ($row->status == 'COMPLETED') {
-                $actionBtn.=
-                ' 
-                    <a class="btnComplete" href="'.route('purchase.invoice1',["id"=>$row->id]).'" >
-                   <i class="fa-solid fa-file-invoice fa-xl"></i>
-                    </a>
-                    &#160
-                ';
-                }
-                
                 $actionBtn.=' 
-                    <a data-toggle="modal" class="viewSaleReturn" id="'.$row->id.'"  data-target="#modal">
-                        <i class="fa-solid fa-eye fa-xl"></i>
-                    </a>
-                    &#160
+                   &#160
                     <a  class="deleteSaleReturn" id="'.$row->id.'">
-                        <i class="fa-solid fa-trash-can-list fa-xl"></i>
+                        <i class="fa-solid fa-trash-can-list fa-xl" style="color:red"></i>
                     </a>
                 ';
                 return $actionBtn;
             })
             ->rawColumns(['action'])
-            
             ->make(true);
     }
-
-
-
-    
-
-    
+    public function deleteTrash($id){
+        try{
+            $saleReturn = SalesReturn::onlyTrashed()->find($id);
+        $saleReturn->forceDelete();
+        return "DeleteSuccess";
+        }catch (\Exception $e){
+            return "fail";
+        }
+        
+    }
 
     public function moduleView($id)
     {
@@ -278,34 +263,19 @@ class SalesReturnController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SalesReturn  $salesReturnsReturn
-     * @return \Illuminate\Http\Response
+     * Restoring the specified resource in storage.
      */
-    public function update(Request $request, SalesReturn $salesReturnsReturn)
+    public function restoreTrash($id)
     {
-        //
+        $saleReturn = SalesReturn::onlyTrashed()->find($id);
+        $saleReturn->restore();
+        return "DataRestore";
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\SalesReturn  $salesReturnsReturn
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(SalesReturn $salesReturnsReturn)
-    {  
-        //  try {
-             $salesReturnsReturn->delete();
-            // $salesReturn = SalesReturn::find($id)->get();
-            // $salesReturn->delete();
-            // return "DeleteSuccess";
-        //  }
-        // catch (\Exception $e) 
-        // {
-        //     return "fail";
-        // }
+    public function softDelete($id){
+
+       $saleReturn = SalesReturn::find($id) ;
+       $saleReturn->delete();
+       return "DeleteSuccess";
     }
 }

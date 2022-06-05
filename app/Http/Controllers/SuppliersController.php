@@ -180,19 +180,14 @@ class SuppliersController extends Controller
     public function update(Request $request, $id)
     {
         $suppliers = Suppliers::find($id);
-
         $suppliers->name = $request->supplier_name;
-
         $suppliers->address = $request->address;
-
+        $suppliers->email = $request->email;
         $suppliers->contact_number = empty($request->contact_number)? null:$request->contact_number;
-
         $suppliers->contact_person = empty($request->contact_person_name)?  null: $request->contact_person_name;
-
         $suppliers->remark= empty($request->remark)?null:$request->remark;
-        
         $suppliers-> save();
-
+        // return $suppliers;
         return redirect()->route('supplier.index');
     }
 

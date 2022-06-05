@@ -124,28 +124,18 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/stock/statusSwitch/{id}',[StockController::class,'statusSwitch'])->name('stock.statusSwitch');
     Route::get('/stock/getIndexAjax',[StockController::class,'getIndexAjax'])->name('stock.getIndexAjax');
     Route::resource('stock',StockController::class);
-
-
-
-
-
     //!Email 
     Route::post('/salesEmail/index/{id}',[SalesEmailController::class,'index'])->name('salesEmail.index');
-
-
-
     //? Supplier Ledger
     Route::get('/supplierLedger/searchLedger',[SupplierLedgerController::class,'searchLedger'])->name('supplierLedger.searchLedger');
     Route::resource('supplierLedger', SupplierLedgerController::class);
-
-
     //? Sales Report
     Route::get('/salesReport',[SalesReportController::class,'index'])->name('salesReport.index');
     Route::get('/salesReport/searchReport',[SalesReportController::class,'searchReport'])->name('salesReport.searchReport');
-
     //* Activity Log
     Route::get('/activityLog',[ActivityLogsController::class,'index'])->name('activityLog.index');
-
+    Route::get('/activityLog/ajaxActivityData',[ActivityLogsController::class,'ajaxActivityData'])->name('activityLog.ajaxActivityData');
+    
     //? Configuration
     Route::get('/configuration',[ConfigController::class,'index'])->name('configuration.index');
     Route::post('/configuration/updateConfig',[ConfigController::class,'updateConfig'])->name('configuration.updateConfig');
@@ -189,10 +179,11 @@ Route::delete('/account/delete/{id}', [App\Http\Controllers\AccountController::c
 Route::get('/account/trash', [App\Http\Controllers\AccountController::class, 'trash'])->name('account.trash');
 Route::delete('/account/trashDelete/{id}', [App\Http\Controllers\AccountController::class, 'trashDelete'])->name('account.trashDelete');
 Route::post('/account/trashRestore/{id}', [App\Http\Controllers\AccountController::class, 'trashRestore'])->name('account.trashRestore');
-//
-
 
 //* SALE RETURN
+Route::delete('/saleReturn/deleteTrash/{id}',[SalesReturnController::class,'deleteTrash'])->name('salesReturn.deleteTrash');
+Route::post('/salesReturn/restoreTrash/{id}',[SalesReturnController::class,'restoreTrash'])->name('salesReturn.restoreTrash');
+Route::delete('/salesReturn/softDelete/{id}',[SalesReturnController::class,'softDelete'])->name('salesReturn.softDelete');
 Route::get('/salesReturn/moduleView/{id}',[SalesReturnController::class,'moduleView'])->name('salesReturn.moduleView');
 Route::get('/salesReturn/ajaxIndex',[SalesReturnController::class,'ajaxIndex'])->name('salesReturn.ajaxIndex');
 Route::post('/salesReturn/returnItemComplete/{id}',[SalesReturnController::class,'returnItemComplete'])->name('salesReturn.returnItemComplete');

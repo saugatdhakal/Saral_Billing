@@ -1,15 +1,11 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Account;
 use App\Models\Sale;
 use App\Models\AccountLedger;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\AccountPaymentRequest;
-
 use Illuminate\Support\Arr;
 class AccountController extends Controller
 {
@@ -20,9 +16,7 @@ class AccountController extends Controller
      */
     public function index()
     {   
-        
         $users = DB::table('accounts')->where('deleted_by',NULL)->get(['id','name','account_type','shop_address','home_address','contact_number_1','vat_number','pan_number']);
-
         return view('account.index',['users'=>$users]);
     }
 
@@ -41,33 +35,18 @@ class AccountController extends Controller
     }
 
     public function searchSaleInvoice($account_id){
-
-        // $accountLedger =DB::table('account_ledgers')
-        // ->where('account_id',2)->get(['id','credit']);
-        // // return $accountLedger;
         return DB::table('sales')
         ->where('sales.account_id',2)
         ->where('sales.sales_type','CREDIT')
         ->get(['sales.id','sales.invoice_number','sales.sales_date']);
-        
-        // $index=0;
-        // foreach($sale as $row){
-        //     $row=Arr::add($row, 'balance' , empty($accountLedger[$index]->credit)? 0:$accountLedger[$index]->balance);
-        //     $index++;   
-        // };
-
-        // return $sale;
-        
     }
 
     public function savePayment(AccountPaymentRequest $request){
         $supplier = DB::table('sales')->where('id',$request->sale_id)->get(['invoice_number'])->first();
-        
          $old_supplierLedger = DB::table('account_ledgers')
          ->where('account_id',$request->account_id)
          ->get('balance')
          ->last();
-
         if ($old_supplierLedger->balance < $request->amount) {
             // return redirect()->back()->with('Error', 'Amount is Greater then Balance');
              return redirect()->back()->withFail(['Amount is Greater then Balance','Check your balance']);// can add multiple value on error
@@ -93,37 +72,38 @@ class AccountController extends Controller
      */
     public function add(Request $request)
     {
-        // return $request;
-
+        if($request->CutomerType ="Business"){
+            $request->validate([
+                'companyName'=>'required',
+                'shopAddress'=>'required',
+                'vat'=>'required',
+                'pan'=>'required',
+                'shopAddress'=>'required',
+                'mobile2'=>'required'   
+            ]);
+        }
+        $request->validate([
+                'homeAddress'=>'required', 
+                'mobile1'=>'required',    
+                'email'=>'required',    
+                'remark'=>'required'
+        ]);
         $account = new Account;
-
         $account->account_type= $request->CutomerType;
-
         $account->name= $request->name;
-
         if($request->CutomerType =="Business"){
             $account->shop_name = empty($request->companyName)? null:$request->companyName;
-
             $account->shop_address = empty($request->shopAddress)? null:$request->shopAddress;
-
             $account->vat_number =  empty($request->vat)?null:$request->vat;
-
             $account->pan_number =  empty($request->pan)?null:$request->pan;
-
             $account->contact_number_2 = empty($request->mobile2)?null:$request->mobile2;
         }
         $account->home_address = empty($request->homeAddress)? null:$request->homeAddress;
-
         $account->contact_number_1 = empty($request->mobile1)?null:$request->mobile1;
-
         $account->email = empty($request->email)?null:$request->email;
-
         $account->remark=  empty($request->remark)?null:$request->remark;
-
         $account->save();
-
         return redirect()->route('Account.index')->with('successes','Customer Create Successful');
-        
     }
 
     /**
@@ -137,7 +117,6 @@ class AccountController extends Controller
         // $accountmodel = DB::table('Accounts')->find($id);
         $user = DB::table('Accounts')->select('name','account_type','shop_name','home_address','shop_address','contact_number_1','contact_number_2',
         'email','vat_number','pan_number','remark')->find($id);
-
          return $user;
     }
 
@@ -165,35 +144,21 @@ class AccountController extends Controller
     {
         $flag=true;
         $account = Account::find($id);
-
         $account->account_type= $request->CutomerType;
-
         $account->name= $request->name;
-        
         if($request->CutomerType == "Business"){
             $account->shop_name = empty($request->companyName)? null:$request->companyName;
-
             $account->shop_address = empty($request->shopAddress)? null:$request->shopAddress;
-
             $account->contact_number_2 = empty($request->mobile2)?null:$request->mobile2;
-
             $account->vat_number =  empty($request->vat)?null:$request->vat;
-
             $account->pan_number =  empty($request->pan)?null:$request->pan;
         }
-        
         $account->home_address = empty($request->homeAddress)? null:$request->homeAddress;
-        
         $account->contact_number_1 = empty($request->mobile1)?null:$request->mobile1;
-        
         $account->email = empty($request->email)?null:$request->email;
-
         $account->remark= empty($request->remark)?null:$request->remark;
-        // return $account;
         $account->save();
-
         return redirect()->route('Account.index')->with('success','Customer Updated');
-
     }
 
     /**
@@ -204,9 +169,6 @@ class AccountController extends Controller
      */
     public function delete($id)
     {
-        // $account = DB::table('Accounts')->find($id);
-        // DB::table('Accounts')->where('id', $id)->delete();
-        
         $account = Account::find($id);
         $account->status = 'INACTIVE';
         $account->delete();
@@ -214,9 +176,7 @@ class AccountController extends Controller
     }
     public function trashDelete($id)
     {
-
         Account::onlyTrashed()->find($id)->forceDelete();
-        // Account::find($id)->forceDelete();
         return "DeleteSuccess";
     }
     public function trashRestore($id)
@@ -228,7 +188,6 @@ class AccountController extends Controller
     }
     public function trash(){
         $trash=Account::onlyTrashed()->get(['id','name','account_type','contact_number_1','shop_address','home_address','vat_number','pan_number']);
-        
         return view('account.trash',['trash'=>$trash]);
     }
 }

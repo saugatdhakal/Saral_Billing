@@ -35,6 +35,7 @@ class CreateSalesReturnsTable extends Migration
             $table->foreign('updated_by')->references('id')->on('users');
             $table->unsignedBigInteger('deleted_by')->nullable();
             $table->foreign('deleted_by')->references('id')->on('users');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -46,8 +47,9 @@ class CreateSalesReturnsTable extends Migration
      */
     public function down()
     {
-        Schema::table('sales_returns',function(Blueprint $table){
-            $table->dropSoftDeletes();
-        });
+         Schema::dropIfExists('sales_returns');
+        // Schema::table('sales_returns',function(Blueprint $table){
+        //     $table->dropSoftDeletes();
+        // });
     }
 }

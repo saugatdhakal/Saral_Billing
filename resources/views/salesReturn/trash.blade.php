@@ -74,7 +74,7 @@ var btnId = $(this).attr("id");
     if (result) {
     $.ajax({
         type: "POST",
-        url:'/product/restoreProduct/'+btnId,
+        url:'/salesReturn/restoreTrash/'+btnId,
         data: {
             "_token":$('input[name="_token"]').val(),
             "id":btnId,
@@ -96,7 +96,7 @@ var btnId = $(this).attr("id");
 });
 });
 //Category Permanent Delete
-$('body').on('click', '.deleteProduct', function () {
+$('body').on('click', '.deleteSaleReturn', function () {
 var btnId = $(this).attr("id");
 swal({
 title: "Are you sure?",
@@ -110,7 +110,7 @@ dangerMode: true,
 if (willDelete) {
 $.ajax({
 type: "DELETE",
-url:"/product/forceDeleteProduct/"+btnId,
+url:"/saleReturn/deleteTrash/"+btnId,
 data: {
 "_token":$('input[name="_token"]').val(),
 "id":btnId,
@@ -118,11 +118,15 @@ data: {
 success: function(data){
 // alert(data);
 if(data == "DeleteSuccess"){
-swal(" Your is permanently deleted!!", {
-icon: "success",
-}).then((willDelete)=>{
-location.reload();
-});
+    swal(" Your is permanently deleted!!", {
+    icon: "success",
+    }).then((willDelete)=>{
+    location.reload();
+    });
+}else{
+    swal(" Sorry this Sales Can't be deleted!!", {
+    icon: "error",
+    });
 }
 
 }

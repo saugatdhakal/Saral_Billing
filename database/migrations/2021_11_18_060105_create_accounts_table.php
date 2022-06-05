@@ -45,9 +45,14 @@ class CreateAccountsTable extends Migration
      */
     public function down()
     {
-        Schema::table('Account',function(Blueprint $table){
-            $table->dropSoftDeletes();
-        });
-        // Schema::dropIfExists('accounts');
+        // Schema::table('Accounts',function(Blueprint $table){
+        //     $table->dropSoftDeletes();
+        // });
+        // DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        Schema::dropIfExists('Accounts');
+        // DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+        // $table->dropForeign('accounts_created_by_foreign');
+        // $table->dropColumn('created_by');
     }
+
 }

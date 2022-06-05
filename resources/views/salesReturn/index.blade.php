@@ -16,11 +16,11 @@
                 <i class="fa fa-user" aria-hidden="true"></i> Create Sales Return
             </button>
         </a>
-        {{-- <a class="float-right mr-2" href="{{route('salesReturn.trashIndex')}}">
+        <a class="float-right mr-2" href="{{route('salesReturn.trashIndex')}}">
             <button type="button" class="btn btn-outline-danger">
                 <i class="fas fa-user-times"></i> Trash Sales Return
             </button>
-        </a> --}}
+        </a>
     </div>
 </div>
 {{-- Table --}}
@@ -146,32 +146,11 @@
     },
     ]
     });
-    //!! Model
-    $('body').on('click', '.viewSaleReturn', function () {
-    var btnId = $(this).attr("id");
-    // alert(btnId);
-    $('#saleModel').modal('toggle');
-    $.get("/salesReturn/moduleView/"+btnId , function (data) {
-    // console.log(data);
-    $('#sales_status').html(data.status);
-    $('#account_name').html(data.name);
-    $('#invoice_no').html(data.invoice_number);
-    $('#transaction_date').html(data.transaction_date);
-    $('#sales_date').html(data.sales_return_date);
-    $('#total_amt').html(data.total_amount);
-    $('#net_amount').html(data.net_amount);
-    }
-    );
-    });
-    
-    //Moving into trash(soft Delete)
-    $('.close').click(function () {
-    $('#saleModel').modal('toggle');
-    });
+
 
     $('body').on('click', '.deleteSaleReturn', function () {
     var btnId = $(this).attr("id");
-    alert(btnId);
+    // alert(btnId);
     swal({
     title: "Are you sure?",
     text: "Deleted Data will move to Trash",
@@ -183,14 +162,15 @@
     if (willDelete) {
     $.ajax({
     type: "DELETE",
-    url:"/salesReturn/"+btnId,
+    url:"/salesReturn/softDelete/"+btnId,
     data: {
     "_token":$('input[name="_token"]').val(),
     "id":btnId,
     },
     success: function(data){
+        console.log(data);  
     if(data == "DeleteSuccess"){
-    swal(" Your Data has been Move to Trash!!", {
+    swal("Your Data has been Move to Trash!!", {
     icon: "success",
     }).then((willDelete)=>{
     location.reload();

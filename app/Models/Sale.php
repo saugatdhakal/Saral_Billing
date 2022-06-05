@@ -44,8 +44,6 @@ class Sale extends Model
     {
         return $this->belongsTo(User::class,'updated_by');
     }
-
-
      public function Saleitems()
     {
         return $this->hasMany(SaleItem::class,'sales_id');
@@ -56,9 +54,6 @@ class Sale extends Model
         $sale->account_id = $request->accountId;
         $sale->transaction_date = getNepaliDate($request->transactionDate);
         $sale->sales_date = $request->saleDate;
-        // if($request->saleType == 'RETURN'){
-        //     $sale->sales_type = $request->saleType;
-        // }
         $sale->save();
     }
 

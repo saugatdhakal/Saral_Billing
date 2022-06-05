@@ -12,9 +12,8 @@ class SalesReturn extends Model
     use HasFactory;
     use SoftDeletes;
     use Userstamps;
-    
-    protected $datas=['deleted_at'];
-   
+
+    protected $datas=['deleted_at'];   
     protected $fillable=[
         'account_id',
         'transection_date',

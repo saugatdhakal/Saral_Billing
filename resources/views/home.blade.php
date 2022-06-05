@@ -106,7 +106,7 @@
     ->get(['net_amount']);
     $salesCount = $salesToday->count();
     @endphp
-    <div class="row mb-2">
+    <div class="row" style="margin-bottom:20px; margin-top:10;">
         <div class="col-xl-3 col-md-6">
             <div class="card" style="background-color: rgb(8, 0, 255);">
                 <div class="card-body">
@@ -123,6 +123,7 @@
 
             </div>
         </div>
+
         <div class="col-xl-3 col-md-6">
             <div class="card" style="background-color: rgb(149, 0, 255);">
                 <div class="card-body">
@@ -176,13 +177,9 @@
                 </div>
 
             </div>
-            {{-- Total Revenue Year --}}
-
-
-
-        </div>  
-
-
+        </div>
+    </div>
+    <div>
         @php
         $data =DB::table('sales')
         ->where('created_at', '>', now()->subDays(30)->endOfDay())
