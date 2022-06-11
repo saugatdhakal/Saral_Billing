@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-md-5 fw-bold" style="font-size: 20px;"> SALES # {{$sales->invoice_number}} </div>
                 <div class="col-md-2" style="font-size: 17px;">
-                    Transaction Date : {{$sales->transaction_date}}
+                    Issue Date : {{$sales->transaction_date}}
                 </div>
             </div>
             <div class="row mb-1">
@@ -94,7 +94,7 @@
                 <div class="col-md-2 col-sm-12">
                     <label class="fw-bold" for="exampleInputEmail1">Re-Rate</label>
                     <div class="input-group">
-                        <input type="number" id="re-Rate" class="form-control" name="reRate"
+                        <input type="number" id="re-Rate" min="0" oninput="this.value = Math.abs(this.value)" class="form-control" name="reRate"
                             aria-label="Text input with segmented dropdown button" min="1" step="0.01">
 
                         <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
@@ -120,7 +120,7 @@
                     <div class="form-group">
                         <label class="fw-bold" for="exampleInputEmail1">Discount Amount</label>
                         <div class="input-group">
-                            <input type="number" min="1" step="0.01" min="0" class="form-control" name="discount_amount"
+                            <input type="number" min="1" step="0.01" class="form-control" name="discount_amount"
                                 placeholder="">
                             <span class="input-group-text"><i class="fa-solid fa-indian-rupee-sign"></i></span>
                         </div>
@@ -327,13 +327,13 @@
                     <div class="col-md-2 " id="reAmountDiv" style="display: none">
                         <label style="color:red">Received Amount*</label>
                         <br>
-                        <input type="number" class="form-control" id="received_amt_input" name="received_amount"
+                        <input type="number" class="form-control" min="1" id="received_amt_input" name="received_amount"
                             placeholder="Received Amount">
                     </div>
                     <div class="col-md-2 " id="chequeNoDiv" style="display: none">
                         <label style="color:red">Cheque No*</label>
                         <br>
-                        <input type="number" class="form-control" id="cheque_no" name="cheque_no"
+                        <input type="number" class="form-control" min="0" id="cheque_no" name="cheque_no"
                             placeholder="Cheque No">
                     </div>
                     <div class="col-md-2 " id="accountNameDiv" style="display: none">
@@ -345,7 +345,7 @@
                     <div class="col-md-2 " id="accountNoDiv" style="display: none">
                         <label style="color:red">Account No*</label>
                         <br>
-                        <input type="number" class="form-control" id="account_no" name="account_no"
+                        <input type="number" class="form-control" min="0" id="account_no" name="account_no"
                             placeholder="Account No">
                     </div>
 
@@ -358,7 +358,7 @@
                     <div class="col-md-2 " id="chequeDateDiv" style="display: none">
                         <label style="color:red">Cheque Date*</label>
                         <br>
-                        <input type="date" class="form-control" id="cheque_date" name="cheque_date">
+                        <input type="date" class="form-control" min="0" id="cheque_date" name="cheque_date">
                     </div>
                     <div class="col-md-2" id="btn_received_full" style="margin-top:31px;display:none">
                         <button type="button" class="btn btn-primary "> Received Full Payment</button>
@@ -402,7 +402,7 @@
                                 <input type="number" id="id" name="id" hidden required>
 
                                 <div class="div">
-                                    <select class=" form-select " id="productSelectModel" style="width: 100%"
+                                    <select class="form-select" id="productSelectModel" style="width: 100%"
                                         name="productId" autofocus>
                                         <option value="" selected disabled>---Select Product -----</option>
                                         @foreach ($product as $row)

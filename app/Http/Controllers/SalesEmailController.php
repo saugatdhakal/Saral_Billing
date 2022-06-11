@@ -12,6 +12,11 @@ use Mail;
 class SalesEmailController extends Controller
 {
     public function index(Request $request,$id){
+        $request->validate(
+            [
+                'email_id'=>'required|regex:/(.+)@(.+)\.(.+)/i'
+            ]
+        );
         //Making PDF
         $config = getConfig();    
         $saleDetails = Sale::saleInvoiceData($id);
@@ -22,7 +27,6 @@ class SalesEmailController extends Controller
         //  return $pdf->stream();
        $path= Storage::put('public/storage/uploads/'.'-'.rand().'_'.time().'.'.'pdf', $pdf->output());
         Storage::put($path,$pdf->output());
-
         $sale =DB::table('sales')->where('sales.id',$id)
         ->join('accounts','accounts.id','=','sales.account_id')
         ->get(['sales.invoice_number','accounts.name','sales.net_amount','sales.sales_date'])

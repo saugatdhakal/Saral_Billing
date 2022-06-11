@@ -86,99 +86,89 @@
 
 
 </div>
-<div class="card mb-4 m-2">
-  <div class="card-header">
-    <svg class="svg-inline--fa fa-table fa-w-16 me-1" aria-hidden="tdue" focusable="false" data-prefix="fas"
-      data-icon="table" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
-      <path fill="currentColor"
-        d="M464 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM224 416H64v-96h160v96zm0-160H64v-96h160v96zm224 160H288v-96h160v96zm0-160H288v-96h160v96z">
-      </path>
-    </svg><!-- <i class="fas fa-table me-1"></i> Font Awesome fontawesome.com -->
-    Supplier List
-  </div>
-  <div class="card-body">
 
-    <table class="table table-bordered  yajra-datatable" width="100%">
-      <thead>
-        <tr>
+<hr>
+<table class="table table-bordered  yajra-datatable" width="100%">
+  <thead>
+    <tr>
 
-          <th>Name</th>
-          <th>Address</th>
-          <th>Contact Person</th>
-          <th>Contact Number</th>
-          <th>Email</th>
-          <th>Remark</th>
-          <th width="9%">Action</th>
-        </tr>
-      </thead>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Contact Person</th>
+      <th>Contact Number</th>
+      <th>Email</th>
+      <th>Remark</th>
+      <th width="9%">Action</th>
+    </tr>
+  </thead>
 
-      <tbody>
+  <tbody>
 
-      </tbody>
-    </table>
+  </tbody>
+</table>
 
-  </div>
+</div>
 
-  {{-- Bootstrap model --}}
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle"><i class="far fa-address-card"></i> Supplier Deatils</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+{{-- Bootstrap model --}}
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"><i class="far fa-address-card"></i> Supplier Deatils</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{-- body start --}}
+        <div class="row mb-1">
+          <div class="col-sm-4"><b>Name:</b></div>
+          <div class="col-sm-5">
+            <p id="name"></p>
+          </div>
         </div>
-        <div class="modal-body">
-          {{-- body start --}}
-          <div class="row mb-1">
-            <div class="col-sm-4"><b>Name:</b></div>
-            <div class="col-sm-5">
-              <p id="name"></p>
-            </div>
+        <div class="row mb-1">
+          <div class="col-sm-4"><b>Address:</b></div>
+          <div class="col-sm-5">
+            <p id="address"></p>
           </div>
-          <div class="row mb-1">
-            <div class="col-sm-4"><b>Address:</b></div>
-            <div class="col-sm-5">
-              <p id="address"></p>
-            </div>
+        </div>
+        <div class="row mb-1">
+          <div class="col-sm-4"><b>Contact Person:</b></div>
+          <div class="col-sm-5">
+            <p id="person"><strong></strong></p>
           </div>
-          <div class="row mb-1">
-            <div class="col-sm-4"><b>Contact Person:</b></div>
-            <div class="col-sm-5">
-              <p id="person"><strong></strong></p>
-            </div>
+        </div>
+        <div class="row mb-1">
+          <div class="col-sm-4"><b>Contact Number:</b></div>
+          <div class="col-sm-5">
+            <p id="number"><strong></strong></p>
           </div>
-          <div class="row mb-1">
-            <div class="col-sm-4"><b>Contact Number:</b></div>
-            <div class="col-sm-5">
-              <p id="number"><strong></strong></p>
-            </div>
+        </div>
+        <div class="row mb-1">
+          <div class="col-sm-4"><b>Email:</b></div>
+          <div class="col-sm-5">
+            <p id="email"><strong></strong></p>
           </div>
-          <div class="row mb-1">
-            <div class="col-sm-4"><b>Email:</b></div>
-            <div class="col-sm-5">
-              <p id="email"><strong></strong></p>
-            </div>
+        </div>
+        <div class="row mb-1">
+          <div class="col-sm-4"><b>Remark:</b></div>
+          <div class="col-sm-5">
+            <p id="remark"><strong></strong></p>
           </div>
-          <div class="row mb-1">
-            <div class="col-sm-4"><b>Remark:</b></div>
-            <div class="col-sm-5">
-              <p id="remark"><strong></strong></p>
-            </div>
+        </div>
+        <div class="row mb-1">
+          <div class="col-sm-4"><b>Created By:</b></div>
+          <div class="col-sm-5">
+            <p id="created_by"><strong></strong></p>
           </div>
-          <div class="row mb-1">
-            <div class="col-sm-4"><b>Created By:</b></div>
-            <div class="col-sm-5">
-              <p id="created_by"><strong></strong></p>
-            </div>
+        </div>
+        <div class="row mb-1">
+          <div class="col-sm-4"><b>Updated By:</b></div>
+          <div class="col-sm-5">
+            <p id="updated_by"><strong></strong></p>
           </div>
-          <div class="row mb-1">
-            <div class="col-sm-4"><b>Updated By:</b></div>
-            <div class="col-sm-5">
-              <p id="updated_by"><strong></strong></p>
-            </div>
 
           {{-- body stop --}}
         </div>
@@ -187,11 +177,10 @@
         </div>
       </div>
     </div>
-  </div>
-  {{-- Model ended --}}
-  @section('supplier.index')
-  <script>
-    $(function(){
+    {{-- Model ended --}}
+    @section('supplier.index')
+    <script>
+      $(function(){
             // YajraBox-Datatable
             var table =$('.yajra-datatable').DataTable({
               lengthMenu: [
@@ -280,7 +269,7 @@
             // })
 
           });
-  </script>
-  @endsection
+    </script>
+    @endsection
 
-  @endsection
+    @endsection

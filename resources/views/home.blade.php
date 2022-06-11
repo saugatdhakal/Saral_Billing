@@ -5,7 +5,7 @@
 <div class="container-fluid px-4">
     <div class="row">
         <div class="col-md-3">
-            <h1 class="mt-4">Dashboard</h1>
+            <h1 class="mt-4">Saral Dashboard</h1>
         </div>
         <div class="col-md-5"></div>
         <div class="col-md-4 mt-4">

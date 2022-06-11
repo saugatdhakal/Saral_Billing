@@ -43,11 +43,11 @@ class SaleController extends Controller
         return view('sale.create',compact('salesInvoice'));
     }
     public function email($id){
+        
         $config = DB::table('configs')->get('email')->first();
         $account = DB::table('sales')->where('sales.id',$id)
         ->join('accounts', 'accounts.id','=','sales.account_id')
         ->select(['accounts.email','accounts.id as account_id','sales.id as sales_id'])->first();
-        // return $account;
         return view('mail.index',compact('config','account'));
     }
 
@@ -80,7 +80,6 @@ class SaleController extends Controller
                     &#160
                 ';
                 }
-                
                 $actionBtn.=' 
                     <a data-toggle="modal" class="viewSale" id="'.$row->id.'"  data-target="#modal">
                         <i class="fa-solid fa-eye fa-xl" ></i>
@@ -93,7 +92,6 @@ class SaleController extends Controller
                 return $actionBtn;
             })
             ->rawColumns(['action'])
-            
             ->make(true);
     }
     public function invoiceView($id){
@@ -171,7 +169,6 @@ class SaleController extends Controller
     {
         $fiscal=getFiscalYear();
         $sale = new Sale();
-        
         \DB::transaction(function()use($request,$fiscal,$sale){
         $sale->fiscal_year = '0'.$fiscal[0].'/'.'0'.$fiscal[1];
         $sale->invoice_number =getSalesInvoice();   
@@ -180,8 +177,6 @@ class SaleController extends Controller
         $config->sales_bill_number = $config->sales_bill_number + 1;
         $config->save();
         });
-       
-        
         return redirect()->route('sales.salesItem',['id'=>$sale->id]);
     }
     public function moduleView($id)
@@ -243,52 +238,9 @@ class SaleController extends Controller
         }
         catch (\Exception $e) {
             return "fail";
-           //! Not returning back with error message 
-        //  return redirect()->back()->withFail(['Code Match with other product','Please use default code']);// can add multiple value on error
         }   
     }
-    //  public function trashDelete($id)
-    // {  
-    //     try {
-    //     Sale::find($id)->delete();
-    //     return "DeleteSuccess";
-    //     }
-    //     catch (\Exception $e) {
-    //        //! Not returning back with error message 
-    //     //  return redirect()->back()->withFail(['Code Match with other product','Please use default code']);// can add multiple value on error
-    //     }
-    // }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Sale  $sale
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Sale $sale)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Sale  $sale
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Sale $sale)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Sale  $sale
-     * @return \Illuminate\Http\Response
-     */
+  
     public function destroy(Sale $sale)
     {
         try {
@@ -297,8 +249,7 @@ class SaleController extends Controller
          }
         catch (\Exception $e) 
         {
-             //! Not returning back with error message 
-            //  return redirect()->back()->withFail(['Code Match with other product','Please use default code']);// can add multiple value on error
+
         }
     }
         

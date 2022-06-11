@@ -74,7 +74,7 @@
                         Product code
                     </div>
                     <div class="col-md-4">
-                        <input type="number" name="code" id="pro_code" value="{{$code}}" class="form-control" required>
+                        <input type="number" name="code" id="pro_code" min="0" oninput="this.value = Math.abs(this.value)" value="{{$code}}" class="form-control" required>
                         <div class="invalid-feedback">
                             Product Name is Empty!!
                         </div>

@@ -24,7 +24,7 @@
     </div>
 
     @endif
-<hr>
+    <hr>
     <form class="row g-3 mt-2 needs-validation" action="{{route('transport.store')}}" method="POST" novalidate>
         @csrf
         <div class="row m-2">
@@ -56,7 +56,8 @@
                 Contact Number
             </div>
             <div class="col-md-4">
-                <input type="number" class="form-control" name="number" placeholder="Contact Number" required>
+                <input type="number" class="form-control" min="0" oninput="this.value = Math.abs(this.value)"
+                    name="number" placeholder="Contact Number" required>
                 <div class="invalid-feedback">
                     Contact Number is Empty!!
                 </div>

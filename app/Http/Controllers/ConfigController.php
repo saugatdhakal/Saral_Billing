@@ -30,8 +30,8 @@ class ConfigController extends Controller
         $request->validate([
                 'name'=>'required',
                 'address'=>'required',
-                'contact_number'=>'required||integer',
-                'email'=>'required|email',
+                'contact_number'=>'required|min:10|max:10',
+                'email'=>'required|email|regex:/(.+)@(.+)\.(.+)/',
                 'fiscal_year'=>'required||integer',
                 'sales_bill_number'=>'required||integer',
                 'sales_return_bill_number'=>'required||integer',

@@ -34,7 +34,7 @@
 <form action="{{route('configuration.updateConfig')}}" method="POST">
     @csrf
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-10">
             <div class="row" style="margin-bottom:10px">
                 <div class="col-md-2" style="font-size:23px;margin-top:5px">SOFTWARE NAME</div>
                 <div class="col-md-3 mt-1">
@@ -52,7 +52,7 @@
             <div class="row" style="margin-bottom:10px">
                 <div class="col-md-2" style="font-size:23px;margin-top:5px">CONTACT NUMBER</div>
                 <div class="col-md-3 mt-1">
-                    <input type="number" class="form-control" name="contact_number" min="0"
+                    <input type="number" class="form-control" min="0" name="contact_number" min="0"
                         value="{{$config->contact_number}}" placeholder="Numbers" required>
                 </div>
             </div>
@@ -119,7 +119,7 @@
 
         </div>
 </form>
-<div class="col-md-3">
+<div class="col-md-2">
 
     <div class="alert alert-danger" style="font-size:20px" role="alert">
         <i class="fa-solid fa-brake-warning fa-lg"> </i> UNDERSTAND SETTING BEFORE CHANGING ANYTHING!

@@ -15,6 +15,20 @@
 
 </div>
 @endif
+{{-- Error on repeated product --}}
+<div class="row">
+    <div class="col-md">
+        @if (Session::has('fail'))
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (Session::get('fail') as $session)
+                <li>{{$session}}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+    </div>
+</div>
 <div class="container-fluid">
     <form class="row g-3 needs-validation" action="{{route('Account.add')}}" method="POST" novalidate>
         @csrf
@@ -105,13 +119,13 @@
                 Customer Phone
             </div>
             <div class="col-md-2">
-                <input type="number" class="form-control " name="mobile1" placeholder="Mobile" required>
+                <input type="number" class="form-control " min="0" oninput="this.value = Math.abs(this.value)" name="mobile1" placeholder="Mobile" required>
                 <div class="invalid-feedback">
                     Phone Number is Empty
                 </div>
             </div>
             <div class="col-md-2" id="workPhone">
-                <input type="number" id="WorkPhoneNo" class="form-control" name="mobile2" placeholder="Work phone">
+                <input type="number" id="WorkPhoneNo" min="0" oninput="this.value = Math.abs(this.value)" class="form-control" name="mobile2" placeholder="Work phone">
                 <div class="invalid-feedback">
                     Work phone is Empty
                 </div>
@@ -122,7 +136,7 @@
                 PAN Number
             </div>
             <div class="col-md-4">
-                <input type="number" id="Pan" class="form-control" name="pan">
+                <input type="number" id="Pan" class="form-control" min="0"  oninput="this.value = Math.abs(this.value)" name="pan">
                 <div class="invalid-feedback">
                     PAN Number is Empty
                 </div>
@@ -133,7 +147,7 @@
                 VAT Number
             </div>
             <div class="col-md-4">
-                <input type="number" id="Vat" class="form-control" name="vat">
+                <input type="number" id="Vat" class="form-control" min="0"  oninput="this.value = Math.abs(this.value)" name="vat">
                 <div class="invalid-feedback">
                     VAT Number is Empty
                 </div>

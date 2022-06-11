@@ -6,31 +6,24 @@
         <h1> Sales Return Trash</h1>
     </center>
 </div>
-<div class="card ">
-    
+<hr>
+<table class="table table-striped table-bordered  yajra-datatable" width="100%">
+    <thead>
+        <tr>
+            <th width="5%">SN</th>
+            <th>Customer Name</th>
+            <th>Invoice No</th>
+            <th>Transaction date</th>
+            <th>Sales Return Date</th>
+            <th>Net Amount</th>
+            <th width="9%">Action</th>
+        </tr>
+    </thead>
 
-    <div class="card-body mb-4 m-2">
+    <tbody>
 
-        <table class="table table-striped table-bordered  yajra-datatable" width="100%">
-            <thead>
-                <tr>
-                    <th width="5%">SN</th>
-                    <th>Customer Name</th>
-                    <th>Invoice No</th>
-                    <th>Transaction date</th>
-                    <th>Sales Return Date</th>
-                    <th>Net Amount</th>
-                    <th width="9%">Action</th>
-                </tr>
-            </thead>
-
-            <tbody>
-
-            </tbody>
-        </table>
-
-    </div>
-</div>
+    </tbody>
+</table>
 @section('category.trash')
 <script>
     $(function(){

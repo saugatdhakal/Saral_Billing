@@ -72,22 +72,23 @@ class AccountController extends Controller
      */
     public function add(Request $request)
     {
-        if($request->CutomerType ="Business"){
+        if($request->CutomerType =="Business"){
             $request->validate([
                 'companyName'=>'required',
                 'shopAddress'=>'required',
-                'vat'=>'required',
-                'pan'=>'required',
+                'vat'=>'required|max:8|min:0',
+                'pan'=>'required|max:8|min:0',
                 'shopAddress'=>'required',
-                'mobile2'=>'required'   
+                'mobile2'=>'required|min:10|max:10'   
             ]);
         }
         $request->validate([
                 'homeAddress'=>'required', 
-                'mobile1'=>'required',    
-                'email'=>'required',    
+                'mobile1'=>'required|min:10|max:10',    
+                'email'=>'required|regex:/(.+)@(.+)\.(.+)/',    
                 'remark'=>'required'
         ]);
+        
         $account = new Account;
         $account->account_type= $request->CutomerType;
         $account->name= $request->name;
@@ -142,6 +143,22 @@ class AccountController extends Controller
      */
     public function update(Request $request,$id)
     {
+         if($request->CutomerType =="Business"){
+            $request->validate([
+                'companyName'=>'required',
+                'shopAddress'=>'required',
+                'vat'=>'required|max:8|min:0',
+                'pan'=>'required|max:8|min:0',
+                'shopAddress'=>'required',
+                'mobile2'=>'required|min:10|max:10'   
+            ]);
+        }
+        $request->validate([
+                'homeAddress'=>'required', 
+                'mobile1'=>'required|min:10|max:10',    
+                'email'=>'required|regex:/(.+)@(.+)\.(.+)/',    
+                'remark'=>'required'
+        ]);
         $flag=true;
         $account = Account::find($id);
         $account->account_type= $request->CutomerType;

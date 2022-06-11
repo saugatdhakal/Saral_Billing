@@ -195,8 +195,13 @@ class ProductController extends Controller
     }
 
     public function forceDeleteProduct($id){
-        Product::onlyTrashed()->find($id)->forceDelete();
-        return "DeleteSuccess";
+        try{
+            Product::onlyTrashed()->find($id)->forceDelete();
+            return "DeleteSuccess";
+        }catch(\Exception $e){
+            return "fail";
+        }
+        
     }
 }
 

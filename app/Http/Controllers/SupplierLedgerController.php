@@ -63,7 +63,7 @@ class SupplierLedgerController extends Controller
         
         $drAmount =$supplierLedger->sum('debit_amount');
         $crAmount =$supplierLedger->sum('credit_amount');
-
+        //  return $purchases;
         return view('supplierLedger.index',
         [
             'supplier'=>$supplier,

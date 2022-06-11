@@ -7,6 +7,16 @@
     </h1>
 </center>
 <hr>
+@if ($errors->any())
+<div class="alert alert-danger" role="alert">
+
+    @foreach ($errors->all() as $err)
+
+    <li style="color:red">{{$err}}</li>
+    @endforeach
+
+</div>
+@endif
 <form class="row g-3 needs-validation" action="{{route('salesEmail.index',['id'=>$account->sales_id])}}" method="POST">
     @csrf
     <div class="row m-2">
@@ -39,7 +49,11 @@
         </div>
     </div>
 </form>
-
-
-
+@section('purchase.create')
+<script>
+$(".alert").first().hide().slideDown(500).delay(4000).slideUp(500, function () {
+$(this).remove();
+});
+</script>
+@endsection
 @endsection

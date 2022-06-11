@@ -28,6 +28,7 @@ class AccountPaymentRequest extends FormRequest
             'sale_id'=>'required',
             'pay_mode'=>'required',
             'payment_date'=>'required',
+            
             'amount'=>'required',
         ];
     }

@@ -78,7 +78,8 @@
                 Payment Date
             </div>
             <div class="col-md-4">
-                <input type="date" name="payment_date" id="pro_code" value="" class="form-control" required>
+                <input type="date" name="payment_date" min="2022-01-01" max="2022-12-31" id="pro_code" value=""
+                    class="form-control" required>
                 <div class="invalid-feedback">
                     Payment Date is Empty!!
                 </div>
@@ -90,8 +91,8 @@
                 Payment Amount
             </div>
             <div class="col-md-4">
-                <input type="number" id="name" class="form-control" name="amount" placeholder="Amount" autofocus
-                    required>
+                <input type="number" id="name" min="0" oninput="this.value = Math.abs(this.value)" class="form-control"
+                    name="amount" placeholder="Amount" autofocus required>
                 <div class="invalid-feedback">
                     Payment Amount is Empty!!
                 </div>

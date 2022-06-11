@@ -27,7 +27,7 @@
         <div class="col-md-4">
             <input type="text" class="form-control"
                 value="{{$purchaseInvoice}}"
-                name="invoiceNo" placeholder="Invoice Number" disabled required>
+                name="invoiceNo" min="0" oninput="this.value = Math.abs(this.value)" placeholder="Invoice Number" disabled required>
             <div class="invalid-feedback">
                 Invoice Number is Empty!!
             </div>
@@ -70,7 +70,7 @@
             Bill Date
         </div>
         <div class="col-md-4">
-            <input type="date" id="" class="form-control" name="billDate">
+            <input type="date" min="2022-01-01" max="2022-12-31" class="form-control" name="billDate">
             <div class="invalid-feedback">
                 Bill Date is Empty !!
             </div>
@@ -80,12 +80,12 @@
 
     <div class="row m-2">
         <div class="col-md-2 m-1" style="font-family:georgia,garamond,serif;">
-            Transaction Date
+            Issue Date
         </div>
         <div class="col-md-4">
-            <input type="date" id="" class="form-control" name="transactionDate">
+            <input type="date" min="2022-01-01" max="2022-12-31" class="form-control" name="transactionDate">
             <div class="invalid-feedback">
-                Transaction Date is Empty !!
+                Issue Date is Empty !!
             </div>
         </div>
     </div>

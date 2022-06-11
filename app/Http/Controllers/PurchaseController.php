@@ -259,12 +259,11 @@ class PurchaseController extends Controller
      public function trashDelete($id)
     {  
         try {
-        Purchase::onlyTrashed()->find($id)->forceDelete();
-        return "DeleteSuccess";
+            Purchase::onlyTrashed()->find($id)->forceDelete();
+            return "DeleteSuccess";
         }
         catch (\Exception $e) {
-           //! Not returning back with error message 
-        //  return redirect()->back()->withFail(['Code Match with other product','Please use default code']);// can add multiple value on error
+            return "fail";
         }
         
        

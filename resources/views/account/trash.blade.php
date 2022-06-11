@@ -1,58 +1,58 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="card-body">
-  <center><h1> Account Trash</h1> </center>
-</div>
 
-<div class="card-body m-2">
-        
-    <table id="datatable">
-        <thead>
-            <tr>
-                <th>SN</th>
-                <th width="10%">Customer Type</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Contact Number</th>
-                <th>Vat Number</th>
-                <th>Pan Number</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-       
-        <tbody>
-            @php $i=0; @endphp
-            @foreach ($trash as $row )
-            <tr>
-                <td>{{++$i}}</td>
-                <td>
-                    @if($row->account_type == "Business")
-                    <span class="badge badge-primary">Business</span> 
-                    @else
-                    <span class="badge badge-secondary">Individual</span>
-                    @endif
-                </td>
-                <td>{{$row->name}}</td>
-                <td>{{($row->account_type == "Business")? $row->shop_address: $row->home_address}}</td>
-                <td>{{$row->contact_number_1}}</td>
-                <td>{{empty($row->vat_number)? "EMPTY": $row->vat_number }}</td>
-                <td>{{empty($row->pan_number)? "EMPTY":$row->pan_number}}</td>
-                <td>
-                    <a class="restoreTrash" id="{{$row->id}}">
-                        <i class="fas fa-undo-alt fa-lg"></i>
-                    </a>
-                    &#160
-                    &#160
-                     <a class="deleteAccount" id="{{$row->id}}">
-                        <i class="fas fa-trash-alt fa-lg"></i>
-                    </a>
-                </td>
-                @endforeach
-        </tbody>
-    </table>
+<center>
+  <h1><i class="fa-solid fa-trash-list"></i> Account Trash</h1>
+</center>
 
-</div>
+<hr>
+<table id="datatable">
+  <thead>
+    <tr>
+      <th>SN</th>
+      <th width="10%">Customer Type</th>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Contact Number</th>
+      <th>Vat Number</th>
+      <th>Pan Number</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @php $i=0; @endphp
+    @foreach ($trash as $row )
+    <tr>
+      <td>{{++$i}}</td>
+      <td>
+        @if($row->account_type == "Business")
+        <span class="badge badge-primary">Business</span>
+        @else
+        <span class="badge badge-secondary">Individual</span>
+        @endif
+      </td>
+      <td>{{$row->name}}</td>
+      <td>{{($row->account_type == "Business")? $row->shop_address: $row->home_address}}</td>
+      <td>{{$row->contact_number_1}}</td>
+      <td>{{empty($row->vat_number)? "EMPTY": $row->vat_number }}</td>
+      <td>{{empty($row->pan_number)? "EMPTY":$row->pan_number}}</td>
+      <td>
+        <a class="restoreTrash" id="{{$row->id}}">
+          <i class="fas fa-undo-alt fa-lg"></i>
+        </a>
+        &#160
+        &#160
+        <a class="deleteAccount" id="{{$row->id}}">
+          <i class="fas fa-trash-alt fa-lg"></i>
+        </a>
+      </td>
+      @endforeach
+  </tbody>
+</table>
+
+
 @section('account.trash')
 <script>
   $('#datatable').DataTable({});
@@ -144,7 +144,7 @@
        
 
 
-  </script>
-      
-  @endsection
+</script>
+
+@endsection
 @endsection

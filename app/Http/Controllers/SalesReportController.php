@@ -15,8 +15,10 @@ class SalesReportController extends Controller
     }
 
     public function searchReport(Request $request){
+        // return $request;
         $account = DB::table('accounts')->get(['id','name']);
         $sales =SalesReport::ifCheck($request->account_id,$request->sales_type,$request->fromDate,$request->toDate);
+        
         if($sales=='error'){
             return redirect()->back()->withFail(['Every Filed should not be Empty','Wrong Search']);     
         }

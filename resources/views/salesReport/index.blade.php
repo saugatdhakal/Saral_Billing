@@ -129,7 +129,7 @@
 
 @section('salesReport')
 <script>
-   document.getElementById("toDate").valueAsDate = new Date();
+
     $('#sales_type,#supplierSelect').select2(
         {
         theme: "bootstrap-5",

@@ -16,8 +16,6 @@ use PDF;
 use Illuminate\Support\Facades\DB;
 use App\Models\Config;
 
-
-
 class SalesReturnController extends Controller
 {
     /**

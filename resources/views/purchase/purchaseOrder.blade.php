@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-md-5 fw-bold" style="font-size: 20px;"> Purchase #{{$data->invoice_number}}</div>
                 <div class="col-md-2" style="font-size: 17px;">
-                    Transaction Date : {{$data->transaction_date}}
+                    Issue Date : {{$data->transaction_date}}
                 </div>
             </div>
             <div class="row mb-1">
@@ -110,7 +110,7 @@
                     <div class="form-group">
                         <label class="fw-bold" for="exampleInputEmail1">Wholesale</label>
                         <div class="input-group">
-                            <input type="number" class="form-control" name="wholesalePrice" placeholder="Wholesale">
+                            <input type="number" class="form-control" min="1" name="wholesalePrice" placeholder="Wholesale">
                             <span class="input-group-text"><i class="fa-solid fa-rupee-sign"></i></span>
                         </div>
                     </div>
@@ -255,14 +255,14 @@
                 <div class="col-md-3">
                     <label class="fw-bold">GST</label>
                     <div class="input-group">
-                        <input type="number" class="form-control" name="gst" step="0.01" placeholder="Amount">
+                        <input type="number" class="form-control" name="gst" min="0" step="0.01" placeholder="Amount">
 
                         <span class="input-group-text fw-bold" id="unit"><i class="fa-solid fa-coin"></i></span>
                     </div>
                     <br>
                     <label class="fw-bold">Extra charge</label>
                     <div class="input-group">
-                        <input type="number" class="form-control" name="extra_amount" step="0.01" placeholder="Amount">
+                        <input type="number" class="form-control" name="extra_amount" min="0" step="0.01" placeholder="Amount">
 
                         <span class="input-group-text fw-bold" id="unit"><i
                                 class="fa-solid fa-truck-container"></i></span>

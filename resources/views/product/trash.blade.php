@@ -1,43 +1,28 @@
 @extends('layouts.app')
 @section('content')
 
-<div class="card-body">
-    <center>
-        <h1> Product Trash Data</h1>
-    </center>
-</div>
-<div class="card mb-4 m-2">
-    <div class="card-header">
-        <svg class="svg-inline--fa fa-table fa-w-16 me-1" aria-hidden="tdue" focusable="false" data-prefix="fas"
-            data-icon="table" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
-            <path fill="currentColor"
-                d="M464 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM224 416H64v-96h160v96zm0-160H64v-96h160v96zm224 160H288v-96h160v96zm0-160H288v-96h160v96z">
-            </path>
-        </svg><!-- <i class="fas fa-table me-1"></i> Font Awesome fontawesome.com -->
-        Product List
-    </div>
+<center>
+    <h1> <i class="fa-solid fa-trash-can-list"></i> Product Trash Data</h1>
+</center>
 
-    <div class="card-body">
+<hr>
+<table class="table table-striped table-bordered  yajra-datatable" width="100%">
+    <thead>
+        <tr>
+            <th>Index</th>
+            <th>Name</th>
+            <th>code</th>
+            <th>unit</th>
+            <th>category</th>
+            <th width="9%">Action</th>
+        </tr>
+    </thead>
 
-        <table class="table table-striped table-bordered  yajra-datatable" width="100%">
-            <thead>
-                <tr>
-                    <th>Index</th>
-                    <th>Name</th>
-                    <th>code</th>
-                    <th>unit</th>
-                    <th>category</th>
-                    <th width="9%">Action</th>
-                </tr>
-            </thead>
+    <tbody>
 
-            <tbody>
+    </tbody>
+</table>
 
-            </tbody>
-        </table>
-
-    </div>
-</div>
 @section('category.trash')
 <script>
     $(function(){
@@ -124,11 +109,15 @@ data: {
 success: function(data){
 // alert(data);
 if(data == "DeleteSuccess"){
-swal(" Your is permanently deleted!!", {
-icon: "success",
-}).then((willDelete)=>{
-location.reload();
-});
+    swal(" Your is permanently deleted!!", {
+    icon: "success",
+    }).then((willDelete)=>{
+    location.reload();
+    });
+}else{
+    swal(" Sorry this Product Can't be deleted!!", {
+    icon: "error",
+    })
 }
 
 }

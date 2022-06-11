@@ -63,7 +63,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="{{route('home')}}">SARAL BILLING</a>
+        <a class="navbar-brand ps-3" href="{{route('home')}}">SARAL BILLING <i class="fa-brands fa-uncharted"></i></a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><svg
                 class="svg-inline--fa fa-bars fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas"
@@ -267,8 +267,7 @@
                         {{-- Purchase --}}
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#purchase"
                             aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i>
-                                <!-- <i class="fas fa-columns"></i> Font Awesome fontawesome.com -->
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-cart-shopping"></i>
                             </div>
                             Purchase
                             <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10"

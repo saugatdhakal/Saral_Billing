@@ -3,7 +3,7 @@
 <div class="row mt-2">
     <center>
         <h1 style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold;  ">
-            Product Stock
+            <i class="fa-solid fa-layer-group"></i> Product Stock
         </h1>
     </center>
 </div>

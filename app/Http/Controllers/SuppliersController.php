@@ -130,7 +130,12 @@ class SuppliersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        if(!empty($request->contact_number)){
+           $request->validate([
+               'contact_number'=>'max:10|min:10',
+           ]);
+        }
         $suppliers = new Suppliers();
         $suppliers->name= $request->supplier_name;
         $suppliers->address= $request->address;
@@ -179,6 +184,15 @@ class SuppliersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'email'=>'required|regex:/(.+)@(.+)\.(.+)/',
+        ]);
+        if(!empty($request->contact_number)){
+           $request->validate([
+               'contact_number'=>'max:10|min:10',
+           ]);
+        }
+        
         $suppliers = Suppliers::find($id);
         $suppliers->name = $request->supplier_name;
         $suppliers->address = $request->address;
@@ -187,7 +201,6 @@ class SuppliersController extends Controller
         $suppliers->contact_person = empty($request->contact_person_name)?  null: $request->contact_person_name;
         $suppliers->remark= empty($request->remark)?null:$request->remark;
         $suppliers-> save();
-        // return $suppliers;
         return redirect()->route('supplier.index');
     }
 
@@ -220,8 +233,12 @@ class SuppliersController extends Controller
         return "DataRestore";
     }
     public function trashSupplier($id){
-        Suppliers::onlyTrashed()->find($id)->forceDelete();
-        // Account::find($id)->forceDelete();
-        return "DeleteSuccess";
+        try{
+            Suppliers::onlyTrashed()->find($id)->forceDelete();
+            return "DeleteSuccess";
+        }catch(\Exception $e){
+            return "fail";
+        }   
+       
     }
 }
