@@ -28,7 +28,8 @@ class SalesReport extends Model
     else if($account_id and !$sales_type and !$fromDate and !$toDate){// Only ACCOUNT to search
         return SalesReport::account($account_id);
     }
-    else if(!$account_id and $sales_type and !$fromDate and $toDate){ // only sale type , to date(default)
+    else if(!$account_id and $sales_type and !$fromDate and !$toDate){ // Only Sale Type 
+        
         return SalesReport::sales_type($sales_type);
     }
     else if(!$account_id and !$sales_type and $fromDate and $toDate){ // from date and to date
